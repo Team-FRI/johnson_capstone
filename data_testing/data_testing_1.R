@@ -12,3 +12,5 @@ library(readxl)
 #Read in water temp data for Longterm Loyalsock Project 
 
 Data1.xlsx.tibble <- read_excel("Data.xlsx")
+
+Brunnerdale_temp_stream.xlsx.tibble <- read_excel("Brunnerdale_Run_Stream_X_QC")
