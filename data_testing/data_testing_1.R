@@ -13,4 +13,5 @@ library(readxl)
 
 Data1.xlsx.tibble <- read_excel("Data.xlsx")
 
-Brunnerdale_temp_stream.xlsx.tibble <- read_excel("Brunnerdale_Run_Stream_X_QC")
+Brunnerdale_temp_Stream.xlsx.tibble <- read_excel("Brunnerdale_Run_Land_X_QC")
+Brunnerdale_Run_Land_X_QC
