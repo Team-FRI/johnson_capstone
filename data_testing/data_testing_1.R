@@ -30,12 +30,7 @@ Brunnerdale_Land_Temp <- read.csv("Brunnerdale_Run_Land_X_QC.csv")
 #Now that both CSV's are red in, we need  a unique identifier that brings the two data sets together. 
 #Luckily, both the temperature and fish data was taken in the same location (Brunnerdale Run at Ogdonia). 
 #However, these are not currency columns in the data tables, so I need to add a column.
-#To do that, I will need to R bind, but first I will need to remove the columns from the Brunnerdale_Fish_Records_1 file that I don't want to use????
-# See above lines and edit columns taken out bellow ^??????
-
-Brunnerdale.ogdonia_FishRecords2 <- Brunnerdale.ogdonia_Fish_Records1[,c(-3:-7, -10:-12, -14:-16)]
-
-#Now that that's done we can add the column "Site Name" consiting of "Brunnerdale.ogdonia" to the Brunndedale stream and air temp tables
+#So lets add the column "Site Name" consiting of "Brunnerdale.ogdonia" to the Brunndedale stream and air temp tables
 
 Brunnerdale_Stream_Temp$Site_Name <- "Brunnerdale.ogdonia"
 
@@ -45,9 +40,14 @@ Brunnerdale_Land_Temp$Site_Name <- "Brunnerdale.ogdonia"
 
 Brunnerdale.ogdonia_FishRecords1$Site_Name <- "Brunnerdale.ogdonia"
 
+#In order to bring the 3 datasets together I will need to R bind, but first I will need to remove the columns from the Brunnerdale_Fish_Records_1 file that I don't want to use to have the same number of columns as Brunnerdale_Stream_Temp
+# See above lines and edit columns taken out bellow ^??????
+
+Brunnerdale.ogdonia_FishRecords2 <- Brunnerdale.ogdonia_FishRecords1[,c(-3:-7, -9:-12)]
+
 #Now we can finaly bring either all 3 data sets together, or just the fish records and either the land temperatue or water temperature data set together using the R bind function.
 
-Brunnerdale_ogdonia_masterland <- rbind(Brunnerdale_Stream_Temp, Brunnerdale.ogdonia_FishRecords1)
+Brunnerdale_ogdonia_masterland <- rbind(Brunnerdale_Stream_Temp, Brunnerdale.ogdonia_FishRecords2)
 
-#Get error message. I'm assuming its because the data sets don't have the same amount of rows. Maybe have to remove rows you wont do like in line 36 that you didin't run???
+#Get error message. I'm assuming its because the data sets don't have the same amount of rows. Maybe have to remove rows you wont do like in line 36 that you didn't run???
 #When you come back to this, mess with looper date package for dates and tidy verse pacage, and then building the actual differnt model and using both air and water temps, or one or the other!!!!
