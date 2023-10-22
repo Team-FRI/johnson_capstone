@@ -46,8 +46,19 @@ Brunnerdale.ogdonia_FishRecords1$Site_Name <- "Brunnerdale.ogdonia"
 Brunnerdale.ogdonia_FishRecords2 <- Brunnerdale.ogdonia_FishRecords1[,c(-3:-7, -9:-12)]
 
 #Now we can finaly bring either all 3 data sets together, or just the fish records and either the land temperatue or water temperature data set together using the R bind function.
+#But sicne the columns are not the same name, we need to downlaod this package so the R bind will work. 
 
-Brunnerdale_ogdonia_masterland <- rbind(Brunnerdale_Stream_Temp, Brunnerdale.ogdonia_FishRecords2)
+install.packages("dplyr")
+library("dplyr")
 
-#Get error message. I'm assuming its because the data sets don't have the same amount of rows. Maybe have to remove rows you wont do like in line 36 that you didn't run???
-#When you come back to this, mess with looper date package for dates and tidy verse pacage, and then building the actual differnt model and using both air and water temps, or one or the other!!!!
+Bind_ogdonia_masterland1 <- bind_rows(Brunnerdale.ogdonia_FishRecords2, Brunnerdale_Land_Temp)
+
+#Before I try to compare fish and temperature together, I want to just look at temperature alone first. 
+#But first we need to format that date and time. To do that, lets install the luberdate package. 
+
+install.packages("lubridate")
+library("lubridate")
+
+
+
+#When you come back to this, mess with looper date package for dates and tidy verse pacage, and then building the actual different model and using both air and water temps, or one or the other!!!!
