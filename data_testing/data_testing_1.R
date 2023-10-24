@@ -60,11 +60,12 @@ install.packages("lubridate")
 library("lubridate")
 
 
-#When you come back to this, mess with looper date package for dates and tidy verse pacage, and then building the actual different model and using both air and water temps, or one or the other!!!!
+#When you come back to this, mess with luberdate package for dates and tidy verse pacage, and then building the actual different model and using both air and water temps, or one or the other!!!!
 
 #Always X and then Y for plots!
 
 plot(Brunnerdale_Land_Temp$Temp_C, Brunnerdale_Land_Temp$DateTime)
 
-Brunnerdale_Stream_Temp <- mutate(DateTime = ymd_hms(paste(year month, day, hour, minute, second))
+Brunnerdale_Stream_Temp <- mutate(DateTime = ymd_hms(paste(year, month, day, hour, minute, second)))
+
 
