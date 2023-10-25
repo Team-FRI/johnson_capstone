@@ -60,6 +60,7 @@ install.packages("lubridate")
 library("lubridate")
 
 
+<<<<<<< Updated upstream
 #When you come back to this, mess with luberdate package for dates and tidy verse pacage, and then building the actual different model and using both air and water temps, or one or the other!!!!
 
 #Always X and then Y for plots!
@@ -69,3 +70,21 @@ plot(Brunnerdale_Land_Temp$Temp_C, Brunnerdale_Land_Temp$DateTime)
 Brunnerdale_Stream_Temp <- mutate(DateTime = ymd_hms(paste(year, month, day, hour, minute, second)))
 
 
+=======
+#When you come back to this, mess with looper date package for dates and tidy verse pacage, and then building the actual different model and using both air and water temps, or one or the other!!!!
+
+class(Brunnerdale_Land_Temp$DateTime)
+
+#It's eneterd as a character, so need to change it to POSIXct
+
+Brunnerdale_Land_Temp$DateTime <- as.POSIXct(Brunnerdale_Land_Temp$DateTime)
+class(Brunnerdale_Land_Temp$DateTime)
+
+summary(Brunnerdale_Land_Temp)
+
+#Now that its in the propper format, use month function.
+
+Brunnerdale_Land_Temp_Updated <- Brunnerdale_Land_Temp %>%
+  mutate(Month=month(Brunnerdale_Land_Temp$DateTime, label = TRUE))
+summary(Brunnerdale_Land_Temp_Updated)
+>>>>>>> Stashed changes
