@@ -67,17 +67,36 @@ library("lubridate")
 #Now need to get R to reed this as a year date and time rather than a string of numbers.
 
 class(Brunnerdale_Land_Temp$DateTime)
+class(Brunnerdale_Stream_Temp$DateTime)
 
 #It's eneterd as a character, so need to change it to POSIXct
+#First do land temp
 
 Brunnerdale_Land_Temp$DateTime <- as.POSIXct(Brunnerdale_Land_Temp$DateTime)
 class(Brunnerdale_Land_Temp$DateTime)
 
 summary(Brunnerdale_Land_Temp)
 
-#Now that its in the propper format, use month function.
+#Do same thing for stream temp 
+
+Brunnerdale_Stream_Temp$DateTime <- as.POSIXct(Brunnerdale_Stream_Temp$DateTime)
+class(Brunnerdale_Stream_Temp$DateTime)
+
+summary(Brunnerdale_Land_Temp)
+
+
+#Now that its in the proper format, have to extract month as an individual column.
+#First do land temp
 
 Brunnerdale_Land_Temp_Updated <- Brunnerdale_Land_Temp %>%
   mutate(Month=month(Brunnerdale_Land_Temp$DateTime, label = TRUE))
 summary(Brunnerdale_Land_Temp_Updated)
+
+#Now do stream temp 
+Brunnerdale_Stream_Temp_updated <- Brunnerdale_Stream_Temp %>%
+  mutate(Month=month(Brunnerdale_Stream_Temp$DateTime, label = TRUE))
+summary(Brunnerdale_Stream_Temp)
+
+Brunnerdale_Land_Temp_Updated1 <- Brunnerdale_Land_Temp %>%
+  mutate(Year=Year(Brunnerdale_Land_Temp$DateTime, label = TRUE))
 
