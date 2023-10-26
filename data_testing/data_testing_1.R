@@ -97,6 +97,24 @@ Brunnerdale_Stream_Temp_updated <- Brunnerdale_Stream_Temp %>%
   mutate(Month=month(Brunnerdale_Stream_Temp$DateTime, label = TRUE))
 summary(Brunnerdale_Stream_Temp)
 
+#Bellow seemed to work to get year as a column 
 Brunnerdale_Land_Temp_Updated1 <- Brunnerdale_Land_Temp %>%
-  mutate(Year=Year(Brunnerdale_Land_Temp$DateTime, label = TRUE))
+  mutate(Year=year(Brunnerdale_Land_Temp$DateTime))
 
+#But I can't figure out how to combine it as [YYYY-MM]. 
+
+
+#Messing with YYY-MM Stuff Bellow 
+
+Brunnerdale_Land_Temp_Updated1$date <- Brunnerdale_Land_Temp_Updated1 %>%
+  as.yearmon(paste(df$year, df$month), "%Y %m")
+
+Brunnerdale_Land_Temp_Updated1 <- 
+
+my(Brunnerdale_Land_Temp_Updated$DateTime)
+
+Brunnerdale_Land_Temp_Updated1 <- as.Date(with(df, paste(year, mon, day,sep="-")), "%Y-%m-%d")
+Brunnerdale_Land_Temp$DateTime
+
+Brunnerdale_Land_Temp_Updated1 %>%
+  mutate(date = make_date(year, month))
