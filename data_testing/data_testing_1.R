@@ -93,16 +93,46 @@ Brunnerdale_Land_Temp_Updated <- Brunnerdale_Land_Temp %>%
 summary(Brunnerdale_Land_Temp_Updated)
 
 #Now do stream temp 
-Brunnerdale_Stream_Temp_updated <- Brunnerdale_Stream_Temp %>%
+Brunnerdale_Stream_Temp_Updated <- Brunnerdale_Stream_Temp %>%
   mutate(Month=month(Brunnerdale_Stream_Temp$DateTime, label = TRUE))
-summary(Brunnerdale_Stream_Temp)
+summary(Brunnerdale_Stream_Temp_Updated)
 
 #Bellow seemed to work to get year as a column 
-Brunnerdale_Land_Temp_Updated1 <- Brunnerdale_Land_Temp %>%
-  mutate(Year=year(Brunnerdale_Land_Temp$DateTime))
+#Now have to extract year as a new column 
+Brunnerdale_Land_Temp_YM <- Brunnerdale_Land_Temp_Updated %>%
+  mutate(Year=year(Brunnerdale_Land_Temp_Updated$DateTime))
+summary(Brunnerdale_Land_Temp_YM)
 
-#But I can't figure out how to combine it as [YYYY-MM]. 
+Brunnerdale_Stream_Temp_YM <- Brunnerdale_Stream_Temp_Updated %>%
+  mutate(Year=year(Brunnerdale_Stream_Temp_Updated$DateTime))
+summary(Brunnerdale_Stream_Temp_YM)
 
+#Need to combine Year and Month columns to be one column formatted as [YYYY-MM]. 
+#Will need ot use the unite functio. To do that, install tidyr package.
+
+#example code to run
+NewObjectName<- ObjectName %>%
+  unite(YearMonth, Year, Month, “-“)
+
+install.packages("tidyr")
+library("tidyr")
+
+#Now try uniting Year and Month Columns.
+#NOTE***** From here down, Land temp and stream temp will be abbreviated as LT and ST in object names 
+#For Land temp:
+
+Brunnerdale_LT_Master <- Brunnerdale_Land_Temp_YM %>%
+  unite(YearMonth, Year, Month)
+#For Stream temp:
+
+Brunnerdale_ST_Master <- Brunnerdale_Stream_Temp_YM %>%
+  unite(YearMonth, Year, Month)
+
+#So it works, however if I leave the "-" in their as it is in lune 114-115, it gives me an error message saying 
+#"Error in unite()'
+#Can't subset columns that don't exist.
+#Column '-' doesn't exist."
+#It gives an _ in between the year and month column instead of -. 
 
 #Messing with YYY-MM Stuff Bellow 
 
@@ -118,3 +148,7 @@ Brunnerdale_Land_Temp$DateTime
 
 Brunnerdale_Land_Temp_Updated1 %>%
   mutate(date = make_date(year, month))
+
+#Try
+
+Brunnerdale_Land_Temp_Updated["year"] <- Brunnerdale_Land_Temp_Updated["Year"]dt.year
