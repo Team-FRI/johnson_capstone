@@ -133,7 +133,6 @@ Brunnerdale_ST_Master <- Brunnerdale_Stream_Temp_YM %>%
 #Can't subset columns that don't exist.
 #Column '-' doesn't exist."
 #It gives an _ in between the year and month column instead of -. 
-aa
 
 
 #Messing with YYY-MM Stuff Bellow 
