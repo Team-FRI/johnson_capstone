@@ -18,10 +18,10 @@ Painter_ST01 <- read.csv("Painter_Stream0_X_QC.csv")
 #So lets merge the two. 
 
 Painter_ST <- merge(Painter_ST00, Painter_ST01, all = TRUE)
-                    
-#This works, but the dates are not in order??????????
 
-Painter_ST <- arran
+#To arrange dates in right order:
+Painter_ST <- arrange(Painter_ST, DateTime)
+                    
 
 #Before I try to compare fish and temperature together, I want to just look at temperature alone first. 
 #But first we need to format that date and time. To do that, lets install the luberdate package. 
@@ -58,12 +58,12 @@ library(dplyr)
 #First do land temp
 
 Painter_LT_Updated <- Painter_LT %>%
-  mutate(Month=month(Painter_LT$DateTime, label = TRUE))
+  mutate(Month=month(Painter_LT$DateTime, label = FALSE))
 summary(Painter_LT_Updated)
 
 #Now do stream temp 
 Painter_ST_Updated <- Painter_ST %>%
-  mutate(Month=month(Painter_ST$DateTime, label = TRUE))
+  mutate(Month=month(Painter_ST$DateTime, label = FALSE))
 summary(Painter_ST_Updated)
 
 #Bellow seemed to work to get year as a column 
@@ -86,16 +86,24 @@ library(tidyr)
 #For Land temp:
 
 Painter_LT_Master <- Painter_LT_YM %>%
-  unite(YearMonth, Year, Month)
+  unite(YearMonth, Year, Month, sep = "-")
 #For Stream temp:
 Painter_ST_Master <- Painter_ST_YM %>%
-  unite(YearMonth, Year, Month)
+  unite(YearMonth, Year, Month, sep = "-")
 
-Brunnerdale_ST_Master <- Brunnerdale_Stream_Temp_YM %>%
-  unite(YearMonth, Year, Month)
 
 #So it works, however if I leave the "-" in their as it is in line 114-115 in the data testing_1.R docuument, it gives me an error message saying 
 #"Error in unite()'
 #Can't subset columns that don't exist.
 #Column '-' doesn't exist."
 #It gives an _ in between the year and month column instead of -. 
+
+
+Painter_Stream_Summary <- Painter_ST_Master %>%
+  select(YearMonth, Temp_C) %>%
+  group_by(YearMonth) %>%
+  arrange(YearMonth) %>%
+  summarise(AvgYearMonthTemp = mean(Temp_C))
+            
+            
+Painter_Stream_Summary
