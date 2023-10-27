@@ -19,7 +19,11 @@ Painter_ST01 <- read.csv("Painter_Stream0_X_QC.csv")
 
 Painter_ST <- merge(Painter_ST00, Painter_ST01, all = TRUE)
 
-#To arrange dates in right order:
+#To arrange dates in right order, install dplyr package.
+install.packages("dplyr")
+library(dplyr)
+
+#Now to arrange dates in right order:
 Painter_ST <- arrange(Painter_ST, DateTime)
                     
 
@@ -50,10 +54,8 @@ class(Painter_ST$DateTime)
 summary(Painter_ST)
 
 #Now that its in the proper format, have to extract month as an individual column.
-#In order to do this we need to use the muate function, which is in the dplyr package. 
+#In order to do this we need to use the muate function, which is in the dplyr package, which is already installed... 
 
-install.packages("dplyr")
-library(dplyr)
 
 #First do land temp
 
@@ -89,7 +91,12 @@ Painter_LT_Master <- Painter_LT_YM %>%
   unite(YearMonth, Year, Month, sep = "-")
 #For Stream temp:
 Painter_ST_Master <- Painter_ST_YM %>%
-  unite(YearMonth, Year, Month, sep = "-")
+  unite(YearMonth, Year, Month, sep = "-") 
+
+install.packages("zoo")
+library("zoo")
+
+Painter_ST_Master <- as.yearmon(Painter_ST_Master$YearMonth, "%Y-%m")
 
 
 #So it works, however if I leave the "-" in their as it is in line 114-115 in the data testing_1.R docuument, it gives me an error message saying 
@@ -107,3 +114,5 @@ Painter_Stream_Summary <- Painter_ST_Master %>%
             
             
 Painter_Stream_Summary
+
+cla
