@@ -59,60 +59,34 @@ summary(Painter_ST)
 
 #First do land temp
 
-Painter_LT_Updated <- Painter_LT %>%
-  mutate(Month=month(Painter_LT$DateTime, label = FALSE))
-summary(Painter_LT_Updated)
+Painter_LT$YearMonth <- format(as.Date(Painter_LT$DateTime), "%Y-%m")
+summary(Painter_LT)
 
 #Now do stream temp 
-Painter_ST_Updated <- Painter_ST %>%
-  mutate(Month=month(Painter_ST$DateTime, label = FALSE))
-summary(Painter_ST_Updated)
 
-#Bellow seemed to work to get year as a column 
-#Now have to extract year as a new column 
-Painter_LT_YM <- Painter_LT_Updated %>%
-  mutate(Year=year(Painter_LT_Updated$DateTime))
-summary(Painter_LT_YM)
-
-Painter_ST_YM <- Painter_ST_Updated %>%
-  mutate(Year=year(Painter_ST_Updated$DateTime))
-summary(Painter_ST_YM)
-
-#Need to combine Year and Month columns to be one column formatted as [YYYY-MM]. 
-#Will need ot use the unite function. To do that, install tidyr package.
-
-install.packages("tidyr")
-library(tidyr)
-
-#Now try uniting Year and Month Columns.
-#For Land temp:
-
-Painter_LT_Master <- Painter_LT_YM %>%
-  unite(YearMonth, Year, Month, sep = "-")
-#For Stream temp:
-Painter_ST_Master <- Painter_ST_YM %>%
-  unite(YearMonth, Year, Month, sep = "-") 
-
-install.packages("zoo")
-library("zoo")
-
-Painter_ST_Master <- as.yearmon(Painter_ST_Master$YearMonth, "%Y-%m")
+Painter_ST$YearMonth <- format(as.Date(Painter_ST$DateTime), "%Y-%m")
+summary(Painter_ST)
 
 
-#So it works, however if I leave the "-" in their as it is in line 114-115 in the data testing_1.R docuument, it gives me an error message saying 
-#"Error in unite()'
-#Can't subset columns that don't exist.
-#Column '-' doesn't exist."
-#It gives an _ in between the year and month column instead of -. 
+Painter_Stream_Summary <- Painter_ST %>%
+  select(YearMonth, Temp_C) %>%
+  group_by(YearMonth) %>%
+  arrange(YearMonth) %>%
+  summarise(AvgYearMonthTemp = mean(Temp_C))
 
-
-Painter_Stream_Summary <- Painter_ST_Master %>%
+Painter_Land_Summary <- Painter_LT %>%
   select(YearMonth, Temp_C) %>%
   group_by(YearMonth) %>%
   arrange(YearMonth) %>%
   summarise(AvgYearMonthTemp = mean(Temp_C))
             
             
-Painter_Stream_Summary
+#Use Painter_Stream_Summary to make figure 
 
-cla
+#Use select the columns in the figure you want to use
+#Filter selects rows
+#So could select a site, and filter for Brook Trout
+
+#Use plot of ggplot comes into play
+
+
