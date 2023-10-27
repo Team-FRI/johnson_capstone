@@ -80,3 +80,20 @@ summary(Painter_ST_YM)
 install.packages("tidyr")
 library(tidyr)
 
+#Now try uniting Year and Month Columns.
+#For Land temp:
+
+Painter_LT_Master <- Painter_LT_YM %>%
+  unite(YearMonth, Year, Month)
+#For Stream temp:
+Painter_ST_Master <- Painter_ST_YM %>%
+  unite(YearMonth, Year, Month)
+
+Brunnerdale_ST_Master <- Brunnerdale_Stream_Temp_YM %>%
+  unite(YearMonth, Year, Month)
+
+#So it works, however if I leave the "-" in their as it is in line 114-115 in the data testing_1.R docuument, it gives me an error message saying 
+#"Error in unite()'
+#Can't subset columns that don't exist.
+#Column '-' doesn't exist."
+#It gives an _ in between the year and month column instead of -. 

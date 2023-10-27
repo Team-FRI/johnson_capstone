@@ -108,7 +108,7 @@ Brunnerdale_Stream_Temp_YM <- Brunnerdale_Stream_Temp_Updated %>%
 summary(Brunnerdale_Stream_Temp_YM)
 
 #Need to combine Year and Month columns to be one column formatted as [YYYY-MM]. 
-#Will need ot use the unite functio. To do that, install tidyr package.
+#Will need ot use the unite function. To do that, install tidyr package.
 
 #example code to run
 NewObjectName<- ObjectName %>%
@@ -128,12 +128,12 @@ Brunnerdale_LT_Master <- Brunnerdale_Land_Temp_YM %>%
 Brunnerdale_ST_Master <- Brunnerdale_Stream_Temp_YM %>%
   unite(YearMonth, Year, Month)
 
-#So it works, however if I leave the "-" in their as it is in lune 114-115, it gives me an error message saying 
+#So it works, however if I leave the "-" in their as it is in line 114-115, it gives me an error message saying 
 #"Error in unite()'
 #Can't subset columns that don't exist.
 #Column '-' doesn't exist."
 #It gives an _ in between the year and month column instead of -. 
-
+aa
 
 
 #Messing with YYY-MM Stuff Bellow 
