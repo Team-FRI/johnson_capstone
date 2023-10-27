@@ -21,6 +21,8 @@ Painter_ST <- merge(Painter_ST00, Painter_ST01, all = TRUE)
                     
 #This works, but the dates are not in order??????????
 
+Painter_ST <- arran
+
 #Before I try to compare fish and temperature together, I want to just look at temperature alone first. 
 #But first we need to format that date and time. To do that, lets install the luberdate package. 
 
