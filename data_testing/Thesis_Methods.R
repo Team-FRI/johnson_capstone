@@ -88,5 +88,6 @@ Painter_Land_Summary <- Painter_LT %>%
 #So could select a site, and filter for Brook Trout
 
 #Use plot of ggplot comes into play
+#Do confident intervrals. 
 
 
