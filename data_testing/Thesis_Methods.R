@@ -5,7 +5,7 @@ setwd("C:/GitHub/johnson_capstone/data_testing")
 getwd()
 dir()
 
-#All 3 excell files I'm going to read in are CSV's. 
+#3 of 4 excell files I'm going to read in are CSV's. 
 
 Painter_LT <- read.csv("Painter_Land_X_QC.csv")
 
@@ -13,6 +13,12 @@ Painter_ST00 <- read.csv("Painter_Stream_X_QC.csv")
 
 Painter_ST01 <- read.csv("Painter_Stream0_X_QC.csv")
 
+#The Fish records file from Painter Stream is an .xslx, so need to download readxl package.
+
+install.packages("readxl")
+library(readxl)
+
+Painter_FishRec_BT <- read_excel ("Painter_FishRecords_BrookTrout.xlsx")
 
 #The problem is the stream temperature data is split up into two data sets, and I want them as 1 data set.
 #So lets merge the two. 
@@ -88,6 +94,12 @@ Painter_Land_Summary <- Painter_LT %>%
 #So could select a site, and filter for Brook Trout
 
 #Use plot of ggplot comes into play
-#Do confident intervrals. 
+#Do confident intervals. 
+
+#In order to plot figure you want, install gg pot 2 package.
+
+install.packages("ggplot2")
+library("ggplot2")
+
 
 
