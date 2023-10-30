@@ -101,5 +101,14 @@ Painter_Land_Summary <- Painter_LT %>%
 install.packages("ggplot2")
 library("ggplot2")
 
+install.packages("tidyr")
+library("tidyr")
 
+DataForExamplePlot_BRT <- Painter_FishRec_BT %>%
+  select(ID, Date, Species, EventCode) %>%
+  filter(Date > ymd("2018-01-01"))
+
+Summary_Plot_BRTData <- DataForExamplePlot_BRT %>%
+  group_by(Date) %>%
+  summarise(Count = length(Species))
 
