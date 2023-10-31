@@ -112,3 +112,21 @@ Summary_Plot_BRTData <- DataForExamplePlot_BRT %>%
   group_by(Date) %>%
   summarise(Count = length(Species))
 
+
+geom_smooth(Painter_Land_Summary$AvgYearMonthTemp) +
+  geom_smooth(Painter_Stream_Summary$AvgYearMonthTemp) 
+
+ggplot(data = Painter_Land_Summary) +
+  geom_smooth(mapping = aes(x = AvgYearMonthTemp, Y = AvgYearMonthTemp))
+
+ggplot(Summary_Plot_BRTData, mapping = aes(x = ))
+
+geom_smooth(mapping = aes(y = Painter_Land_Summary)) +
+geom_smooth(mapping = aes(y = Painter_Stream_Summary)) +
+  scale_y_continuous
+
+Ft_plot <- Painter_Land_Summary %>% 
+  ggplot(aes(x = YearMonth, y = AvgYearMonthTemp)) +
+  geom_smooth(color = "brown")
+
+
