@@ -111,6 +111,8 @@ DataForExamplePlot_BRT <- Painter_FishRec_BT %>%
 Summary_Plot_BRTData <- DataForExamplePlot_BRT %>%
   group_by(Date) %>%
   summarise(Count = length(Species))
+
+
   
 #Make Stream Temperature and Land Temperature all one table so can make graph with two data sets
 #For Land (now called air) Temp
@@ -124,15 +126,24 @@ Painter_Stream_Summary <- Painter_Stream_Summary %>%
 
 Painter_Master_Temp <- bind_rows(Painter_Land_Summary, Painter_Stream_Summary)
 
+#Convert Painter_Matser_Temp to YM instead of YMD to avoid "Can't convert `x` <datetime<UTC>> to <double>" error/argument in plot your about to make. 
+Summary_Plot_BRTData$Date <- format(as.Date(Summary_Plot_BRTData$Date), "%Y-%m")
+summary(Summary_Plot_BRTData)  
+
 #Now Make plot
   
 ggplot() + 
-  geom_bar(subset(Painter_Master_Temp, Type %in% "Air"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp), stat = "identity", fill = "brown") +
-  geom_bar(subset(Painter_Master_Temp, Type %in% "Water"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp), stat = "identity", fill = "blue") +
-  geom_bar(Summary_Plot_BRTData, mapping = aes(x = date, y = Count), stat = "identity", fill = "pink") + 
-  scale_y_continuous(sec.axis = sec_axis(name = "Number of Brook Trout"))
+  geom_bar(subset(Painter_Master_Temp, Type %in% "Air"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp), stat = "identity", position = "dodge", fill = "brown") + 
+  geom_bar(subset(Painter_Master_Temp, Type %in% "Water"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp), stat = "identity", position = "dodge", fill = "blue") +
+  geom_bar(Summary_Plot_BRTData, mapping = aes(x = Date, y = Count), stat = "identity", position = "dodge", fill = "pink") + 
+  scale_y_continuous(name = "Average Monthly Temperature", sec.axis = sec_axis(~. ,name = "Number of Brook Trout")) +
+  ggtitle("Brook Trout Populations as Temperatures change at Little Painter Run")
+  
 
 #Messing with stuff bellow 
+
+ylim.prim <- c(-4, 50)
+ylim.sec <- c(5, 50)
 
 ###
 
@@ -144,5 +155,7 @@ Painter_Master_Temp %>%
 ggplot(subset(Painter_Master_Temp, Type %in% "Air"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp)) +
   geom_bar(stat = "identity", fill = "brown")  
 
-            
-  
+Painter_LT$YearMonth <- format(as.Date(Painter_LT$DateTime), "%Y-%m")
+summary(Painter_LT)
+
+
