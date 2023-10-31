@@ -112,12 +112,14 @@ Summary_Plot_BRTData <- DataForExamplePlot_BRT %>%
   group_by(Date) %>%
   summarise(Count = length(Species))
 
+#All stuff bellow are things I tried and did not work. 
+
 
 geom_smooth(Painter_Land_Summary$AvgYearMonthTemp) +
   geom_smooth(Painter_Stream_Summary$AvgYearMonthTemp) 
 
 ggplot(data = Painter_Land_Summary) +
-  geom_smooth(mapping = aes(x = AvgYearMonthTemp, Y = AvgYearMonthTemp))
+  geom_smooth(mapping = aes(x = YearMonth, y = AvgYearMonthTemp))
 
 ggplot(Summary_Plot_BRTData, mapping = aes(x = ))
 
@@ -125,8 +127,35 @@ geom_smooth(mapping = aes(y = Painter_Land_Summary)) +
 geom_smooth(mapping = aes(y = Painter_Stream_Summary)) +
   scale_y_continuous
 
-Ft_plot <- Painter_Land_Summary %>% 
+Painter_Stream_Summary %>% 
   ggplot(aes(x = YearMonth, y = AvgYearMonthTemp)) +
-  geom_smooth(color = "brown")
+  geom_smooth(color = "blue")
 
+FT_plot + 
+  Painter_Land_Summary >%>
+  geom_smooth(aes(y = AvgYearMonthTemp))
 
+#######################
+
+ggplot() +
+  geom_point(data = data1, aes(x = clarity, y = m), color = "blue") + 
+  geom_point(data = data2, aes(x = clarity, y = m))
+#^Example!!!!
+
+ggplot() +
+  geom_smooth(data = Painter_Stream_Summary, aes(x = YearMonth, y = AvgYearMonthTemp), color = "blue") +
+  geom_smooth(data = Painter_Land_Summary, aes(x = YearMonth, y = AvgYearMonthTemp), color = "brown") +
+    geom_point(date = Summary_Plot_BRTData, aes(x = Date, y = count)
+
+#######
+
+ggplot() +
+  geom_smooth(mapping = aes(Painter_Stream_Summary)) +
+  geom_smooth(mapping = aes(Painter_Land_Summary))
+#######
+
+ggplot(Painter_Stream_Summary$AvgYearMonthTemp, aes(Painter_Stream_Summary$YearMonth))
+
+######
+
+Test <- 
