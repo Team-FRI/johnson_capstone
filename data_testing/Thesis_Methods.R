@@ -137,6 +137,7 @@ ggplot() +
   geom_bar(subset(Painter_Master_Temp, Type %in% "Water"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp), stat = "identity", position = "dodge", fill = "blue") +
   geom_bar(Summary_Plot_BRTData, mapping = aes(x = Date, y = Count), stat = "identity", position = "dodge", fill = "pink") + 
   scale_y_continuous(name = "Average Monthly Temperature", sec.axis = sec_axis(~. ,name = "Number of Brook Trout")) +
+  ylim(-5,30) +
   ggtitle("Brook Trout Populations as Temperatures change at Little Painter Run")
   
 
