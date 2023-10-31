@@ -29,7 +29,7 @@ Brunnerdale_Land_Temp <- read.csv("Brunnerdale_Run_Land_X_QC.csv")
 
 #Now that both CSV's are red in, we need  a unique identifier that brings the two data sets together. 
 #Luckily, both the temperature and fish data was taken in the same location (Brunnerdale Run at Ogdonia). 
-#However, these are not currency columns in the data tables, so I need to add a column.
+#However, these are not currently columns in the data tables, so I need to add a column.
 #So lets add the column "Site Name" consiting of "Brunnerdale.ogdonia" to the Brunndedale stream and air temp tables
 
 Brunnerdale_Stream_Temp$Site_Name <- "Brunnerdale.ogdonia"

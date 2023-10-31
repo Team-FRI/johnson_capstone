@@ -159,3 +159,27 @@ ggplot(Painter_Stream_Summary$AvgYearMonthTemp, aes(Painter_Stream_Summary$YearM
 ######
 
 Test <- 
+  
+  
+#Make Stream Temperature and Land Temperature all one table so can make graph with two data sets
+#For Land (now called air) Temp
+  
+Painter_Land_Summary <- Painter_Land_Summary %>%
+  mutate(Type = "Air")
+
+#For Stream (now called water) Temp
+Painter_Stream_Summary <- Painter_Stream_Summary %>%
+  mutate(Type = "Water")
+
+Bind_ogdonia_masterland1 <- bind_rows(Brunnerdale.ogdonia_FishRecords2, Brunnerdale_Land_Temp)
+
+Painter_Master_Temp <- bind_rows(Painter_Land_Summary, Painter_Stream_Summary)
+
+Painter_Master_Temp %>%
+  filter(Type %in% ("Air")) %>%
+  print(geom_smooth(mapping = aes(x = Type, y = AvgYearMonthTemp))
+  plot(Painter_Master_Temp)
+              
+  geom_smooth(data = Painter_Land_Summary, aes(x = YearMonth, y = AvgYearMonthTemp), color = "brown") +
+  geom_point(date = Summary_Plot_BRTData, aes(x = Date, y = count)
+  
