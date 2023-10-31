@@ -111,55 +111,6 @@ DataForExamplePlot_BRT <- Painter_FishRec_BT %>%
 Summary_Plot_BRTData <- DataForExamplePlot_BRT %>%
   group_by(Date) %>%
   summarise(Count = length(Species))
-
-#All stuff bellow are things I tried and did not work. 
-
-
-geom_smooth(Painter_Land_Summary$AvgYearMonthTemp) +
-  geom_smooth(Painter_Stream_Summary$AvgYearMonthTemp) 
-
-ggplot(data = Painter_Land_Summary) +
-  geom_smooth(mapping = aes(x = YearMonth, y = AvgYearMonthTemp))
-
-ggplot(Summary_Plot_BRTData, mapping = aes(x = ))
-
-geom_smooth(mapping = aes(y = Painter_Land_Summary)) +
-geom_smooth(mapping = aes(y = Painter_Stream_Summary)) +
-  scale_y_continuous
-
-Painter_Stream_Summary %>% 
-  ggplot(aes(x = YearMonth, y = AvgYearMonthTemp)) +
-  geom_smooth(color = "blue")
-
-FT_plot + 
-  Painter_Land_Summary >%>
-  geom_smooth(aes(y = AvgYearMonthTemp))
-
-#######################
-
-ggplot() +
-  geom_point(data = data1, aes(x = clarity, y = m), color = "blue") + 
-  geom_point(data = data2, aes(x = clarity, y = m))
-#^Example!!!!
-
-ggplot() +
-  geom_smooth(data = Painter_Stream_Summary, aes(x = YearMonth, y = AvgYearMonthTemp), color = "blue") +
-  geom_smooth(data = Painter_Land_Summary, aes(x = YearMonth, y = AvgYearMonthTemp), color = "brown") +
-    geom_point(date = Summary_Plot_BRTData, aes(x = Date, y = count)
-
-#######
-
-ggplot() +
-  geom_smooth(mapping = aes(Painter_Stream_Summary)) +
-  geom_smooth(mapping = aes(Painter_Land_Summary))
-#######
-
-ggplot(Painter_Stream_Summary$AvgYearMonthTemp, aes(Painter_Stream_Summary$YearMonth))
-
-######
-
-Test <- 
-  
   
 #Make Stream Temperature and Land Temperature all one table so can make graph with two data sets
 #For Land (now called air) Temp
@@ -171,15 +122,27 @@ Painter_Land_Summary <- Painter_Land_Summary %>%
 Painter_Stream_Summary <- Painter_Stream_Summary %>%
   mutate(Type = "Water")
 
-Bind_ogdonia_masterland1 <- bind_rows(Brunnerdale.ogdonia_FishRecords2, Brunnerdale_Land_Temp)
-
 Painter_Master_Temp <- bind_rows(Painter_Land_Summary, Painter_Stream_Summary)
+
+#Now Make plot
+  
+ggplot() + 
+  geom_bar(subset(Painter_Master_Temp, Type %in% "Air"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp), stat = "identity", fill = "brown") +
+  geom_bar(subset(Painter_Master_Temp, Type %in% "Water"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp), stat = "identity", fill = "blue") +
+  geom_bar(Summary_Plot_BRTData, mapping = aes(x = date, y = Count), stat = "identity", fill = "pink") + 
+  scale_y_continuous(sec.axis = sec_axis(name = "Number of Brook Trout"))
+
+#Messing with stuff bellow 
+
+###
 
 Painter_Master_Temp %>%
   filter(Type %in% ("Air")) %>%
-  print(geom_smooth(mapping = aes(x = Type, y = AvgYearMonthTemp))
-  plot(Painter_Master_Temp)
-              
-  geom_smooth(data = Painter_Land_Summary, aes(x = YearMonth, y = AvgYearMonthTemp), color = "brown") +
-  geom_point(date = Summary_Plot_BRTData, aes(x = Date, y = count)
+  (geom_smooth(mapping = aes(x = Type, y = AvgYearMonthTemp)))
+
+
+ggplot(subset(Painter_Master_Temp, Type %in% "Air"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp)) +
+  geom_bar(stat = "identity", fill = "brown")  
+
+            
   
