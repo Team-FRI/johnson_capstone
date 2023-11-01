@@ -78,13 +78,13 @@ Painter_Stream_Summary <- Painter_ST %>%
   select(YearMonth, Temp_C) %>%
   group_by(YearMonth) %>%
   arrange(YearMonth) %>%
-  summarise(AvgYearMonthTemp = mean(Temp_C))
+  summarise(AvgYearMonthTemp = mean(Temp_C), sd = sd(Temp_C))
 
 Painter_Land_Summary <- Painter_LT %>%
   select(YearMonth, Temp_C) %>%
   group_by(YearMonth) %>%
   arrange(YearMonth) %>%
-  summarise(AvgYearMonthTemp = mean(Temp_C))
+  summarise(AvgYearMonthTemp = mean(Temp_C), sd = sd(Temp_C))
             
             
 #Use Painter_Stream_Summary to make figure 
@@ -131,13 +131,19 @@ Summary_Plot_BRTData$Date <- format(as.Date(Summary_Plot_BRTData$Date), "%Y-%m")
 summary(Summary_Plot_BRTData)  
 
 #Now Make plot
+install.packages("grDevices")
+library("grDevices")
+
+x11(height = 8, width = 11)
 
 ggplot() +
-  geom_bar(subset(Painter_Master_Temp, Type %in% "Air"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp, fill = Type), stat = "identity", position = "dodge") +
-  geom_bar(subset(Painter_Master_Temp, Type %in% "Water"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp, fill = Type), stat = "identity", position = "dodge") +
-  geom_bar(Summary_Plot_BRTData, mapping = aes(x = Date, y = Count, fill = "Brook Trout"), stat = "identity", position = "dodge") +
-  scale_y_continuous(name = "Average Monthly Temperature", sec.axis = sec_axis(~. ,name = "Number of Brook Trout")) + 
+  geom_bar(Painter_Master_Temp, mapping = aes(x = YearMonth, y = AvgYearMonthTemp, fill = Type), stat = "identity", position = "dodge") +
+  geom_errorbar(Painter_Master_Temp, mapping = aes(x = YearMonth, ymin = AvgYearMonthTemp-sd, ymax = AvgYearMonthTemp+sd, fill = Type), position = position_dodge(0.9)) +
+  geom_point(Summary_Plot_BRTData, mapping = aes(x = Date, y = Count, colour = "Brook Trout"), shape =23, fill = "snow", size = 3, position = "dodge") +
+  scale_y_continuous(name = "Average Monthly Temperature (Celsius)", sec.axis = sec_axis(~. ,name = "Number of Brook Trout")) + 
   ggtitle("Brook Trout Populations as Temperatures change at Painter Run")
+
+#Border color of points in R argument 
 
 #Messing with stuff bellow 
 
