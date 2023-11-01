@@ -134,12 +134,12 @@ summary(Summary_Plot_BRTData)
 install.packages("grDevices")
 library("grDevices")
 
-x11(height = 8, width = 11)
+x11(height = 8, width = 14)
 
 ggplot() +
   geom_bar(Painter_Master_Temp, mapping = aes(x = YearMonth, y = AvgYearMonthTemp, fill = Type), stat = "identity", position = "dodge") +
   geom_errorbar(Painter_Master_Temp, mapping = aes(x = YearMonth, ymin = AvgYearMonthTemp-sd, ymax = AvgYearMonthTemp+sd, fill = Type), position = position_dodge(0.9)) +
-  geom_point(Summary_Plot_BRTData, mapping = aes(x = Date, y = Count, colour = "Brook Trout"), shape =23, fill = "snow", size = 3, position = "dodge") +
+  geom_point(Summary_Plot_BRTData, mapping = aes(x = Date, y = Count, colour = "Brook Trout", fill = "purple"), shape =23, size = 3.5, position = "dodge") +
   scale_y_continuous(name = "Average Monthly Temperature (Celsius)", sec.axis = sec_axis(~. ,name = "Number of Brook Trout")) + 
   ggtitle("Brook Trout Populations as Temperatures change at Painter Run")
 
