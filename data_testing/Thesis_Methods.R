@@ -131,15 +131,67 @@ Summary_Plot_BRTData$Date <- format(as.Date(Summary_Plot_BRTData$Date), "%Y-%m")
 summary(Summary_Plot_BRTData)  
 
 #Now Make plot
+
+ggplot() +
+  geom_bar(subset(Painter_Master_Temp, Type %in% "Air"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp, fill = Type), stat = "identity", position = "dodge") +
+  geom_bar(subset(Painter_Master_Temp, Type %in% "Water"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp, fill = Type), stat = "identity", position = "dodge") +
+  geom_bar(Summary_Plot_BRTData, mapping = aes(x = Date, y = Count, fill = "Brook Trout"), stat = "identity", position = "dodge") +
+  scale_y_continuous(name = "Average Monthly Temperature", sec.axis = sec_axis(~. ,name = "Number of Brook Trout")) + 
+  ggtitle("Brook Trout Populations as Temperatures change at Painter Run")
+
+#Messing with stuff bellow 
+
+ggplot() +
+  geom_bar(subset(Painter_Master_Temp, Type %in% "Air"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp, fill = Type), stat = "identity", position = "dodge") +
+  facet_grid(~YearMonth)
+  geom_bar(subset(Painter_Master_Temp, Type %in% "Water"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp, fill = Type), stat = "identity", position = "dodge") +
+  geom_bar(Summary_Plot_BRTData, mapping = aes(x = Date, y = Count, fill = "Brook Trout"), stat = "identity", position = "dodge") +
+  scale_y_continuous(name = "Average Monthly Temperature", sec.axis = sec_axis(~. ,name = "Number of Brook Trout")) + 
+  ggtitle("Brook Trout Populations as Temperatures change at Painter Run")
+
+ggplot() +
+  geom_bar(subset(Painter_Master_Temp, Type %in% "Air"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp, fill = Type), stat = "identity", position = "dodge")
+  geom_bar(subset(Painter_Master_Temp, Type %in% "Water"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp, fill = Type), stat = "identity", position = "dodge") +
+  geom_bar(Summary_Plot_BRTData, mapping = aes(x = Date, y = Count, fill = "Brook Trout"), stat = "identity", position = "dodge") +
+  scale_y_continuous(name = "Average Monthly Temperature", sec.axis = sec_axis(~. ,name = "Number of Brook Trout")) +
+  ggtitle("Brook Trout Populations as Temperatures change at Painter Run")
+
+ggplot() +
+  geom_bar(subset(Painter_Master_Temp, Type %in% "Air"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp, fill = Type), stat = "summary", fun = "mean", position = "dodge") +
+  stat_summary(geom = "errorbar", fun.data = mean_se)
+  geom_bar(subset(Painter_Master_Temp, Type %in% "Water"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp, fill = Type), stat = "summary", fun = "mean", position = "dodge") +
+  geom_bar(Summary_Plot_BRTData, mapping = aes(x = Date, y = Count, fill = "Brook Trout"), stat = "identity", position = "dodge") +
+  scale_y_continuous(name = "Average Monthly Temperature", sec.axis = sec_axis(~. ,name = "Number of Brook Trout")) + 
+  ggtitle("Brook Trout Populations as Temperatures change at Painter Run")
+
+
   
 ggplot() + 
-  geom_bar(subset(Painter_Master_Temp, Type %in% "Air"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp), stat = "identity", position = "dodge", fill = "brown") + 
-  geom_bar(subset(Painter_Master_Temp, Type %in% "Water"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp), stat = "identity", position = "dodge", fill = "blue") +
+  geom_bar(subset(data = Painter_Master_Temp, Type %in% "Air"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp), stat = "identity", position = "dodge")  + 
+  geom_bar(subset(data = Painter_Master_Temp, Type %in% "Water"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp), stat = "identity", position = "dodge") +
   geom_bar(Summary_Plot_BRTData, mapping = aes(x = Date, y = Count), stat = "identity", position = "dodge", fill = "pink") + 
   scale_y_continuous(name = "Average Monthly Temperature", sec.axis = sec_axis(~. ,name = "Number of Brook Trout")) +
   ylim(-5,30) +
   ggtitle("Brook Trout Populations as Temperatures change at Little Painter Run")
-  
+ 
+ggplot(subset(Painter_Master_Temp, Type %in% "Air"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp, fill = Type)) + 
+  geom_bar(stat = "identity", position = "dodge") +
+  ggplot(subset(Painter_Master_Temp, Type %in% "Water"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp, fill = Type)) +
+         geom_bar(stat = "identity", position = "dodge")
+         
+ggplot() + geom_bar(subset(Painter_Master_Temp, Type %in% "Air"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp, fill = Type) stat = "identity", position = "dodge") 
+  geom_bar(subset(Painter_Master_Temp, Type %in% "Water"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp), stat = "identity", position = position_dodge(width = 0.50), fill = "blue") +
+  geom_bar(Summary_Plot_BRTData, mapping = aes(x = Date, y = Count), stat = "identity", position = "dodge", fill = "pink") + 
+  scale_y_continuous(name = "Average Monthly Temperature", sec.axis = sec_axis(~. ,name = "Number of Brook Trout")) +
+  ylim(-5,30) +
+  ggtitle("Brook Trout Populations as Temperatures change at Little Painter Run")
+         
+  geom_bar(subset(Painter_Master_Temp, Type %in% "Water"), mapping = aes(x = YearMonth, y = AvgYearMonthTemp, fill = Type), stat = "identity", position = "dodge2") +
+  geom_bar(Summary_Plot_BRTData, mapping = aes(x = Date, y = Count), stat = "identity", position = "dodge", fill = "pink") + 
+  scale_y_continuous(name = "Average Monthly Temperature", sec.axis = sec_axis(~. ,name = "Number of Brook Trout")) +
+  ylim(-5,30) +
+  ggtitle("Brook Trout Populations as Temperatures change at Painter Run")
+
 
 #Messing with stuff bellow 
 
