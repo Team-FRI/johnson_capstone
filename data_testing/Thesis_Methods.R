@@ -134,10 +134,11 @@ summary(Summary_Plot_BRTData)
 install.packages("grDevices")
 library("grDevices")
 
-x11(height = 25, width = 25)
+x11(height = 25, width = 30)
 
 ggplot() +
   geom_bar(Painter_Master_Temp, mapping = aes(x = YearMonth, y = AvgYearMonthTemp, fill = Type), stat = "identity", position = "dodge") +
+  theme(axis.text = element_text(size = 6)) +
   geom_errorbar(Painter_Master_Temp, mapping = aes(x = YearMonth, ymin = AvgYearMonthTemp-sd, ymax = AvgYearMonthTemp+sd, fill = Type), position = position_dodge(0.9)) +
   geom_point(Summary_Plot_BRTData, mapping = aes(x = Date, y = Count, colour = "Brook Trout"), shape =23, size = 3.5, fill = "purple", position = "dodge") +
   scale_y_continuous(name = "Average Monthly Temperature (Celsius)", sec.axis = sec_axis(~. ,name = "Number of Brook Trout")) + 
