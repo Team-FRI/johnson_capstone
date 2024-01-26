@@ -17,5 +17,6 @@ AllFishRec <- read_excel ("All_FishRecords.xlsx")
 #Painter run aka Painter.LittleBear will be our first choice and its already quality control checked. 
 
 #Now need to read in land temp and stream temp data Painter  
+#These two are .csv's though so we have to read them in using the read.csv command 
 
-Painter_LT <- 
+Painter_LT <- read.csv("Painter_Land_X_QC")
