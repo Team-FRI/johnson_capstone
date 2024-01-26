@@ -19,4 +19,14 @@ AllFishRec <- read_excel ("All_FishRecords.xlsx")
 #Now need to read in land temp and stream temp data Painter  
 #These two are .csv's though so we have to read them in using the read.csv command 
 
-Painter_LT <- read.csv("Painter_Land_X_QC")
+Painter_LT <- read.csv("Painter_Land_X_QC.csv")
+
+Painter_ST <- read.csv("Painter_Stream_X_QC.csv")
+
+install.packages("dplR")
+library(dplyr)
+
+By.Site <- filter(AllFishRec, waterName == "Painter.Run") 
+
+By.Species_BKT <- filter(By.Site, Species == "Brook Trout")
+
