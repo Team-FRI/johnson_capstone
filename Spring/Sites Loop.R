@@ -30,3 +30,4 @@ By.Site <- filter(AllFishRec, waterName == "Painter.Run")
 
 By.Species_BKT <- filter(By.Site, Species == "Brook Trout")
 
+#Next figure out how to seperate fish less than or equal to certain lengths and then how to make ratio, CPUE, and then how to get fish survesy and temp both togehter to analyze?
