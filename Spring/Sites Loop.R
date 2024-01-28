@@ -31,3 +31,13 @@ By.Site <- filter(AllFishRec, waterName == "Painter.Run")
 By.Species_BKT <- filter(By.Site, Species == "Brook Trout")
 
 #Next figure out how to seperate fish less than or equal to certain lengths and then how to make ratio, CPUE, and then how to get fish survesy and temp both togehter to analyze?
+
+#The next step is to classify what Brook Trout are Juvenile/Young of year (YOY) and adults bu size. 
+#Based on literature searches, The range for juvenile Brook Trout is 7 to 10 inches and adults are 100 to 120mm. 
+#For our protocols, we take fish lengths in milometers (mm). 
+#That makes Juvenile Brook trout 70 to 100mm and adults greater than  or equal to 101mm. 
+#So anything anything equal to 100mm or less will be a juvenile Trout. Anything greater than or equal to 101mm will be considered an adult Brook Trout. 
+#These numbers will likely need to change. 
+
+
+
