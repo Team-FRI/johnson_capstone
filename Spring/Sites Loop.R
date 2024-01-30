@@ -39,16 +39,5 @@ By.Species_BKT <- filter(By.Site, Species == "Brook Trout")
 #So anything anything equal to 100mm or less will be a juvenile Trout. Anything greater than or equal to 101mm will be considered an adult Brook Trout. 
 #These numbers will likely need to change. 
 
-By.Species_BKT$Length_mm <100 = "Juvenile"
-
-if (By.Species_BKT$Length_mm <100) {
-  print ("Juvenile")
-}
-
-result <- ifelse(By.Species_BKT$Length_mm < 100, "Juvenile", "Adult")
-print("Juvenile")
-
-
-df$new_column <- ifelse(df$your_column < 1, "NewValue", "OriginalValue")
-
-By.Species_BKT$Juvenile_or_adult <- ifelse(By.Species_BKT <100, "Juvenile", "Adult")
+YOY <- subset(By.Species_BKT, By.Species_BKT$Length_mm <100)
+Adult <- subset(By.Species_BKT, By.Species_BKT$Length_mm >101)
