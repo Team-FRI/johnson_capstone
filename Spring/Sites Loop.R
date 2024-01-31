@@ -41,3 +41,14 @@ By.Species_BKT <- filter(By.Site, Species == "Brook Trout")
 
 YOY <- subset(By.Species_BKT, By.Species_BKT$Length_mm <100)
 Adult <- subset(By.Species_BKT, By.Species_BKT$Length_mm >101)
+
+YOY$AgeClass <- c(rep("YOY", nrow(YOY)))
+
+Adult$AgeClass <- c(rep("Adult", nrow(Adult)))
+
+Fish.Age.Site <- rbind(YOY, Adult)
+
+
+hist(By.Species_BKT$Length_mm, breaks = 20)
+
+#Seems adults start at 90, juveniles start at 85? Ask Sara
