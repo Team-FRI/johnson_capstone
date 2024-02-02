@@ -63,5 +63,17 @@ AllFishSurvey <- read_excel("All_FishSurvey.xlsx")
 PainterEventInfo <- subset(AllFishSurvey, AllFishSurvey$SiteCode == "Painter.LittleBear") 
 #Should I only use Painter.LittleBear as painter run or should i use other one as well like Painter.Elk , the UNT, etc???? Ask Matt next meeting 
 
+#Install the lubridate package to doubble chekc that the dates are in POSIXct and NOT character
+install.packages("lubridate")
+library("lubridate")
 
+class(PainterEventInfo$Date)
 
+#It's in POSIXct, Yay!
+
+PainterEventInfo$Area <- PainterEventInfo$Length * PainterEventInfo$AveWid
+print(df)
+
+PainterEventInfo
+
+PainterEventInfo$Area
