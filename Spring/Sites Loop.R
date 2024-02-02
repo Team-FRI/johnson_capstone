@@ -57,10 +57,11 @@ hist(By.Species_BKT$Length_mm, breaks = 20)
 
 AllFishSurvey <- read_excel("All_FishSurvey.xlsx")
 
-Ex <- subset(AllFishSurvey, AllFishSurvey$SiteCode == "Painter")
+#Bellow is the one you want and thhat works for pulling event info for certain sites 
 
-ex=filter(AllFishSurvey, "Painter")
+#In order to calculate CPUE for Painter Run, I need to pull dates, widths, and shock times from the AllFishSurvey data frame. 
+PainterEventInfo <- subset(AllFishSurvey, AllFishSurvey$SiteCode == "Painter.LittleBear") 
+#Should I only use Painter.LittleBear as painter run or should i use other one as well like Painter.Elk , the UNT, etc???? Ask Matt next meeting 
 
-Ex <- AllFishSurvey %>% select(-contains("Painter"))
 
- 
+
