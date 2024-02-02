@@ -52,3 +52,15 @@ Fish.Age.Site <- rbind(YOY, Adult)
 hist(By.Species_BKT$Length_mm, breaks = 20)
 
 #Seems adults start at 90, juveniles start at 85? Ask Sara
+
+#Messing with Catch per Unit Effort Stuff bellow
+
+AllFishSurvey <- read_excel("All_FishSurvey.xlsx")
+
+Ex <- subset(AllFishSurvey, AllFishSurvey$SiteCode == "Painter")
+
+ex=filter(AllFishSurvey, "Painter")
+
+Ex <- AllFishSurvey %>% select(-contains("Painter"))
+
+ 
