@@ -71,9 +71,24 @@ class(PainterEventInfo$Date)
 
 #It's in POSIXct, Yay!
 
-PainterEventInfo$Area <- PainterEventInfo$Length * PainterEventInfo$AveWid
+#Next, lets reomove some clutter and columns we dont need from the PainterEventInfo data frame. 
+
+PainterEventInfo1 <- PainterEventInfo[, -c(39:66)]
+
+#Now to calculate Area by doing Length * Width 
+
+PainterEventInfo1$Area <- PainterEventInfo1$Length * PainterEventInfo1$AveWid
 print(df)
 
-PainterEventInfo
+#Now we have our area column and need to calculate CPUE for Painter run 
 
-PainterEventInfo$Area
+CPUE <- By.Species_BKT %>%
+  group_by(Date)
+
+summarize(CPUE = sum(CPUE$Wt_g) / PainterEventInfo1$Area)
+
+summarize()
+
+CPUE <- CPUE$Wt_g / PainterEventInfo1$Area
+
+
