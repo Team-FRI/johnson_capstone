@@ -82,13 +82,17 @@ print(df)
 
 #Now we have our area column and need to calculate CPUE for Painter run 
 
-CPUE <- By.Species_BKT %>%
-  group_by(Date)
+event_code <- "201107.Painter.LittleBear"
 
-summarize(CPUE = sum(CPUE$Wt_g) / PainterEventInfo1$Area)
+TwentyEleven <- By.Species_BKT[By.Species_BKT$EventCode == event_code, ]
 
-summarize()
+TwentyEleven_Area <- subset(PainterEventInfo1, EventCode == event_code)
 
-CPUE <- CPUE$Wt_g / PainterEventInfo1$Area
+TwentyEleven$Area <- TwentyEleven_Area$Area[1]
 
+TwentyEleven$BTCount <- c(1,1,1,1,1,1,1,1,1,1,1)
 
+TwentyEleven$CPUE <- sum(TwentyEleven$BTCount) / TwentyEleven$Area
+
+#CHECK IF CPUE SHOULD BE A PERCENTAGE OR NOT. That should be an easy fix though. 
+#Now repeat for each year site was sampled. 
