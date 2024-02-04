@@ -261,14 +261,30 @@ ratio_data <- ratio_data %>%
 
 #Now lets calculate biomass 
 
-Biomass <- data.frame("2011" = NA, "2012" = NA, "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021")
+Biomass <- data.frame("2011" = NA, "2012" = NA, "2013" = NA, "2014" = NA, "2015" = NA, "2016" = NA, "2017" = NA, "2018" = NA, "2019" = NA, "2020" = NA, "2021" = NA)
                       
 Biomass$X2011 <- sum(TwentyEleven$Wt_g)/ (TwentyEleven$Area[1])
 
-Biomass$X2011 <- sum(TwentyEleven$Wt_g) / TwentyEleven$Area
+Biomass$X2012 <- sum(TwentyTwelve$Wt_g) / (TwentyTwelve$Area[1])
 
-Biomass$X2011 <- sum(TwentyEleven$Wt_g) / TwentyEleven$Area
+Biomass$X2013 <- sum(TwentyThirteen$Wt_g) / (TwentyThirteen$Area[1])
 
-sum(TwentyEleven$Wt_g) / TwentyEleven$Area[1]
+Biomass$X2014 <- sum(TwentyFourteen$Wt_g) / (TwentyFourteen$Area[1])
 
-Biomass <- data.frame("2011" = NA)
+Biomass$X2015 <- sum(TwentyFifteen$Wt_g) / (TwentyFifteen$Area[1])
+
+Biomass$X2016 <- sum(TwentySixteen$Wt_g) / (TwentySixteen$Area[1])
+
+Biomass$X2017 <- sum(TwentySeventeen$Wt_g) / (TwentySeventeen$Area[1])
+
+Biomass$X2018 <- sum(TwentyEighteen$Wt_g) / (TwentyEighteen$Area[1])
+
+Biomass$X2019 <- sum(TwentyNineteen$Wt_g) / (TwentyNineteen$Area[1])
+
+Biomass$X2020 <- sum(TwentyTwenty$Wt_g) / (TwentyTwenty$Area[1])
+
+Biomass$X2021 <- sum(TwentyTwentyOne$Wt_g) / (TwentyTwentyOne$Area[1])
+
+#202 will not run of course 
+
+
