@@ -32,9 +32,7 @@ library(dplyr)
 #Now to arrange dates in right order:
 Painter_ST <- arrange(Painter_ST, DateTime)
                     
-
-#Before I try to compare fish and temperature together, I want to just look at temperature alone first. 
-#But first we need to format that date and time. To do that, lets install the luberdate package. 
+#We need to format that date and time. To do that, lets install the luberdate package. 
 
 install.packages("lubridate")
 library("lubridate")

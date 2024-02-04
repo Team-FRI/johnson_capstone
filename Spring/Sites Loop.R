@@ -12,7 +12,7 @@ library(readxl)
 AllFishRec <- read_excel ("All_FishRecords.xlsx")
 
 
-#To build a loopp for all the sites, its easier to chose one site and mess around with that first instead of trying all the sites at once!
+#To build a lopp for all the sites, its easier to chose one site and mess around with that first instead of trying all the sites at once!
 #Also to make things easier, lets choose a site that has been quality control checked for temp data!
 #Painter run aka Painter.LittleBear will be our first choice and its already quality control checked. 
 
@@ -21,14 +21,53 @@ AllFishRec <- read_excel ("All_FishRecords.xlsx")
 
 Painter_LT <- read.csv("Painter_Land_X_QC.csv")
 
-Painter_ST <- read.csv("Painter_Stream_X_QC.csv")
+Painter_ST00 <- read.csv("Painter_Stream_X_QC.csv")
 
-install.packages("dplR")
+Painter_ST01 <- read.csv("Painter_Stream0_X_QC.csv")
+
+#The problem is the stream temperature data is split up into two data sets, and I want them as 1 data set.
+#So lets merge the two. 
+
+Painter_ST <- merge(Painter_ST00, Painter_ST01, all = TRUE)
+
+#To arrange dates in right order, install dplyr package.
+install.packages("dplyr")
 library(dplyr)
+
+#Now to arrange dates in right order:
+Painter_ST <- arrange(Painter_ST, DateTime)
+
+#Now need to get R to reed this as a year date and time rather than a string of numbers.
+
+class(Painter_LT$DateTime)
+class(Painter_ST$DateTime)
+
+#It's eneterd as a character, so need to change it to POSIXct
+#First do land temp
+
+Painter_LT$DateTime <- as.POSIXct(Painter_LT$DateTime)
+class(Painter_LT$DateTime)
+
+summary(Painter_LT)
+
+#Do same thing for stream temp 
+
+Painter_ST$DateTime <- as.POSIXct(Painter_ST$DateTime)
+class(Painter_ST$DateTime)
+
+summary(Painter_ST)
+
+
+#Filter All things in the AllFishRec survey that haave "Painter.Run" in the water name. 
+#Also filter all "Brook Trout" from the Species columnn out of the By.Site data set. 
 
 By.Site <- filter(AllFishRec, waterName == "Painter.Run")
 
 By.Species_BKT <- filter(By.Site, Species == "Brook Trout")
+
+
+#The next three factors are all Fish factors!
+#Ratio
 
 #Next figure out how to seperate fish less than or equal to certain lengths and then how to make ratio, CPUE, and then how to get fish survesy and temp both togehter to analyze?
 
@@ -285,6 +324,42 @@ Biomass$X2020 <- sum(TwentyTwenty$Wt_g) / (TwentyTwenty$Area[1])
 
 Biomass$X2021 <- sum(TwentyTwentyOne$Wt_g) / (TwentyTwentyOne$Area[1])
 
-#202 will not run of course 
+#2021 will not run correclty of course 
 
+#The next three factors are temperature factors
 
+#Brook Trout start to experience thermal stress at about 20 degress ceclisius. Temperatures of 24 to 25 degrees Celsius are lethal for them. 
+
+#Days Over 20 degrees Celsius factor. 
+#So for each year, we are going to determine how many days the tempertuaure is over 20 degrees celcius. 
+
+#To do that, I need to pull out the year and make it a new column
+
+Painter_LT$Year <- format(as.Date(Painter_LT$DateTime), "%Y")
+summary(Painter_LT)
+
+Painter_ST$Month <- month(ymd(Painter_ST$DateTime), label = TRUE, abbr = FALSE)
+
+#Now do it for stream temp 
+
+Painter_ST$Year <- format(as.Date(Painter_ST$DateTime), "%Y")
+summary(Painter_ST)
+
+Painter_ST$Month <- month(ymd(Painter_ST$DateTime), label = TRUE, abbr = FALSE)
+
+#lubrudate package is already installed, so need to group by year and mutate a new column to show the days over 20C fro Stream Temp 
+
+Painter_ST <- Painter_ST %>%
+  group_by(Year) %>%
+  mutate(Days_Over_20C = sum(Temp_C >= 20))
+
+#Lets do the same ting but for days greater then or equal to 24 degrees Celsius
+
+Painter_ST <- Painter_ST %>%
+  group_by(Year) %>%
+  mutate(Days_Over_24C = sum(Temp_C >= 24))
+
+#The Next factor is going to be degree days for certain periods of time each year.The Higher the degree days, you can get without thermal stress, the more development and rate of development you can get.
+#Lets start with Brook Trouts spawning period which is September to October. 
+
+#Calculate average degree days for each year for september and october. 
