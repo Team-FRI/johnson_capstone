@@ -60,7 +60,6 @@ summary(Painter_ST)
 #Now that its in the proper format, have to extract month as an individual column.
 #In order to do this we need to use the muate function, which is in the dplyr package, which is already installed... 
 
-
 #First do land temp
 
 Painter_LT$YearMonth <- format(as.Date(Painter_LT$DateTime), "%Y-%m")

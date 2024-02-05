@@ -363,3 +363,43 @@ Painter_ST <- Painter_ST %>%
 #Lets start with Brook Trouts spawning period which is September to October. 
 
 #Calculate average degree days for each year for september and october. 
+
+#Messing around with degree days bellow 
+Painter_ST <- Painter_ST %>%
+  mutate(Date = as.Date(DateTime),  # Convert DateTime to Date
+         DegreeDays = pmax(0, Temp_C - base_temperature)) %>%
+  group_by(Year) %>%
+  summarize(TotalDegreeDays = sum(DegreeDays))
+
+base_temperature <- c(24)
+
+Painter_ST <- Painter_ST %>%
+  mutate(Date = as.Date(DateTime),
+         Month = format(Date, "%m"),
+         DegreeDays = pmax(0, Temp_C - base_temperature)) %>%
+  filter(Month %in% c("09", "10")) %>%
+  group_by(Year) %>%
+  summarize(TotalDegreeDays = sum(DegreeDays))
+
+Painter_ST <- Painter_ST %>%
+  mutate(Date = as.Date(DateTime),
+         Month = format(Date, "%m"),
+         DegreeDays = pmax(0, Temp_C - base_temperature)) %>%
+  filter(Month %in% c("09", "10")) %>%
+  group_by(Year) %>%
+  summarize(
+    TotalDegreeDays = sum(DegreeDays),
+    NumDaysBetweenSepOct = n(),  # Number of days between September and October
+    AvgTemperature = mean(Temp_C)  # Average temperature for those two months
+  )
+
+#The Third factor will be the highest and lowest stream temperature of each month to see what the extremes are.
+
+Painter_Monthly_Extremes <- Painter_ST %>%
+  group_by(Year, Month) %>%
+  summarize(
+    Highest_Temperature_C = max(Temp_C, na.rm = TRUE),
+    Lowest_Temperature_C = min(Temp_C, na.rm = TRUE)
+  )         
+
+?na.rm
