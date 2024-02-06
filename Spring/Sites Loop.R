@@ -61,8 +61,9 @@ summary(Painter_ST)
 #Filter All things in the AllFishRec survey that haave "Painter.Run" in the water name. 
 #Also filter all "Brook Trout" from the Species columnn out of the By.Site data set. 
 
-By.Site <- filter(AllFishRec, waterName == "Painter.Run")
-
+By.Site2 <- subset(AllFishRec, waterName == "Painter.Run")
+By.Site1 <- subset(AllFishRec, waterName == "Painter Run")
+By.Site <- rbind(By.Site2, By.Site1)
 By.Species_BKT <- filter(By.Site, Species == "Brook Trout")
 
 
@@ -274,7 +275,7 @@ TwentyTwentyOne_Area <- subset(PainterEventInfo1, EventCode == event_code)
 
 TwentyTwentyOne$Area <- TwentyTwentyOne_Area$Area[1]
 
-TwentyTwentyOne$BTCount <-rep(1, times = 10)
+TwentyTwentyOne$BTCount <-rep(1, times = 24)
 
 TwentyTwentyOne$CPUE <- sum(TwentyTwentyOne$BTCount) / TwentyTwentyOne$Area
 
@@ -324,6 +325,8 @@ Biomass$X2020 <- sum(TwentyTwenty$Wt_g) / (TwentyTwenty$Area[1])
 
 Biomass$X2021 <- sum(TwentyTwentyOne$Wt_g) / (TwentyTwentyOne$Area[1])
 
+Biomass <- as.data.frame(t(Biomass))
+
 #2021 will not run correclty of course 
 
 #The next three factors are temperature factors
@@ -365,13 +368,15 @@ Painter_ST <- Painter_ST %>%
 #Calculate average degree days for each year for september and october. 
 
 #Messing around with degree days bellow 
-Painter_ST <- Painter_ST %>%
+
+base_temperature <- c(0)
+
+Painter_ST20 <- Painter_ST %>%
   mutate(Date = as.Date(DateTime),  # Convert DateTime to Date
          DegreeDays = pmax(0, Temp_C - base_temperature)) %>%
   group_by(Year) %>%
   summarize(TotalDegreeDays = sum(DegreeDays))
 
-base_temperature <- c(24)
 
 Painter_ST <- Painter_ST %>%
   mutate(Date = as.Date(DateTime),
@@ -403,3 +408,26 @@ Painter_Monthly_Extremes <- Painter_ST %>%
   )         
 
 ?na.rm
+
+
+
+
+######Count of days over or under 20 C
+
+
+minmaxtemp <- transform(Temps, min=ave(Temp_C, strftime(DateTime, '%F'), FUN=min),
+               max=ave(Temp_C, strftime(DateTime, '%F'), FUN=max))
+
+minmaxtemp$tempdiff <- minmaxtemp$max - minmaxtemp$min
+#sept2018 <- subset(minmaxtemp, minmaxtemp$Month == "September" & minmaxtemp$Year == 2018)
+
+Max2018 <- subset(minmaxtemp, minmaxtemp$Year == 2018)
+sum(unique(Max2018$max) > 15, na.rm=TRUE)
+
+Max2019 <- subset(minmaxtemp, minmaxtemp$Year == 2019)
+sum(unique(Max2019$max) > 10, na.rm=TRUE)
+
+Max2020 <- subset(minmaxtemp, minmaxtemp$Year == 2020)
+sum(unique(Max2020$max) > 20, na.rm=TRUE)
+
+
