@@ -279,9 +279,6 @@ TwentyTwentyOne$BTCount <-rep(1, times = 24)
 
 TwentyTwentyOne$CPUE <- sum(TwentyTwentyOne$BTCount) / TwentyTwentyOne$Area
 
-#2021 is the onlyy year I can't get to work. I think its because the water name in PainterEventsInfo 1 is "Painter Run" and not "Painter.Run" like all the other years are. 
-#I treid multiple ways of fixing this and nothing seems to work. 
-
 #Making Ratios 
 
 install.packages("tidyr")
@@ -327,14 +324,12 @@ Biomass$X2021 <- sum(TwentyTwentyOne$Wt_g) / (TwentyTwentyOne$Area[1])
 
 Biomass <- as.data.frame(t(Biomass))
 
-#2021 will not run correclty of course 
-
 #The next three factors are temperature factors
 
 #Brook Trout start to experience thermal stress at about 20 degress ceclisius. Temperatures of 24 to 25 degrees Celsius are lethal for them. 
 
 #Days Over 20 degrees Celsius factor. 
-#So for each year, we are going to determine how many days the tempertuaure is over 20 degrees celcius. 
+#So for each year, we are going to determine how many days the tempertuaure is over 20(or other) degrees Celsius. 
 
 #To do that, I need to pull out the year and make it a new column
 
@@ -350,28 +345,63 @@ summary(Painter_ST)
 
 Painter_ST$Month <- month(ymd(Painter_ST$DateTime), label = TRUE, abbr = FALSE)
 
-#lubrudate package is already installed, so need to group by year and mutate a new column to show the days over 20C fro Stream Temp 
+#Lets take Painter_ST and make it a new data frame so we dont rewrite Painter_ST in the feature 
 
-Painter_ST <- Painter_ST %>%
-  group_by(Year) %>%
-  mutate(Days_Over_20C = sum(Temp_C >= 20))
+Temps <- as.data.frame(Painter_ST)
 
-#Lets do the same ting but for days greater then or equal to 24 degrees Celsius
+minmaxtemp <- transform(Temps, min=ave(Temp_C, strftime(DateTime, '%F'), FUN=min),
+                        max=ave(Temp_C, strftime(DateTime, '%F'), FUN=max))
 
-Painter_ST <- Painter_ST %>%
-  group_by(Year) %>%
-  mutate(Days_Over_24C = sum(Temp_C >= 24))
+minmaxtemp$tempdiff <- minmaxtemp$max - minmaxtemp$min
+
+#sept2018 <- subset(minmaxtemp, minmaxtemp$Month == "September" & minmaxtemp$Year == 2018)
+
+Max2018 <- subset(minmaxtemp, minmaxtemp$Year == 2018)
+sum(unique(Max2018$max) > 10, na.rm=TRUE)
+
+Max2018 <- subset(minmaxtemp, minmaxtemp$Year == 2018)
+sum(unique(Max2018$max) > 15, na.rm=TRUE)
+
+Max2018 <- subset(minmaxtemp, minmaxtemp$Year == 2018)
+sum(unique(Max2018$max) > 20, na.rm=TRUE)
+
+Max2019 <- subset(minmaxtemp, minmaxtemp$Year == 2019)
+sum(unique(Max2019$max) > 10, na.rm=TRUE)
+
+Max2019 <- subset(minmaxtemp, minmaxtemp$Year == 2019)
+sum(unique(Max2019$max) > 15, na.rm=TRUE)
+
+Max2019 <- subset(minmaxtemp, minmaxtemp$Year == 2019)
+sum(unique(Max2019$max) > 20, na.rm=TRUE)
+
+Max2020 <- subset(minmaxtemp, minmaxtemp$Year == 2020)
+sum(unique(Max2020$max) > 10, na.rm=TRUE)
+
+Max2020 <- subset(minmaxtemp, minmaxtemp$Year == 2020)
+sum(unique(Max2020$max) > 15, na.rm=TRUE)
+
+Max2020 <- subset(minmaxtemp, minmaxtemp$Year == 2020)
+sum(unique(Max2020$max) > 20, na.rm=TRUE)
+
+Max2021 <- subset(minmaxtemp, minmaxtemp$Year == 2021)
+sum(unique(Max2021$max) > 10, na.rm=TRUE)
+
+Max2021 <- subset(minmaxtemp, minmaxtemp$Year == 2021)
+sum(unique(Max2021$max) > 15, na.rm=TRUE)
+
+Max2021 <- subset(minmaxtemp, minmaxtemp$Year == 2021)
+sum(unique(Max2021$max) > 20, na.rm=TRUE)
 
 #The Next factor is going to be degree days for certain periods of time each year.The Higher the degree days, you can get without thermal stress, the more development and rate of development you can get.
 #Lets start with Brook Trouts spawning period which is September to October. 
 
-#Calculate average degree days for each year for september and october. 
+#Calculate average degree days for each year for September and October. 
 
 #Messing around with degree days bellow 
 
 base_temperature <- c(0)
 
-Painter_ST20 <- Painter_ST %>%
+Painter_ST <- Painter_ST %>%
   mutate(Date = as.Date(DateTime),  # Convert DateTime to Date
          DegreeDays = pmax(0, Temp_C - base_temperature)) %>%
   group_by(Year) %>%
@@ -407,27 +437,18 @@ Painter_Monthly_Extremes <- Painter_ST %>%
     Lowest_Temperature_C = min(Temp_C, na.rm = TRUE)
   )         
 
-?na.rm
 
+######
+#Don't think I need this code for days over 20C, but don't want to get rid of it yet just in case 
 
+#lubrudate package is already installed, so need to group by year and mutate a new column to show the days over 20C fro Stream Temp 
 
+Painter_ST <- Painter_ST %>%
+  group_by(Year) %>%
+  mutate(Days_Over_20C = sum(Temp_C >= 20))
 
-######Count of days over or under 20 C
+#Lets do the same ting but for days greater then or equal to 24 degrees Celsius
 
-
-minmaxtemp <- transform(Temps, min=ave(Temp_C, strftime(DateTime, '%F'), FUN=min),
-               max=ave(Temp_C, strftime(DateTime, '%F'), FUN=max))
-
-minmaxtemp$tempdiff <- minmaxtemp$max - minmaxtemp$min
-#sept2018 <- subset(minmaxtemp, minmaxtemp$Month == "September" & minmaxtemp$Year == 2018)
-
-Max2018 <- subset(minmaxtemp, minmaxtemp$Year == 2018)
-sum(unique(Max2018$max) > 15, na.rm=TRUE)
-
-Max2019 <- subset(minmaxtemp, minmaxtemp$Year == 2019)
-sum(unique(Max2019$max) > 10, na.rm=TRUE)
-
-Max2020 <- subset(minmaxtemp, minmaxtemp$Year == 2020)
-sum(unique(Max2020$max) > 20, na.rm=TRUE)
-
-
+Painter_ST <- Painter_ST %>%
+  group_by(Year) %>%
+  mutate(Days_Over_24C = sum(Temp_C >= 24))
