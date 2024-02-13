@@ -145,167 +145,13 @@ CPUE <- CPUE %>%
     CPUE = (NumBKT/Area) * 100
   )
 
-event_code <- "201107.Painter.LittleBear"
-
-TwentyEleven <- By.Species_BKT[By.Species_BKT$EventCode == event_code, ]
-
-TwentyEleven_Area <- subset(PainterEventInfo1, EventCode == event_code)
-
-TwentyEleven$Area <- TwentyEleven_Area$Area[1]
-
-TwentyEleven$BTCount <- rep(1, times = 11)
-
-TwentyEleven$CPUE <- sum(TwentyEleven$BTCount) / TwentyEleven$Area
-
-#CHECK IF CPUE SHOULD BE A PERCENTAGE OR NOT. That should be an easy fix though. 
-#Now repeat for each year site was sampled. 
-
-#Next is  201206.Painter.LittleBear from 2012
-
-event_code <- "201206.Painter.LittleBear"
-
-TwentyTwelve <- By.Species_BKT[By.Species_BKT$EventCode == event_code, ]
-
-TwentyTwelve_Area <- subset(PainterEventInfo1, EventCode == event_code)
-
-TwentyTwelve$Area <- TwentyEleven_Area$Area[1]
-
-TwentyTwelve$BTCount <-rep(1, times = 35)
-
-TwentyTwelve$CPUE <- sum(TwentyTwelve$BTCount) / TwentyTwelve$Area
-
-#Next is  201306.Painter.LittleBear from 2013
-
-event_code <- "201306.Painter.LittleBear"
-
-TwentyThirteen <- By.Species_BKT[By.Species_BKT$EventCode == event_code, ]
-
-TwentyThirteen_Area <- subset(PainterEventInfo1, EventCode == event_code)
-
-TwentyThirteen$Area <- TwentyThirteen_Area$Area[1]
-
-TwentyThirteen$BTCount <-rep(1, times = 43)
-
-TwentyThirteen$CPUE <- sum(TwentyThirteen$BTCount) / TwentyThirteen$Area
-
-#Next is 201406.Painter.LittleBear from 2014
-
-event_code <- "201406.Painter.LittleBear"
-
-TwentyFourteen <- By.Species_BKT[By.Species_BKT$EventCode == event_code, ]
-
-TwentyFourteen_Area <- subset(PainterEventInfo1, EventCode == event_code)
-
-TwentyFourteen$Area <- TwentyFourteen_Area$Area[1]
-
-TwentyFourteen$BTCount <-rep(1, times = 10)
-
-TwentyFourteen$CPUE <- sum(TwentyFourteen$BTCount) / TwentyFourteen$Area
-
-#Next is 201506.Painter.LittleBear from 2015
-
-event_code <- "201506.Painter.LittleBear"
-
-TwentyFifteen <- By.Species_BKT[By.Species_BKT$EventCode == event_code, ]
-
-TwentyFifteen_Area <- subset(PainterEventInfo1, EventCode == event_code)
-
-TwentyFifteen$Area <- TwentyFifteen_Area$Area[1]
-
-TwentyFifteen$BTCount <-rep(1, times = 22)
-
-TwentyFifteen$CPUE <- sum(TwentyFifteen$BTCount) / TwentyFifteen$Area
-
-#Next is 201606.Painter.LittleBear from 2016
-
-event_code <- "201606.Painter.LittleBear"
-
-TwentySixteen <- By.Species_BKT[By.Species_BKT$EventCode == event_code, ]
-
-TwentySixteen_Area <- subset(PainterEventInfo1, EventCode == event_code)
-
-TwentySixteen$Area <- TwentySixteen_Area$Area[1]
-
-TwentySixteen$BTCount <-rep(1, times = 24)
-
-TwentySixteen$CPUE <- sum(TwentySixteen$BTCount) / TwentySixteen$Area
-
-#Next is 201706.Painter.LittleBear from 2017
-
-event_code <- "201706.Painter.LittleBear"
-
-TwentySeventeen <- By.Species_BKT[By.Species_BKT$EventCode == event_code, ]
-
-TwentySeventeen_Area <- subset(PainterEventInfo1, EventCode == event_code)
-
-TwentySeventeen$Area <- TwentySeventeen_Area$Area[1]
-
-TwentySeventeen$BTCount <-rep(1, times = 12)
-
-TwentySeventeen$CPUE <- sum(TwentySeventeen$BTCount) / TwentySeventeen$Area
-
-#Next is 201806.Painter.LittleBear from 2018
-
-event_code <- "201806.Painter.LittleBear"
-
-TwentyEighteen <- By.Species_BKT[By.Species_BKT$EventCode == event_code, ]
-
-TwentyEighteen_Area <- subset(PainterEventInfo1, EventCode == event_code)
-
-TwentyEighteen$Area <- TwentyEighteen_Area$Area[1]
-
-TwentyEighteen$BTCount <-rep(1, times = 15)
-
-TwentyEighteen$CPUE <- sum(TwentyEighteen$BTCount) / TwentyEighteen$Area
-
-#Next is 201906.Painter.LittleBear from 2019
-
-event_code <- "201906.Painter.LittleBear"
-
-TwentyNineteen <- By.Species_BKT[By.Species_BKT$EventCode == event_code, ]
-
-TwentyNineteen_Area <- subset(PainterEventInfo1, EventCode == event_code)
-
-TwentyNineteen$Area <- TwentyNineteen_Area$Area[1]
-
-TwentyNineteen$BTCount <-rep(1, times = 31)
-
-TwentyNineteen$CPUE <- sum(TwentyNineteen$BTCount) / TwentyNineteen$Area
-
-#Next is 202006.Painter.LittleBear from 2020
-
-event_code <- "202006.Painter.LittleBear"
-
-TwentyTwenty <- By.Species_BKT[By.Species_BKT$EventCode == event_code, ]
-
-TwentyTwenty_Area <- subset(PainterEventInfo1, EventCode == event_code)
-
-TwentyTwenty$Area <- TwentyTwenty_Area$Area[1]
-
-TwentyTwenty$BTCount <-rep(1, times = 10)
-
-TwentyTwenty$CPUE <- sum(TwentyTwenty$BTCount) / TwentyTwenty$Area
-
-#Next is 202106.Painter.LittleBear from 2021
-
-event_code <- "202106.Painter.LittleBear"
-
-TwentyTwentyOne <- By.Species_BKT[By.Species_BKT$EventCode == event_code, ]
-
-TwentyTwentyOne_Area <- subset(PainterEventInfo1, EventCode == event_code)
-
-TwentyTwentyOne$Area <- TwentyTwentyOne_Area$Area[1]
-
-TwentyTwentyOne$BTCount <-rep(1, times = 24)
-
-TwentyTwentyOne$CPUE <- sum(TwentyTwentyOne$BTCount) / TwentyTwentyOne$Area
-
 #Making Ratios 
 
 install.packages("tidyr")
 library(tidyr)
 
 AgeClassCounts <- Fish.Age.Site %>%
+  filter(!EventCode == "201107.TP.Painter.LittleBear") %>%
   group_by(EventCode, AgeClass) %>%
   summarize(count = n())
 
@@ -317,33 +163,26 @@ ratio_data <- AgeClassCounts %>%
 ratio_data <- ratio_data %>%
   mutate(Ratio_YOY_to_Adult = YOY / Adult)
 
+ratio_data1 <- ratio_data %>%
+  mutate(Ratio_Adult_to_YOY = Adult / YOY)
+#Maybe multiply by 100 or make a percentage?
+
 #Now lets calculate biomass 
 
-Biomass <- data.frame("2011" = NA, "2012" = NA, "2013" = NA, "2014" = NA, "2015" = NA, "2016" = NA, "2017" = NA, "2018" = NA, "2019" = NA, "2020" = NA, "2021" = NA)
-                      
-Biomass$X2011 <- sum(TwentyEleven$Wt_g)/ (TwentyEleven$Area[1])
+Biomass <- By.Species_BKT %>%
+  filter(!EventCode == "201107.TP.Painter.LittleBear") %>%
+  group_by(EventCode) %>%
+  summarise(
+    Biomass = sum(Wt_g)
+  )
 
-Biomass$X2012 <- sum(TwentyTwelve$Wt_g) / (TwentyTwelve$Area[1])
+CPUE_Biomass <- left_join(Biomass, PainterEventInfo2,
+                          by = "EventCode")
 
-Biomass$X2013 <- sum(TwentyThirteen$Wt_g) / (TwentyThirteen$Area[1])
+CPUE_Biomass <- mutate(CPUE_Biomass,
+  CPUE_Bio = (Biomass/Area) *100
+)
 
-Biomass$X2014 <- sum(TwentyFourteen$Wt_g) / (TwentyFourteen$Area[1])
-
-Biomass$X2015 <- sum(TwentyFifteen$Wt_g) / (TwentyFifteen$Area[1])
-
-Biomass$X2016 <- sum(TwentySixteen$Wt_g) / (TwentySixteen$Area[1])
-
-Biomass$X2017 <- sum(TwentySeventeen$Wt_g) / (TwentySeventeen$Area[1])
-
-Biomass$X2018 <- sum(TwentyEighteen$Wt_g) / (TwentyEighteen$Area[1])
-
-Biomass$X2019 <- sum(TwentyNineteen$Wt_g) / (TwentyNineteen$Area[1])
-
-Biomass$X2020 <- sum(TwentyTwenty$Wt_g) / (TwentyTwenty$Area[1])
-
-Biomass$X2021 <- sum(TwentyTwentyOne$Wt_g) / (TwentyTwentyOne$Area[1])
-
-Biomass <- as.data.frame(t(Biomass))
 
 #The next three factors are temperature factors
 
@@ -357,7 +196,7 @@ Biomass <- as.data.frame(t(Biomass))
 Painter_LT$Year <- format(as.Date(Painter_LT$DateTime), "%Y")
 summary(Painter_LT)
 
-Painter_ST$Month <- month(ymd(Painter_ST$DateTime), label = TRUE, abbr = FALSE)
+Painter_LT$Month <- month(ymd(Painter_LT$DateTime), label = TRUE, abbr = FALSE)
 
 #Now do it for stream temp 
 
@@ -373,7 +212,19 @@ Temps <- as.data.frame(Painter_ST)
 minmaxtemp <- transform(Temps, min=ave(Temp_C, strftime(DateTime, '%F'), FUN=min),
                         max=ave(Temp_C, strftime(DateTime, '%F'), FUN=max))
 
+minmaxtemp1 <- minmaxtemp %>%
+  select(Month, Year, min, max) %>%
+  unique()
+
 minmaxtemp$tempdiff <- minmaxtemp$max - minmaxtemp$min
+
+minmaxtemp <- Temps %>%
+  group_by(Month, Year) %>%
+  summarise(
+    min = min(Temp_C),
+    max = max(Temp_C)
+  )
+  
 
 #sept2018 <- subset(minmaxtemp, minmaxtemp$Month == "September" & minmaxtemp$Year == 2018)
 
