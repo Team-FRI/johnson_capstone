@@ -304,11 +304,41 @@ Painter_ST <- Painter_ST %>%
 
 Painter_Monthly_Extremes <- Painter_ST %>%
   group_by(Year, Month) %>%
-  summarize(
+  summarise(
     Highest_Temperature_C = max(Temp_C, na.rm = TRUE),
     Lowest_Temperature_C = min(Temp_C, na.rm = TRUE)
   )         
 
+#DON'T USE FOURTH FACTOR, USE FIFTH FACTOR INSTEAD
+#Fourth Factor is minimum and maximum average temperature for the month based on average temperature per day
+
+Painter_Monthly_Extremes_Avg <- Painter_ST %>%
+  group_by(DateTime) %>%
+  summarise(
+    Avg_Temp = mean(Temp_C, na.rm = TRUE)
+    )        
+
+Painter_Monthly_Extremes_Avg2 <- Painter_Monthly_Extremes_Avg %>%
+  separate(DateTime, into = c("Year", "Month", "Day"), sep = "-" )
+  
+Painter_Monthly_Extremes_Avg3 <- Painter_Monthly_Extremes_Avg2 %>%
+  group_by(Year, Month) %>%
+  summarise(min=min(Avg_Temp), max=max(Avg_Temp))
+
+#Fifth Factor is minimum and maximum temperature for the day computed/calculated to the average per month
+
+Painter_Monthly_Extremes_MinMax <- Painter_ST %>%
+  group_by(DateTime) %>%
+  summarise(
+    min_temp = min(Temp_C, na.rm = TRUE), max_temp = max(Temp_C, na.rm = TRUE)
+  )        
+
+Painter_Monthly_Extremes_MinMax2 <- Painter_Monthly_Extremes_MinMax %>%
+  separate(DateTime, into = c("Year", "Month", "Day"), sep = "-" )
+
+Painter_Monthly_Extremes_MinMax3 <- Painter_Monthly_Extremes_MinMax2 %>%
+  group_by(Year, Month) %>%
+  summarise(AverageMin=mean(min_temp), AverageMax=mean(max_temp))
 
 ######
 #Don't think I need this code for days over 20C, but don't want to get rid of it yet just in case 
