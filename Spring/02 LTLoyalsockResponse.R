@@ -113,4 +113,5 @@ CPUEVar #306 x 4
 BKTVar<-left_join(CPUEVar,RatioAY)%>%
   select(!c(Adult,YOY,TotalCount,PerA,PerY))
 BKTVar# 306 x 5
-#write_csv(BKTVar,"BKTVar.csv")
+
+write.csv(BKTVar,"BKTVar.csv")

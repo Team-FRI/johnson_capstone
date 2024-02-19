@@ -119,4 +119,5 @@ Monthly_AvgMinMax # 266 x 5
 #Join Monthly_Extremes and Monthly_AvgMinMax together
 STPred<-left_join(Monthly_Extremes,Monthly_AvgMinMax, by = c("SiteCode","Year","Month"))
 STPred #266 x 7
-#write_csv(STPred,"C:/Users/ashcraft/OneDrive - Susquehanna University/Desktop/FRI Folders/Projects/LT Loyalsock/Database Files/STPred.csv")
+
+write.csv(STPred,"STPred.csv")
