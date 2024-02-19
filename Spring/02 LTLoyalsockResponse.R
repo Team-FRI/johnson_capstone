@@ -7,7 +7,8 @@
 library(tidyverse)
 
 #Set working Directory
-setwd("C:/Users/ashcraft/OneDrive - Susquehanna University/Desktop/FRI Folders/Projects/LT Loyalsock/Database Files")
+setwd("C:/GitHub/johnson_capstone/spring")
+
 
 #Load data - all LTL only
 #Sites with background data
@@ -69,21 +70,21 @@ maj1<-c(20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,
 axis(1,at=maj1,lty=1,lwd=0.5, pos=0,labels=T)
 maj2<-c(0,50,100,150,200,250,300,350,400,450,500,550,600,650,700)#Freq
 axis(2,at=maj2,lty=1,lwd=0.5,las=2,pos=22)#tck=1
-#Threshold 72.5
+#Threshold 75
 ################################################################################
 #Create Adult/YOY Ratio using BKTRecLoy 
-#YOY < 72.5 (Length_mm)
-#Adult > 72.5 (Length_mm)
+#YOY < 75 (Length_mm)
+#Adult >= 75 (Length_mm)
 Ad_YOY<-BKTRecLoy %>%
   group_by(EventCode)%>%
   summarise(
-    Adult = sum(Length_mm > 72.5,.drop=F),
-    YOY = sum(Length_mm < 72.5,.drop=F),
+    Adult = sum(Length_mm > 75,.drop=F),
+    YOY = sum(Length_mm <=75,.drop=F),
     TotalCount = n()
   )
 Ad_YOY
 #RatioA_Y<-Ad_YOY %>%
-#  mutate(RatioA_Y = Adult/YOY) 
+#mutate(RatioA_Y = Adult/YOY) 
 #RatioA_Y# what to do about events with YOY = 0
 #Changing strategy to percent Adults - percent YOY
 RatioAY<-Ad_YOY %>%
@@ -103,8 +104,8 @@ CPUE
 CPUEVar<-CPUE %>%
   group_by(SiteCode,EventCode)%>%
   summarise(
-    CPUE_Count = Count/Area,
-    CPUE_Biomass = Biomass/Area
+    CPUE_Count = Count/Area *100,
+    CPUE_Biomass = Biomass/Area *100
   )
 CPUEVar #306 x 4
 ################################################################################

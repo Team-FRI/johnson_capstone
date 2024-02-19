@@ -7,7 +7,7 @@ library(tidyverse)
 library(lubridate)
 
 #Set working Directory
-setwd("C:/Users/ashcraft/OneDrive - Susquehanna University/Desktop/FRI Folders/Projects/LT Loyalsock/Loggers/TL_QC")
+setwd("C:/GitHub/johnson_capstone/spring")
 
 #Load data - Stream Temp QC only
 BearT<-read_csv("Bear.Loyalsock_Stream_QC.csv")
