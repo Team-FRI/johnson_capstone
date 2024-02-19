@@ -236,6 +236,8 @@ LTLSites # 3- sites - check
 BKTRecLoy<-FishRecLoy%>%
   filter(Species=="Brook Trout")
 BKTRecLoy
-#write_csv(BKTRecLoy,"BKTRecLoy.csv")
+
+
+write.csv(BKTRecLoy,"BKTRecLoy.csv")
 ###############################
 #Currently don't need Fish Tally data 
