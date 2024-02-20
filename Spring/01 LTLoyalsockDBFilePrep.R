@@ -5,7 +5,7 @@
 library(tidyverse)
 
 #Set working Directory
-setwd("C:/Users/ashcraft/OneDrive - Susquehanna University/Desktop/FRI Folders/Projects/LT Loyalsock/Database Files")
+setwd("C:/GitHub/johnson_capstone/spring")
 
 #Load data
 Sites<-read_csv("All_Sites.csv",

@@ -1,0 +1,28 @@
+{
+    "id": "E9AFC77C",
+    "path": null,
+    "project_path": null,
+    "type": "object_explorer",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1708391540243.0,
+    "source_on_save": false,
+    "relative_order": 11,
+    "properties": {
+        "id": "8f0e32a73cd34629917b0eb8d19ccfdd",
+        "name": "cpue_HighT",
+        "title": "cpue_HighT",
+        "language": "R",
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1708391415,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1708391540243,
+    "read_only": false,
+    "read_only_alternatives": []
+}
