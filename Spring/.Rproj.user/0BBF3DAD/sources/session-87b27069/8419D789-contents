@@ -77,10 +77,35 @@ Events<-read_csv("All_Events.csv",
 Events# 1632 x 6
 
 #Reduce Events to only events categorized as Loyalsock
+
 EventsLoyal<-Events%>%
+  
   filter(Loyalsock =="Loyalsock")%>%
-  select(!Loyalsock)# after QC - don't need this column
+  
+  select(!Loyalsock)%>%# after QC - don't need this column
+  
+  arrange(SiteCode)
+
 EventsLoyal#306 x 3
+
+#Update Site Names to match Temperature files
+
+EventsLoyal$SiteCode[1:10]<-"Bear.Loyalsock"
+
+EventsLoyal$SiteCode[21:31]<-"Coal.Loyalsock"
+
+EventsLoyal$SiteCode[32:41]<-"Conklin.Mill"
+
+EventsLoyal$SiteCode[42:52]<-"Dry.Hoagland"
+
+EventsLoyal$SiteCode[53:62]<-"Dry.Loyalsock"
+
+EventsLoyal$SiteCode[63:72]<-"Dutchman.Loyalsock"
+
+EventsLoyal$SiteCode[73:82]<-"Ellis.Loyalsock"
+
+EventsLoyal
+
 #    Time had only 9 surveys out of 306 with a time recorded - removed from data prep.
 #QC- that all events make sense as LTL.
 EvLoySum<-EventsLoyal%>%
@@ -99,13 +124,30 @@ EventsInv# all sites surveyed in 2021 - an additional year after all other sites
 #Create Table for reducting other table to LTL only
 EventsLoyalR<-EventsLoyal[,c(1,2)]
 EventsLoyalR
-#write_csv(EventsLoyal,"EventsLoyal.csv")
+write_csv(EventsLoyal,"EventsLoyal.csv")
 
 #Reduce Sites to only Sites categorized as Loyalsock
 SitesLoyal<-left_join(EvLoySum,Sites,by="SiteCode")
 SitesLoyalU<-SitesLoyal[, c(1,4,5,2,6,7)]%>%
   arrange(SiteCode)
 SitesLoyalU# 30 x 6
+#Update Site Names to match Temperature files
+
+SitesLoyalU$SiteCode[1]<-"Bear.Loyalsock"
+
+SitesLoyalU$SiteCode[3]<-"Coal.Loyalsock"
+
+SitesLoyalU$SiteCode[4]<-"Conklin.Mill"
+
+SitesLoyalU$SiteCode[5]<-"Dry.Hoagland"
+
+SitesLoyalU$SiteCode[6]<-"Dry.Loyalsock"
+
+SitesLoyalU$SiteCode[7]<-"Dutchman.Loyalsock"
+
+SitesLoyalU$SiteCode[8]<-"Ellis.Loyalsock"
+
+SitesLoyalU
 #write_csv(SitesLoyalU,"SitesLoyalU.csv")
 ################################################################################
 #Fish Data

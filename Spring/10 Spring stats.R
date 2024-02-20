@@ -7,7 +7,6 @@ setwd("C:/GitHub/johnson_capstone/spring")
 BKTVar <- read.csv("BKTVar.csv") 
 STPred <- read.csv("STPred.csv")
 
-View(BKTVar)
 
 install.packages("tidyverse")
 library(tidyverse)
@@ -15,12 +14,37 @@ library(tidyverse)
 install.packages("broom")
 library(broom)
 
+
+#Separate out/Reduce to 2020 and 2021 Data 
+
+BKTVar2020 <- BKTVar %>%
+  filter(str_detect(EventCode, "^2020"))
+
+BKTVar2021 <- BKTVar %>%
+  filter(str_detect(EventCode, "^2021"))
+
+STPred2020 <- STPred %>%
+  filter(Year == "2020")
+
+STPred2021 <- STPred %>%
+  filter(Year == "2021")
+
+#QC filter STPred for other years and see how many we get.
+
+STPredQC <- STPred %>%
+  filter(Year == "2016"| Year == "2017"| Year == "2018"| Year == "2019")
+#YAY it worked! :)
+
 #Y variable first, then x!
 
 #First we have to merge the data frame to get all columsn in the same data frame through a unique identifier. 
 #That unique identifier column is "SiteCode"
 
-Data_merge <- merge(BKTVar, STPred, by = "SiteCode")
+Data_merge <- left_join(STPred2020, BKTVar2020, by = c("SiteCode", "Year"))
+
+Data_merge1 <- left_join(STPred2021, BKTVar2021, by = c("SiteCode", "Year"))
+
+#Need to add Year to this table so we can left join by Year and SiteCode
 
 #Now we can start building models and running stats. 
 

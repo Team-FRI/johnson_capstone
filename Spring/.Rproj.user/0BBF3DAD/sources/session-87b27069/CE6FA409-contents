@@ -102,16 +102,22 @@ RatioAY
 CPUE<-left_join(FishSurLoyU,BKTEvtSum,by="EventCode")
 CPUE
 CPUEVar<-CPUE %>%
-  group_by(SiteCode,EventCode)%>%
+  group_by(EventCode)%>%
   summarise(
     CPUE_Count = Count/Area *100,
     CPUE_Biomass = Biomass/Area *100
   )
 CPUEVar #306 x 4
 ################################################################################
+#Add Year to Response Output for future filtering ability
+CPUEYear <- left_join(CPUEVar, EventsLoyal, by =c("EventCode"))
+CPUEYearU <- CPUEYear %>% 
+  mutate(
+    Year = format(as.Date(Date), "%Y"))
+CPUEYearU
 #Combine response variables to one tibble
-BKTVar<-left_join(CPUEVar,RatioAY)%>%
-  select(!c(Adult,YOY,TotalCount,PerA,PerY))
+BKTVar<-left_join(CPUEYearU,RatioAY)%>%
+  select(!c(Date,Adult,YOY,TotalCount,PerA,PerY))
 BKTVar# 306 x 5
 
 write.csv(BKTVar,"BKTVar.csv")
