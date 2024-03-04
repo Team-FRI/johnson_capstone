@@ -9,7 +9,17 @@ setwd("C:/GitHub/johnson_capstone/spring")
 install.packages("readxl")
 library(readxl)
 
+#Install package tidy R 
+install.packages("tidyr")
+library(tidyr)
+
 AllFishRec <- read_excel ("All_FishRecords.xlsx")
+AllFishSurvey <- read.csv("All_FishSurvey.csv")
+
+#To arrange dates in right order, install dplyr package.
+install.packages("dplyr")
+library(dplyr)
+
 
 By.Site2 <- subset(AllFishRec, waterName == "Painter.Run")
 By.Site1 <- subset(AllFishRec, waterName == "Painter Run")
@@ -42,9 +52,6 @@ Painter_ST01 <- read.csv("Painter_Stream0_X_QC.csv")
 
 Painter_ST <- merge(Painter_ST00, Painter_ST01, all = TRUE)
 
-#To arrange dates in right order, install dplyr package.
-install.packages("dplyr")
-library(dplyr)
 
 #Now to arrange dates in right order:
 Painter_ST <- arrange(Painter_ST, DateTime)
@@ -165,7 +172,7 @@ library(tidyr)
 AgeClassCounts <- Fish.Age.Site %>%
   filter(!EventCode == "201107.TP.Painter.LittleBear") %>%
   group_by(EventCode, AgeClass) %>%
-  summarize(count = n())
+  summarise(count = n())
 
 # Pivot the data to have YOY and adult as columns
 ratio_data <- AgeClassCounts %>%
@@ -220,7 +227,35 @@ Painter_ST$Month <- month(ymd(Painter_ST$DateTime), label = TRUE, abbr = FALSE)
 #Lets take Painter_ST and make it a new data frame so we dont rewrite Painter_ST in the feature 
 
 Temps <- as.data.frame(Painter_ST)
+#Now messing with 3 new variables. 
 
+#Midnight - 11:59pm >10 degrees c
+
+TempsG10 <- Temps %>%
+  filter(Temp_C > 10) %>%
+  group_by(DateTime) %>%
+  summarise(numberoflogs_dayG10 = n())
+
+#AvgDailyTemp > 10 degres C
+
+AvgDailyTemp <- Temps %>%
+  group_by(DateTime) %>% 
+  summarise(
+    AvgDailyTempC = mean(Temp_C)) %>%
+    filter(AvgDailyTempC > 10)
+
+#Daily max temp > 10 degrees C 
+
+DailyMaxTemp <- Temps %>%
+  group_by(DateTime) %>%
+  summarize(
+    DailyMaxTempC = max(Temp_C)) %>%
+    filter(DailyMaxTempC > 10)
+
+# + # of logs at max temp
+
+
+#Matt's Stuff
 minmaxtemp <- transform(Temps, min=ave(Temp_C, strftime(DateTime, '%F'), FUN=min),
                         max=ave(Temp_C, strftime(DateTime, '%F'), FUN=max))
 
@@ -230,6 +265,7 @@ minmaxtemp1 <- minmaxtemp %>%
 
 minmaxtemp$tempdiff <- minmaxtemp$max - minmaxtemp$min
 
+#Sara's stuff
 minmaxtemp <- Temps %>%
   group_by(Month, Year) %>%
   summarise(
@@ -283,34 +319,36 @@ sum(unique(Max2021$max) > 20, na.rm=TRUE)
 
 #Messing around with degree days bellow 
 
-base_temperature <- c(0)
+#Never ended up using degree days so comment out this section of code!!!!!
 
-Painter_ST <- Painter_ST %>%
-  mutate(Date = as.Date(DateTime),  # Convert DateTime to Date
-         DegreeDays = pmax(0, Temp_C - base_temperature)) %>%
-  group_by(Year) %>%
-  summarize(TotalDegreeDays = sum(DegreeDays))
+#base_temperature <- c(0)
+
+#Painter_ST <- Painter_ST %>%
+#  mutate(Date = as.Date(DateTime),  # Convert DateTime to Date
+#         DegreeDays = pmax(0, Temp_C - base_temperature)) %>%
+# group_by(Year) %>%
+#  summarize(TotalDegreeDays = sum(DegreeDays))
 
 
-Painter_ST <- Painter_ST %>%
-  mutate(Date = as.Date(DateTime),
-         Month = format(Date, "%m"),
-         DegreeDays = pmax(0, Temp_C - base_temperature)) %>%
-  filter(Month %in% c("09", "10")) %>%
-  group_by(Year) %>%
-  summarize(TotalDegreeDays = sum(DegreeDays))
+#Painter_ST <- Painter_ST %>%
+#  mutate(Date = as.Date(DateTime),
+#         Month = format(Date, "%m"),
+#         DegreeDays = pmax(0, Temp_C - base_temperature)) %>%
+#  filter(Month %in% c("09", "10")) %>%
+#  group_by(Year) %>%
+#  summarize(TotalDegreeDays = sum(DegreeDays))
 
-Painter_ST <- Painter_ST %>%
-  mutate(Date = as.Date(DateTime),
-         Month = format(Date, "%m"),
-         DegreeDays = pmax(0, Temp_C - base_temperature)) %>%
-  filter(Month %in% c("09", "10")) %>%
-  group_by(Year) %>%
-  summarize(
-    TotalDegreeDays = sum(DegreeDays),
-    NumDaysBetweenSepOct = n(),  # Number of days between September and October
-    AvgTemperature = mean(Temp_C)  # Average temperature for those two months
-  )
+#Painter_ST <- Painter_ST %>%
+#  mutate(Date = as.Date(DateTime),
+#         Month = format(Date, "%m"),
+#         DegreeDays = pmax(0, Temp_C - base_temperature)) %>%
+#  filter(Month %in% c("09", "10")) %>%
+#  group_by(Year) %>%
+#  summarize(
+#    TotalDegreeDays = sum(DegreeDays),
+#    NumDaysBetweenSepOct = n(),  # Number of days between September and October
+#    AvgTemperature = mean(Temp_C)  # Average temperature for those two months
+#  )
 
 #The Third factor will be the highest and lowest stream temperature of each month to see what the extremes are.
 
@@ -324,18 +362,18 @@ Painter_Monthly_Extremes <- Painter_ST %>%
 #DON'T USE FOURTH FACTOR, USE FIFTH FACTOR INSTEAD
 #Fourth Factor is minimum and maximum average temperature for the month based on average temperature per day
 
-Painter_Monthly_Extremes_Avg <- Painter_ST %>%
-  group_by(DateTime) %>%
-  summarise(
-    Avg_Temp = mean(Temp_C, na.rm = TRUE)
-    )        
+#Painter_Monthly_Extremes_Avg <- Painter_ST %>%
+#  group_by(DateTime) %>%
+#  summarise(
+#    Avg_Temp = mean(Temp_C, na.rm = TRUE)
+#    )        
 
-Painter_Monthly_Extremes_Avg2 <- Painter_Monthly_Extremes_Avg %>%
-  separate(DateTime, into = c("Year", "Month", "Day"), sep = "-" )
+#Painter_Monthly_Extremes_Avg2 <- Painter_Monthly_Extremes_Avg %>%
+#  separate(DateTime, into = c("Year", "Month", "Day"), sep = "-" )
   
-Painter_Monthly_Extremes_Avg3 <- Painter_Monthly_Extremes_Avg2 %>%
-  group_by(Year, Month) %>%
-  summarise(min=min(Avg_Temp), max=max(Avg_Temp))
+#Painter_Monthly_Extremes_Avg3 <- Painter_Monthly_Extremes_Avg2 %>%
+#  group_by(Year, Month) %>%
+#  summarise(min=min(Avg_Temp), max=max(Avg_Temp))
 
 #Fifth Factor is minimum and maximum temperature for the day computed/calculated to the average per month
 
