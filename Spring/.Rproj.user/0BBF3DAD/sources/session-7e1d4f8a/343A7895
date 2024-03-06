@@ -3,7 +3,7 @@
     "path": "C:/GitHub/johnson_capstone/Spring/Sites Loop V4.R",
     "project_path": null,
     "type": "r_source",
-    "hash": "2787981649",
+    "hash": "2889279070",
     "contents": "",
     "dirty": false,
     "created": 1708383959314.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "235,45",
-        "scrollLine": "224"
+        "cursorPosition": "273,6",
+        "scrollLine": "269"
     },
     "folds": "",
-    "lastKnownWriteTime": 1709659182,
+    "lastKnownWriteTime": 1709759776,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1709659182080,
+    "last_content_update": 1709759776153,
     "read_only": false,
     "read_only_alternatives": []
 }

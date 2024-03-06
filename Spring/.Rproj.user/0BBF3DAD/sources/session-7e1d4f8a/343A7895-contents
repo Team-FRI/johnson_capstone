@@ -231,37 +231,63 @@ Temps <- as.data.frame(Painter_ST)
 
 TempsMY <- as.data.frame(Temps)
 
-TempsMY$DateTime <- format(TempsMY$DateTime, "%m")
+TempsMY$Month <- format(TempsMY$DateTime, "%m")
 
-TempsMY$DateTime <- as.Date(TempsMY$DateTime)
+#TempsMY$DateTime <- as.Date(TempsMY$DateTime)
 
-TempsMY$Month <- month(TempsMY$DateTime)
+#TempsMY$Month <- month(TempsMY$DateTime)
 
 #Midnight - 11:59pm >10 degrees c
 
-TempsG10 <- Temps %>%
-  filter(Temp_C > 10) %>%
+TempsG10 <- TempsMY %>%
+  filter(Temp_C >= 10) %>%
   group_by(DateTime) %>%
   summarise(numberoflogs_dayG10 = n())
 
 #AvgDailyTemp > 10 degres C
 
-AvgDailyTemp <- Temps %>%
+AvgDailyTemp <- TempsMY %>%
   group_by(DateTime) %>% 
   summarise(
-    AvgDailyTempC = mean(Temp_C)) %>%
-    filter(AvgDailyTempC > 10)
+  AvgDailyTempC = mean(Temp_C)) %>%
+  filter(AvgDailyTempC >= 10)
 
 #Daily max temp > 10 degrees C 
 
-DailyMaxTemp <- Temps %>%
+DailyMaxTemp <- TempsMY %>%
   group_by(DateTime) %>%
   summarize(
     DailyMaxTempC = max(Temp_C)) %>%
-    filter(DailyMaxTempC > 10)
+    filter(DailyMaxTempC >= 10)
 
 # + # of logs at max temp
 
+#Temps Month Year
+
+#Midnight - 11:59pm >10 degrees c
+
+TempsG10MY <- TempsMY %>%
+  filter(Temp_C >= 10) %>%
+  group_by(Year, Month) %>%
+  summarise(numberoflogs_MYG10 = n())
+
+#AvgMYTemp > 10 degres C
+
+Avg_YM_TempMY <- TempsMY %>%
+  group_by(Year, Month) %>% 
+  summarise(
+    Avg_YM_TempC = mean(Temp_C)) %>%
+  filter(Avg_YM_TempC >= 10)
+
+#MY max temp > 10 degrees C 
+
+MaxTemp_MY <- TempsMY %>%
+  group_by(Year, Month) %>%
+  summarize(
+    YM_MaxTempC = max(Temp_C)) %>%
+  filter(YM_MaxTempC >= 10)
+
+# + # of logs at max temp
 
 #Matt's Stuff
 minmaxtemp <- transform(Temps, min=ave(Temp_C, strftime(DateTime, '%F'), FUN=min),

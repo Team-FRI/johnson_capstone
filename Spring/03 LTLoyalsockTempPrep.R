@@ -116,8 +116,51 @@ Monthly_AvgMinMax <- YM %>%
     AvgMax=mean(Max_tempC))
 Monthly_AvgMinMax # 266 x 5
 ###############################################################################
+#Number of logs per Month Year 
+
+#Midnight - 11:59pm >10 degrees c
+
+TempsG10MY <- ST %>%
+  filter(Temp_C >= 10) %>%
+  group_by(SiteCode, Year, Month) %>%
+  summarise(numberoflogs_MYG10 = n()) 
+
+#AvgYMTemp > 10 degres C
+
+Avg_YM_TempMY <- ST %>%
+  group_by(SiteCode, Year, Month) %>% 
+  summarise(
+    Avg_YM_TempC = mean(Temp_C)) %>%
+  filter(Avg_YM_TempC >= 10)
+
+#YM max temp > 10 degrees C 
+
+MaxTemp_MY <- ST %>%
+  group_by(SiteCode, Year, Month) %>%
+  summarize(
+    YM_MaxTempC = max(Temp_C)) %>%
+  filter(YM_MaxTempC >= 10)
+
+# + # of logs at max temp
+###############################################################################
+
 #Join Monthly_Extremes and Monthly_AvgMinMax together
 STPred<-left_join(Monthly_Extremes,Monthly_AvgMinMax, by = c("SiteCode","Year","Month"))
 STPred #266 x 7
+#Ivestigate Conklin Mill 2020-06
+STPred2<-left_join(STPred, TempsG10MY, by = c("SiteCode","Year","Month"))
+STPred2
 
-write.csv(STPred,"STPred.csv")
+#DO line 155 next!!!
+write.csv(STPred2,"STPred.csv")
+#REPLACE NA'S WITH 0'S FOR numberoflogs_MYG10 in STpred2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+STPred2[is.na(STPred2)] <- 0
+
+STPred3<-left_join(STPred2, Avg_YM_TempMY, by = c("SiteCode","Year","Month"))
+STPred3
+
+
+STPred4<-left_join(STPred3, MaxTemp_MY, by = c("SiteCode","Year","Month"))
+STPred4
+
+write.csv(STPred4,"STPred.csv")
