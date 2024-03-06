@@ -224,10 +224,18 @@ summary(Painter_ST)
 
 Painter_ST$Month <- month(ymd(Painter_ST$DateTime), label = TRUE, abbr = FALSE)
 
-#Lets take Painter_ST and make it a new data frame so we dont rewrite Painter_ST in the feature 
+#Lets take Painter_ST and make it a new data frame so we don't rewrite Painter_ST in the feature 
 
 Temps <- as.data.frame(Painter_ST)
 #Now messing with 3 new variables. 
+
+TempsMY <- as.data.frame(Temps)
+
+TempsMY$DateTime <- format(TempsMY$DateTime, "%m")
+
+TempsMY$DateTime <- as.Date(TempsMY$DateTime)
+
+TempsMY$Month <- month(TempsMY$DateTime)
 
 #Midnight - 11:59pm >10 degrees c
 
