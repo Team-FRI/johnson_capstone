@@ -138,11 +138,11 @@ Eggs_MinMax <- Eggs %>%
     Max_temp_Eggs_Period = max(Temp_C)
   ) 
 
-Eggs_AvgMinMax <- YM %>%
+Eggs_AvgMinMax <- Eggs_MinMax %>%
   group_by(SiteCode) %>%
   summarise(
-    AvgMin=mean(Min_tempC), 
-    AvgMax=mean(Max_tempC))
+    AvgMin_Egg_Period=mean(Min_temp_Eggs_Period), 
+    AvgMax_Egg_Period=mean(Max_temp_Eggs_Period))
 ###############################################################################
 #Number of logs per Month Year 
 
@@ -150,14 +150,14 @@ Eggs_AvgMinMax <- YM %>%
 
 #Midnight - 11:59pm <3 degrees c
 
-TempsL3MY <- ST %>%
+TempsL3MY <- Eggs %>%
   filter(Temp_C < 3) %>%
   group_by(SiteCode) %>%
   summarise(numberoflogs_MYG10 = n()) 
 
 #AvgYMTemp < 3 degres C
 
-Avg_YM_TempMYL3 <- ST %>%
+Avg_YM_TempMYL3 <- Eggs %>%
   group_by(SiteCode) %>% 
   summarise(
     Avg_YM_TempC = mean(Temp_C)) %>%
@@ -165,7 +165,7 @@ Avg_YM_TempMYL3 <- ST %>%
 
 #YM max temp < 3 degrees C 
 
-MaxTemp_MYL3 <- ST %>%
+MaxTemp_MYL3 <- Eggs %>%
   group_by(SiteCode) %>%
   summarize(
     YM_MaxTempC = max(Temp_C)) %>%
@@ -175,14 +175,14 @@ MaxTemp_MYL3 <- ST %>%
 
 #Midnight - 11:59pm <5 degrees c
 
-TempsL5MY <- ST %>%
+TempsL5MY <- Eggs %>%
   filter(Temp_C < 5) %>%
   group_by(SiteCode) %>%
   summarise(numberoflogs_MYG10 = n()) 
 
 #AvgYMTemp < 5 degres C
 
-Avg_YM_TempMYL5 <- ST %>%
+Avg_YM_TempMYL5 <- Eggs %>%
   group_by(SiteCode) %>% 
   summarise(
     Avg_YM_TempC = mean(Temp_C)) %>%
@@ -190,7 +190,30 @@ Avg_YM_TempMYL5 <- ST %>%
 
 #YM max temp < 5 degrees C 
 
-MaxTemp_MYL5 <- ST %>%
+MaxTemp_MYL5 <- Eggs %>%
+  group_by(SiteCode) %>%
+  summarize(
+    YM_MaxTempC = max(Temp_C)) %>%
+  filter(YM_MaxTempC < 5)
+
+#Alevin Sub Lethal Replace with Alvein
+
+TempsL5MY <- Eggs %>%
+  filter(Temp_C < 5) %>%
+  group_by(SiteCode) %>%
+  summarise(numberoflogs_MYG10 = n()) 
+
+#AvgYMTemp < 5 degres C
+
+Avg_YM_TempMYL5 <- Eggs %>%
+  group_by(SiteCode) %>% 
+  summarise(
+    Avg_YM_TempC = mean(Temp_C)) %>%
+  filter(Avg_YM_TempC < 5)
+
+#YM max temp < 5 degrees C 
+
+MaxTemp_MYL5 <- Eggs %>%
   group_by(SiteCode) %>%
   summarize(
     YM_MaxTempC = max(Temp_C)) %>%

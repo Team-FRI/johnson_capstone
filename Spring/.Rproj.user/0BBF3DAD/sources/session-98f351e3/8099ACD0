@@ -3,7 +3,7 @@
     "path": "C:/GitHub/johnson_capstone/Spring/04 LH LTLoyalsockTempPrep.R",
     "project_path": null,
     "type": "r_source",
-    "hash": "0",
+    "hash": "1217537850",
     "contents": "",
     "dirty": false,
     "created": 1710788582226.0,
@@ -13,15 +13,15 @@
         "tempName": "Untitled1",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "155,38",
-        "scrollLine": "137"
+        "cursorPosition": "198,38",
+        "scrollLine": "191"
     },
     "folds": "",
-    "lastKnownWriteTime": 1710795842,
+    "lastKnownWriteTime": 1710796391,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1710795842317,
+    "last_content_update": 1710796391780,
     "read_only": false,
     "read_only_alternatives": []
 }
