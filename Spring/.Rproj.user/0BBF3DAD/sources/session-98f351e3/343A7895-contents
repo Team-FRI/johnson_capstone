@@ -1,7 +1,7 @@
 #Set working Directory 
 
 setwd("C:/GitHub/johnson_capstone/spring")
-#HI
+
 
 #Now Need to read in data files
 
