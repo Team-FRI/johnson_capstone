@@ -61,7 +61,7 @@ ST<- StreamTemp %>% #Like this code better
     Year = format(as.Date(DateTime),"%Y"),
     Month = format(as.Date(DateTime),"%m"),
     Day = format(as.Date(DateTime),"%d")
-    )%>%
+  )%>%
   mutate_at(vars(Date),date)%>%
   mutate_at(vars(Year,Month,Day),factor)
 ST
@@ -82,39 +82,67 @@ QCTempM<-ST %>%
   arrange(Month)
 QCTempM
 
-###############################################################################
-#Create Min/Max reading for each Month-Year.
-Monthly_Extremes <- ST %>%
-  group_by(SiteCode,Year, Month) %>%
+#####################################
+#Creating Life History Columns 
+
+LH <- ST %>%
+  mutate(Eggs = between(Date, "2020-11-01", "2021-03-31"))
+
+LH <- ST %>%
+  summarise(Eggs = between(Date, "2020-11-01", "2021-03-31"))
+
+LH <- ST %>%
+  mutate(
+    Eggs = filter(Date > ymd(2020-11-01) &
+                    Date < ymd(2021-03-31)))
+
+LH <- ST %>%
   summarise(
-    Highest_Temperature_C = max(Temp_C),
-    Lowest_Temperature_C = min(Temp_C)
+    Eggs = filter(Date > ymd(2020-11-01) &
+                    Date < ymd(2021-03-31)))
+
+LH <- ST %>%
+  mutate(
+    Eggs = between(Date, "2020-11-01", "2021-03-31"))
+
+LHtable <- tibble::tribble(~ stage, ~ StartDate, ~ EndDate,
+                           "Eggs", "2020-11-01", "2021-03031")
+
+ST2 <- ST %>%
+  left_join(LHtable) %>%
+  group_by()
+
+#Bellow Worked 
+Eggs <- ST %>%
+  filter(Date > ymd("2020-11-01") &
+           Date < ymd("2021-03-31"))
+Fri 2020
+
+Fri 2021
+
+###############################################################################
+#Create Min/Max reading for Eggs!
+Egg_Extremes <- Eggs %>%
+  group_by(SiteCode) %>%
+  summarise(
+    Highest_Temperature_Eggs_Period = max(Temp_C),
+    Lowest_Temperature_Eggs_Period = min(Temp_C)
   )       
 Monthly_Extremes # 266 x 5
 ###############################################################################
-#Create Avg Min/Max reading for each Month-Year
-Monthly_MinMax <- ST %>%
-  group_by(SiteCode,Date) %>%
+#Create Avg Daily Min/Max reading for Eggs
+Eggs_MinMax <- Eggs %>%
+  group_by(SiteCode, Date) %>%
   summarise(
-    Min_tempC = min(Temp_C), 
-    Max_tempC = max(Temp_C)
+    Min_temp_Eggs_Period = min(Temp_C), 
+    Max_temp_Eggs_Period = max(Temp_C)
   ) 
-Monthly_MinMax
-YM<- Monthly_MinMax %>% #Like this code better
-  mutate(
-    Date = format(as.Date(Date),"%Y-%m-%d"),
-    Year = format(as.Date(Date),"%Y"),
-    Month = format(as.Date(Date),"%m")
-  )%>%
-  mutate_at(vars(Date),date)%>%
-  mutate_at(vars(Year,Month),factor)
-YM
-Monthly_AvgMinMax <- YM %>%
-  group_by(SiteCode,Year, Month) %>%
+
+Eggs_AvgMinMax <- YM %>%
+  group_by(SiteCode) %>%
   summarise(
     AvgMin=mean(Min_tempC), 
     AvgMax=mean(Max_tempC))
-Monthly_AvgMinMax # 266 x 5
 ###############################################################################
 #Number of logs per Month Year 
 
@@ -124,13 +152,13 @@ Monthly_AvgMinMax # 266 x 5
 
 TempsL3MY <- ST %>%
   filter(Temp_C < 3) %>%
-  group_by(SiteCode, Year, Month) %>%
+  group_by(SiteCode) %>%
   summarise(numberoflogs_MYG10 = n()) 
 
 #AvgYMTemp < 3 degres C
 
 Avg_YM_TempMYL3 <- ST %>%
-  group_by(SiteCode, Year, Month) %>% 
+  group_by(SiteCode) %>% 
   summarise(
     Avg_YM_TempC = mean(Temp_C)) %>%
   filter(Avg_YM_TempC < 3)
@@ -138,7 +166,7 @@ Avg_YM_TempMYL3 <- ST %>%
 #YM max temp < 3 degrees C 
 
 MaxTemp_MYL3 <- ST %>%
-  group_by(SiteCode, Year, Month) %>%
+  group_by(SiteCode) %>%
   summarize(
     YM_MaxTempC = max(Temp_C)) %>%
   filter(YM_MaxTempC < 3)
@@ -149,13 +177,13 @@ MaxTemp_MYL3 <- ST %>%
 
 TempsL5MY <- ST %>%
   filter(Temp_C < 5) %>%
-  group_by(SiteCode, Year, Month) %>%
+  group_by(SiteCode) %>%
   summarise(numberoflogs_MYG10 = n()) 
 
 #AvgYMTemp < 5 degres C
 
 Avg_YM_TempMYL5 <- ST %>%
-  group_by(SiteCode, Year, Month) %>% 
+  group_by(SiteCode) %>% 
   summarise(
     Avg_YM_TempC = mean(Temp_C)) %>%
   filter(Avg_YM_TempC < 5)
@@ -163,7 +191,7 @@ Avg_YM_TempMYL5 <- ST %>%
 #YM max temp < 5 degrees C 
 
 MaxTemp_MYL5 <- ST %>%
-  group_by(SiteCode, Year, Month) %>%
+  group_by(SiteCode) %>%
   summarize(
     YM_MaxTempC = max(Temp_C)) %>%
   filter(YM_MaxTempC < 5)
@@ -174,13 +202,13 @@ MaxTemp_MYL5 <- ST %>%
 
 TempsL4.5MY <- ST %>%
   filter(Temp_C < 4.5) %>%
-  group_by(SiteCode, Year, Month) %>%
+  group_by(SiteCode) %>%
   summarise(numberoflogs_MYG10 = n()) 
 
 #AvgYMTemp < 4.5 degres C
 
 Avg_YM_TempMYL4.5 <- ST %>%
-  group_by(SiteCode, Year, Month) %>% 
+  group_by(SiteCode) %>% 
   summarise(
     Avg_YM_TempC = mean(Temp_C)) %>%
   filter(Avg_YM_TempC < 4.5)
@@ -188,7 +216,7 @@ Avg_YM_TempMYL4.5 <- ST %>%
 #YM max temp < 4.5 degrees C 
 
 MaxTemp_MYL4.5 <- ST %>%
-  group_by(SiteCode, Year, Month) %>%
+  group_by(SiteCode) %>%
   summarize(
     YM_MaxTempC = max(Temp_C)) %>%
   filter(YM_MaxTempC < 4.5)
@@ -201,13 +229,13 @@ MaxTemp_MYL4.5 <- ST %>%
 
 TempsG20MY <- ST %>%
   filter(Temp_C > 20) %>%
-  group_by(SiteCode, Year, Month) %>%
+  group_by(SiteCode) %>%
   summarise(numberoflogs_MYG10 = n()) 
 
 #AvgYMTemp > 20 degres C
 
 Avg_YM_TempMYL3 <- ST %>%
-  group_by(SiteCode, Year, Month) %>% 
+  group_by(SiteCode) %>% 
   summarise(
     Avg_YM_TempC = mean(Temp_C)) %>%
   filter(Avg_YM_TempC > 20)
@@ -215,7 +243,7 @@ Avg_YM_TempMYL3 <- ST %>%
 #YM max temp < 20 degrees C 
 
 MaxTemp_MYL3 <- ST %>%
-  group_by(SiteCode, Year, Month) %>%
+  group_by(SiteCode) %>%
   summarize(
     YM_MaxTempC = max(Temp_C)) %>%
   filter(YM_MaxTempC >20)
@@ -226,13 +254,13 @@ MaxTemp_MYL3 <- ST %>%
 
 TempsG24MY <- ST %>%
   filter(Temp_C > 24) %>%
-  group_by(SiteCode, Year, Month) %>%
+  group_by(SiteCode) %>%
   summarise(numberoflogs_MYG10 = n()) 
 
 #AvgYMTemp > 24 degres C
 
 Avg_YM_TempMYL3 <- ST %>%
-  group_by(SiteCode, Year, Month) %>% 
+  group_by(SiteCode) %>% 
   summarise(
     Avg_YM_TempC = mean(Temp_C)) %>%
   filter(Avg_YM_TempC > 24)
@@ -240,11 +268,59 @@ Avg_YM_TempMYL3 <- ST %>%
 #YM max temp < 24 degrees C 
 
 MaxTemp_MYL3 <- ST %>%
-  group_by(SiteCode, Year, Month) %>%
+  group_by(SiteCode) %>%
   summarize(
     YM_MaxTempC = max(Temp_C)) %>%
   filter(YM_MaxTempC >24)
 
+###################################
+#Number of logs per Month Year 
+
+#Midnight - 11:59pm >10 degrees c
+
+TempsG10MY <- ST %>%
+  filter(Temp_C >= 10) %>%
+  group_by(SiteCode, Year, Month) %>%
+  summarise(numberoflogs_MYG10 = n())
+
+#ASL Stands for Adult Sub lethal 
+
+TempsG20MYASL <- ST %>%
+  filter(Temp_C >= 20) %>%
+  group_by(SiteCode, Year, Month) %>%
+  summarise(numberoflogs_MYG10 = n()) 
+
+TempsG24MYAL <- ST %>%
+  filter(Temp_C >= 24) %>%
+  group_by(SiteCode, Year, Month) %>%
+  summarise(numberoflogs_MYG10 = n()) 
+
+TempsG24MYAlevinL <- ST %>%
+  filter(Temp_C >= 24) %>%
+  group_by(SiteCode, Year, Month) %>%
+  summarise(numberoflogs_MYG10 = n()) 
+
+TempsG24MYAL <- ST %>%
+  filter(Temp_C >= 24) %>%
+  group_by(SiteCode, Year, Month) %>%
+  summarise(numberoflogs_MYG10 = n()) 
+
+
+#AvgYMTemp > 10 degres C
+
+Avg_YM_TempMY <- ST %>%
+  group_by(SiteCode, Year, Month) %>% 
+  summarise(
+    Avg_YM_TempC = mean(Temp_C)) %>%
+  filter(Avg_YM_TempC >= 10)
+
+#YM max temp > 10 degrees C 
+
+MaxTemp_MY <- ST %>%
+  group_by(SiteCode, Year, Month) %>%
+  summarize(
+    YM_MaxTempC = max(Temp_C)) %>%
+  filter(YM_MaxTempC >= 10)
 
 # + # of logs at max temp
 ###############################################################################

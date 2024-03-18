@@ -118,28 +118,133 @@ Monthly_AvgMinMax # 266 x 5
 ###############################################################################
 #Number of logs per Month Year 
 
-#Midnight - 11:59pm >10 degrees c
+#For 3 degrees (Alevin: Lethal)
 
-TempsG10MY <- ST %>%
-  filter(Temp_C >= 10) %>%
+#Midnight - 11:59pm <3 degrees c
+
+TempsL3MY <- ST %>%
+  filter(Temp_C < 3) %>%
   group_by(SiteCode, Year, Month) %>%
   summarise(numberoflogs_MYG10 = n()) 
 
-#AvgYMTemp > 10 degres C
+#AvgYMTemp < 3 degres C
 
-Avg_YM_TempMY <- ST %>%
+Avg_YM_TempMYL3 <- ST %>%
   group_by(SiteCode, Year, Month) %>% 
   summarise(
     Avg_YM_TempC = mean(Temp_C)) %>%
-  filter(Avg_YM_TempC >= 10)
+  filter(Avg_YM_TempC < 3)
 
-#YM max temp > 10 degrees C 
+#YM max temp < 3 degrees C 
 
-MaxTemp_MY <- ST %>%
+MaxTemp_MYL3 <- ST %>%
   group_by(SiteCode, Year, Month) %>%
   summarize(
     YM_MaxTempC = max(Temp_C)) %>%
-  filter(YM_MaxTempC >= 10)
+  filter(YM_MaxTempC < 3)
+
+#For 5 degrees (Alevin and Eggs: Sub Lethal)
+
+#Midnight - 11:59pm <5 degrees c
+
+TempsL5MY <- ST %>%
+  filter(Temp_C < 5) %>%
+  group_by(SiteCode, Year, Month) %>%
+  summarise(numberoflogs_MYG10 = n()) 
+
+#AvgYMTemp < 5 degres C
+
+Avg_YM_TempMYL5 <- ST %>%
+  group_by(SiteCode, Year, Month) %>% 
+  summarise(
+    Avg_YM_TempC = mean(Temp_C)) %>%
+  filter(Avg_YM_TempC < 5)
+
+#YM max temp < 5 degrees C 
+
+MaxTemp_MYL5 <- ST %>%
+  group_by(SiteCode, Year, Month) %>%
+  summarize(
+    YM_MaxTempC = max(Temp_C)) %>%
+  filter(YM_MaxTempC < 5)
+
+#For 4.5 degrees (Eggs: Lethal)
+
+#Midnight - 11:59pm <4.5 degrees c
+
+TempsL4.5MY <- ST %>%
+  filter(Temp_C < 4.5) %>%
+  group_by(SiteCode, Year, Month) %>%
+  summarise(numberoflogs_MYG10 = n()) 
+
+#AvgYMTemp < 4.5 degres C
+
+Avg_YM_TempMYL4.5 <- ST %>%
+  group_by(SiteCode, Year, Month) %>% 
+  summarise(
+    Avg_YM_TempC = mean(Temp_C)) %>%
+  filter(Avg_YM_TempC < 4.5)
+
+#YM max temp < 4.5 degrees C 
+
+MaxTemp_MYL4.5 <- ST %>%
+  group_by(SiteCode, Year, Month) %>%
+  summarize(
+    YM_MaxTempC = max(Temp_C)) %>%
+  filter(YM_MaxTempC < 4.5)
+
+#Already did For 5 degrees (Eggs: Sub Lethal) so move on!
+
+#For 20 degrees (Adults: Sub Lethal)
+
+#Midnight - 11:59pm >20 degrees c
+
+TempsG20MY <- ST %>%
+  filter(Temp_C > 20) %>%
+  group_by(SiteCode, Year, Month) %>%
+  summarise(numberoflogs_MYG10 = n()) 
+
+#AvgYMTemp > 20 degres C
+
+Avg_YM_TempMYL3 <- ST %>%
+  group_by(SiteCode, Year, Month) %>% 
+  summarise(
+    Avg_YM_TempC = mean(Temp_C)) %>%
+  filter(Avg_YM_TempC > 20)
+
+#YM max temp < 20 degrees C 
+
+MaxTemp_MYL3 <- ST %>%
+  group_by(SiteCode, Year, Month) %>%
+  summarize(
+    YM_MaxTempC = max(Temp_C)) %>%
+  filter(YM_MaxTempC >20)
+
+#For 24 degrees (Adults: Lethal)
+
+#Midnight - 11:59pm >24 degrees c
+
+TempsG24MY <- ST %>%
+  filter(Temp_C > 24) %>%
+  group_by(SiteCode, Year, Month) %>%
+  summarise(numberoflogs_MYG10 = n()) 
+
+#AvgYMTemp > 24 degres C
+
+Avg_YM_TempMYL3 <- ST %>%
+  group_by(SiteCode, Year, Month) %>% 
+  summarise(
+    Avg_YM_TempC = mean(Temp_C)) %>%
+  filter(Avg_YM_TempC > 24)
+
+#YM max temp < 24 degrees C 
+
+MaxTemp_MYL3 <- ST %>%
+  group_by(SiteCode, Year, Month) %>%
+  summarize(
+    YM_MaxTempC = max(Temp_C)) %>%
+  filter(YM_MaxTempC >24)
+
 
 # + # of logs at max temp
 ###############################################################################
@@ -164,3 +269,5 @@ STPred4<-left_join(STPred3, MaxTemp_MY, by = c("SiteCode","Year","Month"))
 STPred4
 
 write.csv(STPred4,"STPred.csv")
+
+write.csv(STPred2, "STPred2.csv")
