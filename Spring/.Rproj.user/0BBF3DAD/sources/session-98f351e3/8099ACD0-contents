@@ -180,7 +180,7 @@ Eggs_AvgMinMax <- Eggs_MinMax %>%
     AvgMax_Egg_Period=mean(Max_temp_Eggs_Period))
 ###############################################################################
 ###############################################################################
-Egg_Extremes <- Eggs %>%
+Alevin_Extremes <- Alevin2020 & Alevin2021 %>%
   group_by(SiteCode) %>%
   summarise(
     Highest_Temperature_Eggs_Period = max(Temp_C),
