@@ -106,7 +106,7 @@ LH <- ST %>%
     Eggs = between(Date, "2020-11-01", "2021-03-31"))
 
 LHtable <- tibble::tribble(~ stage, ~ StartDate, ~ EndDate,
-                           "Eggs", "2020-11-01", "2021-03031")
+                           "Eggs", "2020-11-01", "2021-03-31")
 
 ST2 <- ST %>%
   left_join(LHtable) %>%
@@ -116,6 +116,41 @@ ST2 <- ST %>%
 Eggs <- ST %>%
   filter(Date > ymd("2020-11-01") &
            Date < ymd("2021-03-31"))
+
+Alevin2020 <- ST %>%
+  filter(Date > ymd("2020-02-01") &
+           Date < ymd("2020-04-30")) 
+
+#Bellow did not work
+
+Alevin2021 <- ST %>%
+  filter(Date < ymd("2021-02-01") & 
+            Date < ymd("2021-04-30"))
+
+EmergFry2020 <- ST %>%
+  filter(Date < ymd("2020-03-01") & 
+            Date < ymd("2020-04-30"))
+
+EmergFry2021 <- ST %>%
+  filter(Date < ymd("2021-03-01") & 
+            Date < ymd("2021-04-30"))
+
+YOY2020 <- ST %>%
+  filter(Date < ymd("2020-05-01") & 
+            Date < ymd("2020-10-31"))
+
+YOY2021 <- ST %>%
+  filter(Date < ymd("2021-05-01") & 
+            Date < ymd("2021-10-31"))
+
+Ad_Spawning2020 <- ST %>% 
+  filter (Date < ymd("2020-09-15") &
+            Date < ymd("2020-11-10"))
+          
+Ad_Spawning2021 <- ST %>% 
+  filter (Date < ymd("2021-09-15") &
+            Date < ymd("2021-11-10"))
+
 Fri 2020
 
 Fri 2021
@@ -144,6 +179,31 @@ Eggs_AvgMinMax <- Eggs_MinMax %>%
     AvgMin_Egg_Period=mean(Min_temp_Eggs_Period), 
     AvgMax_Egg_Period=mean(Max_temp_Eggs_Period))
 ###############################################################################
+###############################################################################
+Egg_Extremes <- Eggs %>%
+  group_by(SiteCode) %>%
+  summarise(
+    Highest_Temperature_Eggs_Period = max(Temp_C),
+    Lowest_Temperature_Eggs_Period = min(Temp_C)
+  )       
+Monthly_Extremes # 266 x 5
+###############################################################################
+#Create Avg Daily Min/Max reading for Alevin
+Alevin_MinMax <- Alevin2020 %>%
+  group_by(SiteCode, Date) %>%
+  summarise(
+    Min_temp_Eggs_Period = min(Temp_C), 
+    Max_temp_Eggs_Period = max(Temp_C)
+  ) 
+
+Eggs_AvgMinMax <- Eggs_MinMax %>%
+  group_by(SiteCode) %>%
+  summarise(
+    AvgMin_Egg_Period=mean(Min_temp_Eggs_Period), 
+    AvgMax_Egg_Period=mean(Max_temp_Eggs_Period))
+###############################################################################
+
+
 #Number of logs per Month Year 
 
 #For 3 degrees (Alevin: Lethal)
