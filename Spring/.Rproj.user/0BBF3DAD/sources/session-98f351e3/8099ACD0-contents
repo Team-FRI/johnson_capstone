@@ -117,43 +117,46 @@ Eggs <- ST %>%
   filter(Date > ymd("2020-11-01") &
            Date < ymd("2021-03-31"))
 
-Alevin2020 <- ST %>%
-  filter(Date > ymd("2020-02-01") &
-           Date < ymd("2020-04-30")) 
-
-#Bellow did not work
+#Alevin2020 <- ST %>%
+#  filter(Date > ymd("2020-02-01") &
+#           Date < ymd("2020-04-30")) 
 
 Alevin2021 <- ST %>%
-  filter(Date < ymd("2021-02-01") & 
+  filter(Date > ymd("2021-02-01") & 
             Date < ymd("2021-04-30"))
 
-EmergFry2020 <- ST %>%
-  filter(Date < ymd("2020-03-01") & 
-            Date < ymd("2020-04-30"))
+
+#EmergFry2020 <- ST %>%
+#  filter(Date > ymd("2020-03-01") & 
+#            Date < ymd("2020-04-30"))
 
 EmergFry2021 <- ST %>%
-  filter(Date < ymd("2021-03-01") & 
+  filter(Date > ymd("2021-03-01") & 
             Date < ymd("2021-04-30"))
 
 YOY2020 <- ST %>%
-  filter(Date < ymd("2020-05-01") & 
+  filter(Date > ymd("2020-05-01") & 
             Date < ymd("2020-10-31"))
 
 YOY2021 <- ST %>%
-  filter(Date < ymd("2021-05-01") & 
+  filter(Date > ymd("2021-05-01") & 
             Date < ymd("2021-10-31"))
 
 Ad_Spawning2020 <- ST %>% 
-  filter (Date < ymd("2020-09-15") &
+  filter (Date > ymd("2020-09-15") &
             Date < ymd("2020-11-10"))
           
 Ad_Spawning2021 <- ST %>% 
-  filter (Date < ymd("2021-09-15") &
+  filter (Date > ymd("2021-09-15") &
             Date < ymd("2021-11-10"))
 
-Fri 2020
+Ad_Survival2020 <- ST %>% 
+  filter (Date > ymd("2020-07-01") &
+            Date < ymd("2020-09-30"))
 
-Fri 2021
+Ad_Survival2021 <- ST %>% 
+  filter (Date > ymd("2021-07-01") &
+            Date < ymd("2021-09-30"))
 
 ###############################################################################
 #Create Min/Max reading for Eggs!
@@ -163,8 +166,8 @@ Egg_Extremes <- Eggs %>%
     Highest_Temperature_Eggs_Period = max(Temp_C),
     Lowest_Temperature_Eggs_Period = min(Temp_C)
   )       
-Monthly_Extremes # 266 x 5
-###############################################################################
+
+
 #Create Avg Daily Min/Max reading for Eggs
 Eggs_MinMax <- Eggs %>%
   group_by(SiteCode, Date) %>%
@@ -179,29 +182,122 @@ Eggs_AvgMinMax <- Eggs_MinMax %>%
     AvgMin_Egg_Period=mean(Min_temp_Eggs_Period), 
     AvgMax_Egg_Period=mean(Max_temp_Eggs_Period))
 ###############################################################################
-###############################################################################
-Alevin_Extremes <- Alevin2020 & Alevin2021 %>%
+#Create Min/Max reading for Alevin!
+Alevin_Extremes <- Alevin2021 %>%
   group_by(SiteCode) %>%
   summarise(
-    Highest_Temperature_Eggs_Period = max(Temp_C),
-    Lowest_Temperature_Eggs_Period = min(Temp_C)
+    Highest_Temperature_Alevin_Period = max(Temp_C),
+    Lowest_Temperature_Alevin_Period = min(Temp_C)
   )       
-Monthly_Extremes # 266 x 5
-###############################################################################
+
 #Create Avg Daily Min/Max reading for Alevin
-Alevin_MinMax <- Alevin2020 %>%
+Alevin_MinMax <- Alevin2021 %>%
   group_by(SiteCode, Date) %>%
   summarise(
-    Min_temp_Eggs_Period = min(Temp_C), 
-    Max_temp_Eggs_Period = max(Temp_C)
+    Min_temp_Alevin_Period = min(Temp_C), 
+    Max_temp_Alevin_Period = max(Temp_C)
   ) 
 
-Eggs_AvgMinMax <- Eggs_MinMax %>%
+Alevin_AvgMinMax <- Alevin_MinMax %>%
   group_by(SiteCode) %>%
   summarise(
-    AvgMin_Egg_Period=mean(Min_temp_Eggs_Period), 
-    AvgMax_Egg_Period=mean(Max_temp_Eggs_Period))
+    AvgMin_Alevin_Period=mean(Min_temp_Alevin_Period), 
+    AvgMax_Alevin_Period=mean(Max_temp_Alevin_Period))
 ###############################################################################
+#Create Min/Max reading for Emerging Fri!
+EmergFri_Extremes <- EmergFry2021 %>%
+  group_by(SiteCode) %>%
+  summarise(
+    Highest_Temperature_EmergFri_Period = max(Temp_C),
+    Lowest_Temperature_EmergFri_Period = min(Temp_C)
+  )       
+
+#Create Avg Daily Min/Max reading for Emerging Fri
+EmergFri_MinMax <- EmergFry2021 %>%
+  group_by(SiteCode, Date) %>%
+  summarise(
+    Min_temp_EmergFri_Period = min(Temp_C), 
+    Max_temp_EmergFri_Period = max(Temp_C)
+  ) 
+
+EmergFri_AvgMinMax <- EmergFri_MinMax %>%
+  group_by(SiteCode) %>%
+  summarise(
+    AvgMin_EmergFri_Period=mean(Min_temp_EmergFri_Period), 
+    AvgMax_EmergFri_Period=mean(Max_temp_EmergFri_Period))
+###############################################################################
+#Create Min/Max reading for  YOY!
+YOY_Extremes <- YOY2020 %>%
+  bind_rows(YOY2021) %>% 
+  group_by(SiteCode) %>%
+  summarise(
+    Highest_Temperature_YOY_Period = max(Temp_C),
+    Lowest_Temperature_YOY_Period = min(Temp_C)
+  )       
+
+#Create Avg Daily Min/Max reading for YOY
+YOY_MinMax <- YOY2020 %>%
+  bind_rows(YOY2021) %>% 
+  group_by(SiteCode, Date) %>%
+  summarise(
+    Min_temp_YOY_Period = min(Temp_C), 
+    Max_temp_YOY_Period = max(Temp_C)
+  ) 
+
+YOY_AvgMinMax <- YOY_MinMax %>%
+  group_by(SiteCode) %>%
+  summarise(
+    AvgMin_YOY_Period=mean(Min_temp_YOY_Period), 
+    AvgMax_YOY_Period=mean(Max_temp_YOY_Period))
+###############################################################################
+#Create Min/Max reading for Adult Spawning!
+AdSpawning_Extremes <- Ad_Spawning2020 %>%
+  bind_rows(Ad_Spawning2021) %>% 
+  group_by(SiteCode) %>%
+  summarise(
+    Highest_Temperature_AdSpawning_Period = max(Temp_C),
+    Lowest_Temperature_AdSpawning_Period = min(Temp_C)
+  )       
+
+#Create Avg Daily Min/Max reading for Adult Spanwing
+AdSpawning_MinMax <- Ad_Spawning2020 %>%
+  bind_rows(Ad_Spawning2021) %>% 
+  group_by(SiteCode, Date) %>%
+  summarise(
+    Min_temp_AdSpawning_Period = min(Temp_C), 
+    Max_temp_AdSpawning_Period = max(Temp_C)
+  ) 
+
+YOY_AvgMinMax <- AdSpawning_MinMax %>%
+  group_by(SiteCode) %>%
+  summarise(
+    AvgMin_AdSpawning_Period=mean(Min_temp_AdSpawning_Period), 
+    AvgMax_AdSpwaning_Period=mean(Max_temp_AdSpawning_Period))
+
+###############################################################################
+#Create Min/Max reading for Adult Survival!
+AdSurvival_Extremes <- Ad_Survival2020 %>%
+  bind_rows(Ad_Survival2021) %>% 
+  group_by(SiteCode) %>%
+  summarise(
+    Highest_Temperature_AdSurvival_Period = max(Temp_C),
+    Lowest_Temperature_AdSurvival_Period = min(Temp_C)
+  )       
+
+#Create Avg Daily Min/Max reading for Adult Survival
+AdSurvival_MinMax <- Ad_Survival2020 %>%
+  bind_rows(Ad_Survival2021) %>% 
+  group_by(SiteCode, Date) %>%
+  summarise(
+    Min_temp_AdSurvival_Period = min(Temp_C), 
+    Max_temp_AdSurvival_Period = max(Temp_C)
+  ) 
+
+AdSurvival_AvgMinMax <- AdSurvival_MinMax %>%
+  group_by(SiteCode) %>%
+  summarise(
+    AvgMin_AdSurvival_Period=mean(Min_temp_AdSurvival_Period), 
+    AvgMax_AdSurvival_Period=mean(Max_temp_AdSurvival_Period))
 
 
 #Number of logs per Month Year 
