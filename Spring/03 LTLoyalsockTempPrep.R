@@ -12,40 +12,40 @@ setwd("C:/GitHub/johnson_capstone/spring")
 #Load data - Stream Temp QC only
 BearT<-read_csv("Bear.Loyalsock_Stream_QC.csv")
 BrunT<-read_csv("Brunnerdale.Ogdonia_Stream_QC.csv")
-CoalT<-read_csv("Coal.Loyalsock_Stream_QC.csv")
-ConkT<-read_csv("Conklin.Mill_Stream_QC.csv")
-DryHBT<-read_csv("Dry.Hoagland_Stream_QC.csv")
-DryLST<-read_csv("Dry.Loyalsock_Stream_QC.csv")
+#CoalT<-read_csv("Coal.Loyalsock_Stream_QC.csv")
+#ConkT<-read_csv("Conklin.Mill_Stream_QC.csv")
+#DryHBT<-read_csv("Dry.Hoagland_Stream_QC.csv")
+#DryLST<-read_csv("Dry.Loyalsock_Stream_QC.csv")
 DutcT<-read_csv("Dutchman.Loyalsock_Stream_QC.csv")
-ElliT<-read_csv("Ellis.Loyalsock_Stream_QC.csv")
-FallT<-read_csv("Fall.Hoagland_Stream_QC.csv")
-FlagT<-read_csv("FlagMarsh.Pigeon_Stream_QC.csv")
-GranT<-read_csv("Grandad.Hessler_Stream_QC.csv")
-#HuckT<-read_csv("") #No logger retrieved
-LakeT<-read_csv("Lake.Elk_Stream_QC.csv")
-LeveT<-read_csv("Level.Lick_Stream_QC.csv")
-#LickT<-read_csv("") #No logger retrieved
-MillT<-read_csv("Mill.Loyalsock_Stream_QC.csv")
-PainT<-read_csv("Painter.LittleBear_Stream_QC.csv")
-PortT<-read_csv("Porter.Hoagland_Stream_QC.csv")
-RedT<-read_csv("")
-RockT<-read_csv("")
-SandT<-read_csv("")
-SaSpT<-read_csv("")
-#ScarT<-read_csv("") #No logger retrieved
-SherT<-read_csv("")
-ShinT<-read_csv("")
-SnakT<-read_csv("")
-StreT<-read_csv("")
-SwamT<-read_csv("")
-#WeedT<-read_csv("") #No logger retrieved
-YellT<-read_csv("")
+#ElliT<-read_csv("Ellis.Loyalsock_Stream_QC.csv")
+#FallT<-read_csv("Fall.Hoagland_Stream_QC.csv")
+#FlagT<-read_csv("FlagMarsh.Pigeon_Stream_QC.csv")
+#GranT<-read_csv("Grandad.Hessler_Stream_QC.csv")
+####HuckT<-read_csv("") #No logger retrieved
+#LakeT<-read_csv("Lake.Elk_Stream_QC.csv")
+#LeveT<-read_csv("Level.Lick_Stream_QC.csv")
+####LickT<-read_csv("") #No logger retrieved
+#MillT<-read_csv("Mill.Loyalsock_Stream_QC.csv")
+#PainT<-read_csv("Painter.LittleBear_Stream_QC.csv")
+#PortT<-read_csv("Porter.Hoagland_Stream_QC.csv")
+#RedT<-read_csv("Red.LittleBear_Stream_QC.csv")
+#RockT<-read_csv("Rock.LittleLoyalsock_Stream_QC.csv")
+#SandT<-read_csv("Sand.Mill_Stream_QC.csv")
+#SaSpT<-read_csv("SandSpring.LittleBear_Stream_QC.csv")
+####ScarT<-read_csv("") #No logger retrieved
+#SherT<-read_csv("Sherman.Loyalsock_Stream_QC.csv")
+#ShinT<-read_csv("Shingle.Bear_Stream_QC.csv")
+#SnakT<-read_csv("Snake.Bear_Stream_QC.csv")
+#StreT<-read_csv("Streby.Lick_Stream_QC.csv")
+#SwamT<-read_csv("Swamp.Hoagland_Stream_QC.csv")
+####WeedT<-read_csv("") #No logger retrieved
+#YellT<-read_csv("Yellow.LittleLoyalsock_Stream_QC.csv")
 ######################
 #Bind row so that all stream temperature data is in one tibble
-StreamTemp<-rbind(BearT,BrunT,CoalT,ConkT,DryHBT,DryLST,DutcT,ElliT,FallT,FlagT,MillT,PainT,PortT,LeveT,
-                  GranT,LakeT)
-#                 HuckT,LickT,RedT,RockT,SandT,SaSpT,
-#                  ScarT,SherT,ShinT,SnakT,StreT,SwamT,WeedT,YellT)
+StreamTemp<-rbind(BearT,BrunT,   DutcT,)
+#   ,CoalT,ConkT,DryHBT,DryLST,ElliT,FallT,FlagT,MillT,PainT,PortT,LeveT,
+#    GranT,LakeT,HuckT,LickT,RedT,RockT,SandT,SaSpT,ScarT,SherT,ShinT,SnakT,
+#    StreT,SwamT,WeedT,YellT)
 StreamTemp
 #####################
 #Separate out Year-Month-Day-Time so that we can create different predictors.
