@@ -1,27 +1,27 @@
 {
-    "id": "417AD06E",
+    "id": "A39BBBEA",
     "path": "C:/GitHub/johnson_capstone/Spring/10 Spring stats.R",
     "project_path": null,
     "type": "r_source",
     "hash": "0",
     "contents": "",
     "dirty": false,
-    "created": 1708383858537.0,
+    "created": 1710957826558.0,
     "source_on_save": false,
-    "relative_order": 1,
+    "relative_order": 27,
     "properties": {
         "tempName": "Untitled1",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "77,0",
-        "scrollLine": "0"
+        "cursorPosition": "160,0",
+        "scrollLine": "146"
     },
     "folds": "",
-    "lastKnownWriteTime": 1708466515,
+    "lastKnownWriteTime": 1710957647,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1708466515153,
+    "last_content_update": 1710957647,
     "read_only": false,
     "read_only_alternatives": []
 }
