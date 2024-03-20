@@ -58,12 +58,14 @@ ST<- StreamTemp %>% #Like this code better
   mutate_at(vars(Date),date)%>%
   mutate_at(vars(Year,Month,Day),factor)
 ST
+
 #QC - Date,Year,Month
 QCTempDate<-ST %>%
   group_by(SiteCode,Date)%>%
   summarize(Count=n())%>%
   arrange(Date)
 QCTempDate
+#     only 15 days for the sites included that are not full.
 QCTempY<-ST %>%
   group_by(SiteCode,Year)%>%
   summarize(Count=n())%>%
@@ -83,16 +85,17 @@ Monthly_Extremes <- ST %>%
     Highest_Temperature_C = max(Temp_C),
     Lowest_Temperature_C = min(Temp_C)
   )       
-Monthly_Extremes # 266 x 5
+Monthly_Extremes # 105 x 5
 ###############################################################################
 #Create Avg Min/Max reading for each Month-Year
-Monthly_MinMax <- ST %>%
+Daily_MinMax <- ST %>%
   group_by(SiteCode,Date) %>%
   summarise(
-    Min_tempC = min(Temp_C), 
-    Max_tempC = max(Temp_C)
+    DailyMin_tempC = min(Temp_C), 
+    DailyMax_tempC = max(Temp_C)
   ) 
-Monthly_MinMax
+Daily_MinMax
+#
 YM<- Monthly_MinMax %>% #Like this code better
   mutate(
     Date = format(as.Date(Date),"%Y-%m-%d"),
@@ -102,39 +105,48 @@ YM<- Monthly_MinMax %>% #Like this code better
   mutate_at(vars(Date),date)%>%
   mutate_at(vars(Year,Month),factor)
 YM
+#
 Monthly_AvgMinMax <- YM %>%
   group_by(SiteCode,Year, Month) %>%
   summarise(
     AvgMin=mean(Min_tempC), 
     AvgMax=mean(Max_tempC))
-Monthly_AvgMinMax # 266 x 5
+Monthly_AvgMinMax # 105 x 5
 ###############################################################################
-#Number of logs per Month Year 
+###############################################################################
 
-#For 3 degrees (Alevin: Lethal)
-
-#Midnight - 11:59pm <3 degrees c
-
+#Join Monthly_Extremes and Monthly_AvgMinMax together
+STPred<-left_join(Monthly_Extremes,Monthly_AvgMinMax, by = c("SiteCode","Year","Month"))
+STPred #105 x 7
+#write.csv(STPred,"STPred.csv")
+#   looks good
+###############################################################################
+########Mess below
+#Number of logs per Month Year, 
+############################For 3 degrees (Alevin: Lethal)
+#      day = Midnight - 11:59pm;  <3 degrees c
 TempsL3MY <- ST %>%
   filter(Temp_C < 3) %>%
-  group_by(SiteCode, Year, Month) %>%
-  summarise(numberoflogs_MYG10 = n()) 
+  group_by(SiteCode, Year, Month, .drop=F) %>%
+  summarise(numberoflogs_MYL3 = n()) 
+TempsL3MY #37 x4
+# Number of logs per Month Year less than 3 degrees Celsius.
 
-#AvgYMTemp < 3 degres C
-
+#Sites with Month-Year AvgYMTemp < 3 degrees C? why did we do this?
 Avg_YM_TempMYL3 <- ST %>%
   group_by(SiteCode, Year, Month) %>% 
   summarise(
     Avg_YM_TempC = mean(Temp_C)) %>%
   filter(Avg_YM_TempC < 3)
+Avg_YM_TempMYL3 #13 x 4
 
-#YM max temp < 3 degrees C 
 
-MaxTemp_MYL3 <- ST %>%
+#YM min temp < 3 degrees C 
+MinTemp_MYL3 <- ST %>%
   group_by(SiteCode, Year, Month) %>%
   summarize(
-    YM_MaxTempC = max(Temp_C)) %>%
-  filter(YM_MaxTempC < 3)
+    YM_MaxTempC = min(Temp_C)) %>%
+  filter(YM_MinTempC < 3)
 
 #For 5 degrees (Alevin and Eggs: Sub Lethal)
 
@@ -240,12 +252,7 @@ MaxTemp_MYL3 <- ST %>%
 
 
 # + # of logs at max temp
-###############################################################################
 
-#Join Monthly_Extremes and Monthly_AvgMinMax together
-STPred<-left_join(Monthly_Extremes,Monthly_AvgMinMax, by = c("SiteCode","Year","Month"))
-STPred #266 x 7
-#Ivestigate Conklin Mill 2020-06
 STPred2<-left_join(STPred, TempsG10MY, by = c("SiteCode","Year","Month"))
 STPred2
 
