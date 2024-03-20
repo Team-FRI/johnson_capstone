@@ -4,8 +4,8 @@ setwd("C:/GitHub/johnson_capstone/spring")
 
 #Read Both BKTVar and STDPred csv's
 
-BKTVar <- read.csv("BKTVar.csv") 
-STPred <- read.csv("STPred.csv")
+BKTVar <- read_csv("BKTVar.csv") #correct
+STPred <- read_csv("STPred.csv") #correct
 
 
 install.packages("tidyverse")
