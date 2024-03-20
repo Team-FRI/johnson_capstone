@@ -42,7 +42,7 @@ SaSpT<-read_csv("SandSpring.LittleBear_Stream_QC.csv")
 #YellT<-read_csv("Yellow.LittleLoyalsock_Stream_QC.csv")
 ######################
 #Bind row so that all stream temperature data is in one tibble
-StreamTemp<-bind_rows(BearT,BrunT,DutcT,GranT,PainT,SandT,SaSpT)
+StreamTemp<-rbind(BearT,BrunT,DutcT,GranT,PainT,SandT,SaSpT)
 #   CoalT,ConkT,DryHBT,DryLST,   ElliT,FallT,FlagT,  LakeT,LeveT,MillT,PortT,
 #   RedT,RockT,SherT,ShinT,SnakT,StreT,SwamT,YellT)
 StreamTemp
