@@ -16,22 +16,22 @@ BrunT<-read_csv("Brunnerdale.Ogdonia_Stream_QC.csv")
 #ConkT<-read_csv("Conklin.Mill_Stream_QC.csv")
 #DryHBT<-read_csv("Dry.Hoagland_Stream_QC.csv")
 #DryLST<-read_csv("Dry.Loyalsock_Stream_QC.csv")
-DutcT<-read_csv("Dutchman.Loyalsock_Stream_QC.csv")
+DutcT<-read_csv("Dutchman.Loyalsock_Stream_20202021_QC.csv")
 #ElliT<-read_csv("Ellis.Loyalsock_Stream_QC.csv")
 #FallT<-read_csv("Fall.Hoagland_Stream_QC.csv")
 #FlagT<-read_csv("FlagMarsh.Pigeon_Stream_QC.csv")
-#GranT<-read_csv("Grandad.Hessler_Stream_QC.csv")
+GranT<-read_csv("Grandad.Hessler_Stream_QC.csv")
 ####HuckT<-read_csv("") #No logger retrieved
 #LakeT<-read_csv("Lake.Elk_Stream_QC.csv")
 #LeveT<-read_csv("Level.Lick_Stream_QC.csv")
 ####LickT<-read_csv("") #No logger retrieved
 #MillT<-read_csv("Mill.Loyalsock_Stream_QC.csv")
-#PainT<-read_csv("Painter.LittleBear_Stream_QC.csv")
+PainT<-read_csv("Painter.LittleBear_Stream_20202021_QC.csv")
 #PortT<-read_csv("Porter.Hoagland_Stream_QC.csv")
 #RedT<-read_csv("Red.LittleBear_Stream_QC.csv")
 #RockT<-read_csv("Rock.LittleLoyalsock_Stream_QC.csv")
-#SandT<-read_csv("Sand.Mill_Stream_QC.csv")
-#SaSpT<-read_csv("SandSpring.LittleBear_Stream_QC.csv")
+SandT<-read_csv("Sand.Mill_Stream_QC.csv")
+SaSpT<-read_csv("SandSpring.LittleBear_Stream_QC.csv")
 ####ScarT<-read_csv("") #No logger retrieved
 #SherT<-read_csv("Sherman.Loyalsock_Stream_QC.csv")
 #ShinT<-read_csv("Shingle.Bear_Stream_QC.csv")
@@ -42,19 +42,12 @@ DutcT<-read_csv("Dutchman.Loyalsock_Stream_QC.csv")
 #YellT<-read_csv("Yellow.LittleLoyalsock_Stream_QC.csv")
 ######################
 #Bind row so that all stream temperature data is in one tibble
-StreamTemp<-rbind(BearT,BrunT,   DutcT,)
-#   ,CoalT,ConkT,DryHBT,DryLST,ElliT,FallT,FlagT,MillT,PainT,PortT,LeveT,
-#    GranT,LakeT,HuckT,LickT,RedT,RockT,SandT,SaSpT,ScarT,SherT,ShinT,SnakT,
-#    StreT,SwamT,WeedT,YellT)
+StreamTemp<-rbind(BearT,BrunT,   DutcT,   GranT,    PainT,  SandT,SaSpT,)
+#   CoalT,ConkT,DryHBT,DryLST,   ElliT,FallT,FlagT,  LakeT,LeveT,MillT,PortT,
+#   RedT,RockT,SherT,ShinT,SnakT,StreT,SwamT,YellT)
 StreamTemp
 #####################
 #Separate out Year-Month-Day-Time so that we can create different predictors.
-#STemp<-StreamTemp%>%
-#  separate(DateTime, into=c("Date","Time"),sep=" ",remove=FALSE)%>%
-#  separate(Date, into=c("Year","Month","Day"),sep="-",remove=FALSE)%>%
-#  mutate_at(vars(Date),date)%>%
-#  mutate_at(vars(Year,Month,Day),factor)
-#STemp
 ST<- StreamTemp %>% #Like this code better
   mutate(
     Date = format(as.Date(DateTime),"%Y-%m-%d"),
