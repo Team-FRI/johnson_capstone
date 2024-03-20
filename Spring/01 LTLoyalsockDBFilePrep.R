@@ -1,11 +1,12 @@
 #Database File Prep for Long-term (LT) Loyalsock (L) Surveys
 #Created by Sara Ashcraft 2/18/2024
-
+#Modified by Sara Ashcraft 3/20/2024 - prep for modeling
 #Load Library
 library(tidyverse)
 
 #Set working Directory
 setwd("C:/GitHub/johnson_capstone/spring")
+
 
 #Load data
 Sites<-read_csv("All_Sites.csv",
@@ -89,21 +90,36 @@ EventsLoyal<-Events%>%
 EventsLoyal#306 x 3
 
 #Update Site Names to match Temperature files
-
 EventsLoyal$SiteCode[1:10]<-"Bear.Loyalsock"
-
+EventsLoyal$SiteCode[11:20]<-"Brunnerdale.Ogdonia"
 EventsLoyal$SiteCode[21:31]<-"Coal.Loyalsock"
-
 EventsLoyal$SiteCode[32:41]<-"Conklin.Mill"
-
 EventsLoyal$SiteCode[42:52]<-"Dry.Hoagland"
-
 EventsLoyal$SiteCode[53:62]<-"Dry.Loyalsock"
-
 EventsLoyal$SiteCode[63:72]<-"Dutchman.Loyalsock"
-
 EventsLoyal$SiteCode[73:82]<-"Ellis.Loyalsock"
-
+EventsLoyal$SiteCode[83:92]<-"Fall.Hoagland"
+EventsLoyal$SiteCode[93:102]<-"FlagMarsh.Pigeon"
+EventsLoyal$SiteCode[103:113]<-"Grandad.Hessler"
+EventsLoyal$SiteCode[114:123]<-"Huckle.Loyalsock"
+EventsLoyal$SiteCode[124:133]<-"Lake.Elk"
+EventsLoyal$SiteCode[134:143]<-"Level.Lick"
+EventsLoyal$SiteCode[144:153]<-"Lick.Kings"
+EventsLoyal$SiteCode[154:163]<-"Mill.Loyalsock"
+EventsLoyal$SiteCode[164:174]<-"Painter.LittleBear"
+EventsLoyal$SiteCode[175:184]<-"Porter.Hoagland"
+EventsLoyal$SiteCode[185:195]<-"Red.LittleBear"
+EventsLoyal$SiteCode[196:206]<-"Rock.LittleLoyalsock"
+EventsLoyal$SiteCode[207:216]<-"Sand.Mill"
+EventsLoyal$SiteCode[217:226]<-"SandSpring.LittleBear"
+EventsLoyal$SiteCode[227:236]<-"Scar.Loyalsock"
+EventsLoyal$SiteCode[237:246]<-"Sherman.Loyalsock"
+EventsLoyal$SiteCode[247:256]<-"Shingle.Bear"
+EventsLoyal$SiteCode[257:266]<-"Snake.Bear"
+EventsLoyal$SiteCode[267:276]<-"Streby.Lick"
+EventsLoyal$SiteCode[277:286]<-"Swamp.Hoagland"
+EventsLoyal$SiteCode[287:296]<-"Weed.Hoagland"
+EventsLoyal$SiteCode[297:306]<-"Yellow.LittleLoyalsock"
 EventsLoyal
 
 #    Time had only 9 surveys out of 306 with a time recorded - removed from data prep.
@@ -124,7 +140,7 @@ EventsInv# all sites surveyed in 2021 - an additional year after all other sites
 #Create Table for reducting other table to LTL only
 EventsLoyalR<-EventsLoyal[,c(1,2)]
 EventsLoyalR
-write_csv(EventsLoyal,"EventsLoyal.csv")
+#write_csv(EventsLoyal,"EventsLoyal.csv")
 
 #Reduce Sites to only Sites categorized as Loyalsock
 SitesLoyal<-left_join(EvLoySum,Sites,by="SiteCode")
