@@ -1,12 +1,12 @@
 SiteCode,SiteName,TribTo,LoyalEventCount,SiteLat,SiteLon
-BearRun.Loyalsock,Bear.Run,Loyalsock Creek,10,41.465112,-76.498457
+Bear.Loyalsock,Bear.Run,Loyalsock Creek,10,41.465112,-76.498457
 Brunnerdale.Ogdonia,Brunnerdale.Run,Ogdonia Creek,10,41.38554,-76.66904
-Coal.UpperLoyalsock,Coal.Run,UpperLoyalsock Creek,11,41.46088,-76.52153
-Conklin.LakeMokoma,Conklin.Run,Lake Mokoma,10,41.41991,-76.480135
-DryHB.Hoagland,Dry.Run.HB,Hoagland Branch,11,41.51405,-76.71452
-DrySock.LowerLoyalsock,Dry.Run.Sock,Lower Loyalsock Creek,10,41.419941,-76.704952
-Dutchman.UpperLoyalsock,Dutchman.Run,Upper Loyalsock Creek,10,41.449235,-76.451373
-Ellis.UpperLoyalsock,Ellis.Creek,Upper Loyalsock Creek,10,41.44606,-76.37416
+Coal.Loyalsock,Coal.Run,UpperLoyalsock Creek,11,41.46088,-76.52153
+Conklin.Mill,Conklin.Run,Lake Mokoma,10,41.41991,-76.480135
+Dry.Hoagland,Dry.Run.HB,Hoagland Branch,11,41.51405,-76.71452
+Dry.Loyalsock,Dry.Run.Sock,Lower Loyalsock Creek,10,41.419941,-76.704952
+Dutchman.Loyalsock,Dutchman.Run,Upper Loyalsock Creek,10,41.449235,-76.451373
+Ellis.Loyalsock,Ellis.Creek,Upper Loyalsock Creek,10,41.44606,-76.37416
 Fall.Hoagland,Fall.Run,Hoagland Branch,10,41.53544,-76.74061
 FlagMarsh.Pigeon,Flag.Marsh.Run,Pigeon Creek,10,41.476077,-76.309056
 Grandad.Hessler,Grandad.Run,Hessler Branch,11,41.35706,-76.7487
@@ -19,12 +19,12 @@ Painter.LittleBear,Painter.Run,Little Bear Creek,11,41.3598,-76.84715
 Porter.Hoagland,Porter.Creek,Hoagland Branch,10,41.52133,-76.70416
 Red.LittleBear,Red.Run,Little Bear Creek,11,41.34909,-76.81129
 Rock.LittleLoyalsock,Rock.Run,Little Loyalsock Creek,11,41.501177,-76.516613
-Sand.MillMokoma,Sand.Run,Mill Creek (Mokoma),10,41.429593,-76.486242
+Sand.Mill,Sand.Run,Mill Creek (Mokoma),10,41.429593,-76.486242
 SandSpring.LittleBear,Sand.Spring.Run,Little Bear Creek,10,41.34489,-76.79786
-Scar.LowerLoyalsock,Scar.Run,Lower Loyalsock,10,41.470536,-76.635052
-Sherman.UpperLoyalsock,Sherman.Run,Upper Loyalsock,10,41.45208,-76.3519
+Scar.Loyalsock,Scar.Run,Lower Loyalsock,10,41.470536,-76.635052
+Sherman.Loyalsock,Sherman.Run,Upper Loyalsock,10,41.45208,-76.3519
 Shingle.Bear,Shingle.Run,Bear Creek,10,41.38193,-76.76989
-Snake.BearLoyalsock,Snake.Run,Bear Creek (Loyalsock),10,41.38209,-76.781769
+Snake.Bear,Snake.Run,Bear Creek (Loyalsock),10,41.38209,-76.781769
 Streby.Lick,Streby.Run,Lick Creek,10,41.548331,-76.555277
 Swamp.Hoagland,Swamp.Run,Hoagland Branch,10,41.49084,-76.71973
 Weed.Hoagland,Weed.Creek,Hoagland Branch,10,41.53089,-76.74007
