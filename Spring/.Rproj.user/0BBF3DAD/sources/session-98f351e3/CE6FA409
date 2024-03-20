@@ -3,7 +3,7 @@
     "path": "C:/GitHub/johnson_capstone/Spring/02 LTLoyalsockResponse.R",
     "project_path": null,
     "type": "r_source",
-    "hash": "911015620",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1708383939079.0,
@@ -16,11 +16,11 @@
         "scrollLine": "30"
     },
     "folds": "",
-    "lastKnownWriteTime": 1708465826,
+    "lastKnownWriteTime": 1710957647,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1708465826694,
+    "last_content_update": 1710957647,
     "read_only": false,
     "read_only_alternatives": []
 }
