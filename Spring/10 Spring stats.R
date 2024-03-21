@@ -240,11 +240,11 @@ AIC(mod11)#276.30....super extra overfit
 
 mod12 <- gam(RatAY~Year+SiteCode, data=BKTVar)
 summary(mod12)
-AIC(mod12)#105.20
+AIC(mod12)#105.20; With all years 499.41
 
 mod13 <- gam(RatAY~Year*SiteCode, data=BKTVar)
 summary(mod13)
-AIC(mod13)#68.78; With all years 
+AIC(mod13)#68.78; With all years 537.38
 
 
 Data_merge <- merge(BKTVar, STPred, by = "SiteCode", all = TRUE)
@@ -252,27 +252,27 @@ Data_merge <- merge(BKTVar, STPred, by = "SiteCode", all = TRUE)
 colnames(Data_merge)
 mod14 <- gam(RatAY~Year.x, data=Data_merge)
 summary(mod14)
-AIC(mod14)#295.85; With all years
+AIC(mod14)#295.85; With all years 1980.35
 
 mod15 <- gam(RatAY~Year.x*Highest_Temperature_C, data=Data_merge)
 summary(mod15)
-AIC(mod15)#235.28
+AIC(mod15)#235.28; With all years 1583.071
 
 mod16 <- gam(RatAY~Year.x*Lowest_Temperature_C, data=Data_merge)
 summary(mod16)
-AIC(mod16)#249.42; With all years
+AIC(mod16)#249.42; With all years 1582.182
 
 
 mod17 <- gam(RatAY~Year.x+Lowest_Temperature_C, data=Data_merge)
 summary(mod17)
-AIC(mod17)#228.26; With all years
+AIC(mod17)#228.26; With all years 1580.324
 
 #scratchpad
 mod18 <- gam(CPUE_Biomass~Year.x*AvgMax, data=Data_merge)
 summary(mod18)
-AIC(mod18)#228.29; With all years
+AIC(mod18)#228.29; With all years 13059.76
 
 mod18 <- gam(CPUE_Count~Year.x*AvgMax, data=Data_merge)
 summary(mod18)
-AIC(mod18)#228.29; With all years
+AIC(mod18)#228.29; With all years 8927.68
 
