@@ -143,3 +143,4 @@ BKTVar# 306 x 6
 BKTVarO<-BKTVar[,c(4,1,5,2:3,6)]
 BKTVarO
 #write.csv(BKTVarO,"BKTVar_AllSites.csv")
+write.csv(BKTVarO,"BKTVar_AllSites.csv")

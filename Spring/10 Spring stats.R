@@ -4,8 +4,9 @@ setwd("C:/GitHub/johnson_capstone/spring")
 
 #Read Both BKTVar and STDPred csv's
 
-BKTVar <- read_csv("BKTVar.csv") #correct
+#BKTVar <- read_csv("BKTVar.csv") #correct
 STPred <- read_csv("STPred.csv") #correct
+BKTVar<- read_csv("BKTVar_AllSites.csv") #Updated; Brook Trout for all years of Long Term Loyalsock Project. #Correct 
 
 
 install.packages("tidyverse")
@@ -174,11 +175,13 @@ cpue_BTestAvgMax <- lm(BKTVar$CPUE_Biomass ~ STPred$AvgMax)
 
 
 #MW from scratch:
+install.packages("mgcv")
 library(mgcv)
 #+s(SiteCode, bs = 're')
-mod <- gam(Highest_Temperature_C~Year+Month, data=STPred)
-summary(mod)
-AIC(mod) #372.46
+
+mod1 <- gam(Highest_Temperature_C~Year+Month, data=STPred)
+summary(mod1)
+AIC(mod1) #372.46
 
 mod2 <- gam(Highest_Temperature_C~Year+s(SiteCode, bs = 're'), data=STPred)#double check reason for error
 summary(mod2)
@@ -241,7 +244,7 @@ AIC(mod12)#105.20
 
 mod13 <- gam(RatAY~Year*SiteCode, data=BKTVar)
 summary(mod13)
-AIC(mod13)#68.78
+AIC(mod13)#68.78; With all years 
 
 
 Data_merge <- merge(BKTVar, STPred, by = "SiteCode", all = TRUE)
@@ -249,7 +252,7 @@ Data_merge <- merge(BKTVar, STPred, by = "SiteCode", all = TRUE)
 colnames(Data_merge)
 mod14 <- gam(RatAY~Year.x, data=Data_merge)
 summary(mod14)
-AIC(mod14)#295.85
+AIC(mod14)#295.85; With all years
 
 mod15 <- gam(RatAY~Year.x*Highest_Temperature_C, data=Data_merge)
 summary(mod15)
@@ -257,19 +260,19 @@ AIC(mod15)#235.28
 
 mod16 <- gam(RatAY~Year.x*Lowest_Temperature_C, data=Data_merge)
 summary(mod16)
-AIC(mod16)#249.42
+AIC(mod16)#249.42; With all years
 
 
 mod17 <- gam(RatAY~Year.x+Lowest_Temperature_C, data=Data_merge)
 summary(mod17)
-AIC(mod17)#228.26
+AIC(mod17)#228.26; With all years
 
 #scratchpad
 mod18 <- gam(CPUE_Biomass~Year.x*AvgMax, data=Data_merge)
 summary(mod18)
-AIC(mod18)#228.29
+AIC(mod18)#228.29; With all years
 
 mod18 <- gam(CPUE_Count~Year.x*AvgMax, data=Data_merge)
 summary(mod18)
-AIC(mod18)#228.29
+AIC(mod18)#228.29; With all years
 
