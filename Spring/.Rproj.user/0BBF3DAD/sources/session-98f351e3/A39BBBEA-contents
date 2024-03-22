@@ -165,8 +165,111 @@ plot(RatAy_AvgMax)
 
 GLM_CPUEC_HighT <- glm(CPUE_Count ~ Highest_Temperature_C, data = Data_merge, family = binomial())
 
-GLM_CPUEC_HighT <- glm(CPUE_Count ~ Highest_Temperature_C, data = Data_merge, family = gaussian()
+GLM_CPUEC_HighT <- glm(CPUE_Count ~ Highest_Temperature_C, data = Data_merge, family = gaussian())
 
 
 
 cpue_BTestAvgMax <- lm(BKTVar$CPUE_Biomass ~ STPred$AvgMax)
+
+
+
+#MW from scratch:
+library(mgcv)
+#+s(SiteCode, bs = 're')
+mod <- gam(Highest_Temperature_C~Year+Month, data=STPred)
+summary(mod)
+AIC(mod) #372.46
+
+mod2 <- gam(Highest_Temperature_C~Year+s(SiteCode, bs = 're'), data=STPred)#double check reason for error
+summary(mod2)
+AIC(mod)
+
+mod2 <- gam(Highest_Temperature_C~Year+SiteCode, data=STPred)
+summary(mod2)
+AIC(mod2)#629.2585
+
+
+mod3 <- gam(Highest_Temperature_C~Year*SiteCode, data=STPred)
+summary(mod3)
+AIC(mod3)#631.99
+
+
+mod4 <- gam(Highest_Temperature_C~Month+SiteCode, data=STPred)
+summary(mod4)
+AIC(mod4)#356.3311
+
+mod5 <- gam(Highest_Temperature_C~Month*SiteCode, data=STPred)
+summary(mod5)
+AIC(mod5)#283.9091....super extra overfit
+
+#March <- subset()
+#boxplot(Highest_Temperature_C~Month+SiteCode, data=March)
+#Look at temps for these months and compare to p-values by site interaction
+
+
+mod6 <- gam(Lowest_Temperature_C~Month+SiteCode, data=STPred)
+summary(mod6)
+AIC(mod6)#384.78
+
+mod7 <- gam(Lowest_Temperature_C~Month*SiteCode, data=STPred)
+summary(mod7)
+AIC(mod7)#427.66....super extra overfit
+
+
+mod8 <- gam(AvgMax~Month+SiteCode, data=STPred)
+summary(mod8)
+AIC(mod8)#346.03
+
+mod9 <- gam(AvgMax~Month*SiteCode, data=STPred)
+summary(mod9)
+AIC(mod9)#278.73....super extra overfit
+
+
+mod10 <- gam(AvgMin~Month+SiteCode, data=STPred)
+summary(mod10)
+AIC(mod10)#339.86
+
+mod11 <- gam(AvgMin~Month*SiteCode, data=STPred)
+summary(mod11)
+AIC(mod11)#276.30....super extra overfit
+
+
+
+mod12 <- gam(RatAY~Year+SiteCode, data=BKTVar)
+summary(mod12)
+AIC(mod12)#105.20
+
+mod13 <- gam(RatAY~Year*SiteCode, data=BKTVar)
+summary(mod13)
+AIC(mod13)#68.78
+
+
+Data_merge <- merge(BKTVar, STPred, by = "SiteCode", all = TRUE)
+
+colnames(Data_merge)
+mod14 <- gam(RatAY~Year.x, data=Data_merge)
+summary(mod14)
+AIC(mod14)#295.85
+
+mod15 <- gam(RatAY~Year.x*Highest_Temperature_C, data=Data_merge)
+summary(mod15)
+AIC(mod15)#235.28
+
+mod16 <- gam(RatAY~Year.x*Lowest_Temperature_C, data=Data_merge)
+summary(mod16)
+AIC(mod16)#249.42
+
+
+mod17 <- gam(RatAY~Year.x+Lowest_Temperature_C, data=Data_merge)
+summary(mod17)
+AIC(mod17)#228.26
+
+#scratchpad
+mod18 <- gam(CPUE_Biomass~Year.x*AvgMax, data=Data_merge)
+summary(mod18)
+AIC(mod18)#228.29
+
+mod18 <- gam(CPUE_Count~Year.x*AvgMax, data=Data_merge)
+summary(mod18)
+AIC(mod18)#228.29
+
