@@ -96,7 +96,7 @@ Daily_MinMax <- ST %>%
   ) 
 Daily_MinMax
 #
-YM<- Monthly_MinMax %>% #Like this code better
+YM<- Daily_MinMax %>% #Like this code better
   mutate(
     Date = format(as.Date(Date),"%Y-%m-%d"),
     Year = format(as.Date(Date),"%Y"),
