@@ -106,11 +106,12 @@ YM<- Daily_MinMax %>% #Like this code better
   mutate_at(vars(Year,Month),factor)
 YM
 #
+
 Monthly_AvgMinMax <- YM %>%
   group_by(SiteCode,Year, Month) %>%
   summarise(
-    AvgMin=mean(Min_tempC), 
-    AvgMax=mean(Max_tempC))
+    AvgMin=mean(DailyMin_tempC), 
+    AvgMax=mean(DailyMax_tempC))
 Monthly_AvgMinMax # 105 x 5
 ###############################################################################
 ###############################################################################
