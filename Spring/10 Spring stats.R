@@ -247,6 +247,7 @@ summary(mod13)
 AIC(mod13)#68.78; With all years 537.38
 
 
+
 Data_merge <- merge(BKTVar, STPred, by = "SiteCode", all = TRUE)
 
 colnames(Data_merge)
