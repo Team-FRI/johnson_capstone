@@ -3,7 +3,7 @@
     "path": "C:/GitHub/johnson_capstone/Spring/10 Spring stats.R",
     "project_path": null,
     "type": "r_source",
-    "hash": "4133197087",
+    "hash": "1633000614",
     "contents": "",
     "dirty": false,
     "created": 1710957826558.0,
@@ -13,15 +13,15 @@
         "tempName": "Untitled1",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "278,0",
-        "scrollLine": "264"
+        "cursorPosition": "264,0",
+        "scrollLine": "248"
     },
     "folds": "",
-    "lastKnownWriteTime": 1711212029,
+    "lastKnownWriteTime": 1711398189,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1711212029140,
+    "last_content_update": 1711398189152,
     "read_only": false,
     "read_only_alternatives": []
 }

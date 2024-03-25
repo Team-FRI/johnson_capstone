@@ -15,6 +15,8 @@ library(tidyverse)
 install.packages("broom")
 library(broom)
 
+install.packages("lubridate")
+library(lubridate)
 
 #Separate out/Reduce to 2020 and 2021 Data 
 
@@ -181,7 +183,7 @@ library(mgcv)
 
 mod1 <- gam(Highest_Temperature_C~Year+Month, data=STPred)
 summary(mod1)
-AIC(mod1) #372.46; with updated QC1 550.56
+AIC(mod1) #372.46; with updated QC1 550.56; with updated QC2 779.55
 
 mod2 <- gam(Highest_Temperature_C~Year+s(SiteCode, bs = 're'), data=STPred)#double check reason for error
 summary(mod2)
@@ -189,52 +191,102 @@ AIC(mod)
 
 mod2 <- gam(Highest_Temperature_C~Year+SiteCode, data=STPred)
 summary(mod2)
-AIC(mod2)#629.2585; with updated QC1 910.00
+AIC(mod2)#629.2585; with updated QC1 910.00; with updated QC2 1138.74
 
 
 mod3 <- gam(Highest_Temperature_C~Year*SiteCode, data=STPred)
 summary(mod3)
-AIC(mod3)#631.99; with updated QC1 919.21
+AIC(mod3)#631.99; with updated QC1 919.21; with updated QC2 1149.46
 
 
 mod4 <- gam(Highest_Temperature_C~Month+SiteCode, data=STPred)
 summary(mod4)
-AIC(mod4)#356.3311; with updated QC1 529.76
+AIC(mod4)#356.3311; with updated QC1 529.76; with updated QC2; 727.29
 
 mod5 <- gam(Highest_Temperature_C~Month*SiteCode, data=STPred)
 summary(mod5)
-AIC(mod5)#283.9091....super extra overfit ; with updated QC1 439.06
+AIC(mod5)#283.9091....super extra overfit ; with updated QC1 439.06; with updated QC2 574.04
 
 #March <- subset()
 #boxplot(Highest_Temperature_C~Month+SiteCode, data=March)
 #Look at temps for these months and compare to p-values by site interaction
 
+#(March) April, June July August 
 
-mod6 <- gam(Lowest_Temperature_C~Month+SiteCode, data=STPred)
+#Subset the data by months your interested in. 
+
+March <- subset(STPred, Month == "03")
+
+April <- subset(STPred, Month == "04")
+
+March_April <- subset(STPred, Month == "03" | Month == "04")
+
+June <- subset(STPred, Month == "06")
+
+July <- subset(STPred, Month == "07")
+
+August <- subset(STPred, Month == "08")
+
+June_July_August <- subset(STPred, Month == "06" | Month == "07" | Month == "08")
+
+boxplot(Highest_Temperature_C~Month+SiteCode, data=March)
+
+boxplot(Lowest_Temperature_C~Month+SiteCode, data=March)
+
+boxplot(Highest_Temperature_C~SiteCode, data=March_April)
+
+boxplot(Highest_Temperature_C~Month, data=March_April)
+
+boxplot(Lowest_Temperature_C~SiteCode, data=March_April)
+
+boxplot(Lowest_Temperature_C~Month, data=March_April)
+
+boxplot(Highest_Temperature_C~Month+SiteCode, data=April)
+
+boxplot(Lowest_Temperature_C~Month+SiteCode, data=April)
+
+boxplot(Highest_Temperature_C~Month+SiteCode, data=June)
+
+boxplot(Lowest_Temperature_C~Month+SiteCode, data=June)
+
+boxplot(Highest_Temperature_C~Month+SiteCode, data=July)
+
+boxplot(Lowest_Temperature_C~Month+SiteCode, data=July)
+
+boxplot(Highest_Temperature_C~Month+SiteCode, data=August)
+
+boxplot(Lowest_Temperature_C~Month+SiteCode, data=August)
+
+boxplot(Highest_Temperature_C~Month, data=June_July_August)
+
+boxplot(Highest_Temperature_C~SiteCode, data=June_July_August)
+
+
+mod6 <- gam(Lowest_Temperature_C~Month+SiteCode, data=STPred) 
 summary(mod6)
-AIC(mod6)#384.78; with updated QC1 536.6349
+AIC(mod6)#384.78; with updated QC1 536.6349; with updated QC2 695.03
 
 mod7 <- gam(Lowest_Temperature_C~Month*SiteCode, data=STPred)
 summary(mod7)
-AIC(mod7)#427.66....super extra overfit; with updated QC1 614.4394m
+AIC(mod7)#427.66....super extra overfit; with updated QC1 614.4394m; with updated QC2 768.98
 
 
 mod8 <- gam(AvgMax~Month+SiteCode, data=STPred)
 summary(mod8)
-AIC(mod8)#346.03
+AIC(mod8)#346.03; with updated QC2 668.23
 
 mod9 <- gam(AvgMax~Month*SiteCode, data=STPred)
 summary(mod9)
-AIC(mod9)#278.73....super extra overfit
+AIC(mod9)#278.73....super extra overfit; with updated QC2 550.33
 
 
 mod10 <- gam(AvgMin~Month+SiteCode, data=STPred)
 summary(mod10)
-AIC(mod10)#339.86
+AIC(mod10)#339.86; with updated QC2 618.38
 
 mod11 <- gam(AvgMin~Month*SiteCode, data=STPred)
 summary(mod11)
-AIC(mod11)#276.30....super extra overfit
+AIC(mod11)#276.30....super extra overfit; 505.98
 
 
 
@@ -261,19 +313,19 @@ AIC(mod15)#235.28; With all years 1583.071
 
 mod16 <- gam(RatAY~Year.x*Lowest_Temperature_C, data=Data_merge)
 summary(mod16)
-AIC(mod16)#249.42; With all years 1582.182
+AIC(mod16)#249.42; With all years 1582.182; with updated QC2 2930.87
 
 
 mod17 <- gam(RatAY~Year.x+Lowest_Temperature_C, data=Data_merge)
 summary(mod17)
-AIC(mod17)#228.26; With all years 1580.324
+AIC(mod17)#228.26; With all years 1580.324; with updated QC2 2928.93
 
 #scratchpad
 mod18 <- gam(CPUE_Biomass~Year.x*AvgMax, data=Data_merge)
 summary(mod18)
-AIC(mod18)#228.29; With all years 13059.76
+AIC(mod18)#228.29; With all years 13059.76; with updated QC2 23027.43
 
 mod18 <- gam(CPUE_Count~Year.x*AvgMax, data=Data_merge)
 summary(mod18)
-AIC(mod18)#228.29; With all years 8927.68
+AIC(mod18)#228.29; With all years 8927.68; with updated QC2  14498.23
 

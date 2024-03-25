@@ -33,16 +33,16 @@ RedT<-read_csv("Red.LittleBear_Stream_QC.csv")
 SandT<-read_csv("Sand.Mill_Stream_QC.csv")
 SaSpT<-read_csv("SandSpring.LittleBear_Stream_QC.csv")
 ####ScarT<-read_csv("") #No logger retrieved
-#SherT<-read_csv("Sherman.Loyalsock_Stream_QC.csv")
+SherT<-read_csv("Sherman.Loyalsock_Stream_QC.csv")
 #ShinT<-read_csv("Shingle.Bear_Stream_QC.csv")
 #SnakT<-read_csv("Snake.Bear_Stream_QC.csv")
 StreT<-read_csv("Streby.Lick_Stream_QC.csv")
-#SwamT<-read_csv("Swamp.Hoagland_Stream_QC.csv")
+SwamT<-read_csv("Swamp.Hoagland_Stream_QC.csv")
 ####WeedT<-read_csv("") #No logger retrieved
-#YellT<-read_csv("Yellow.LittleLoyalsock_Stream_QC.csv")
+YellT<-read_csv("Yellow.LittleLoyalsock_Stream_QC.csv")
 ######################
 #Bind row so that all stream temperature data is in one tibble
-StreamTemp<-rbind(BearT,BrunT,DutcT,GranT,LeveT,PainT,RedT,SandT,SaSpT,StreT)
+StreamTemp<-rbind(BearT,BrunT,DutcT,GranT,LeveT,PainT,RedT,SandT,SaSpT,StreT,SherT,SwamT,YellT)
 #   CoalT,ConkT,DryHBT,DryLST,   ElliT,FallT,FlagT,  LakeT,MillT,PortT,
 #   RockT,SherT,ShinT,SnakT,SwamT,YellT)
 StreamTemp
