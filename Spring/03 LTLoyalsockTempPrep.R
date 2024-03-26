@@ -1,6 +1,7 @@
 #Long-term (LT) Loyalsock (L) Surveys
 #Logger Data Prep for Loops
 #Created by Sara Ashcraft 2/18/2024
+#Modified by Sara Ashcraft 3/26/24 - Adding files and working with predictor code.
 
 #Load Library
 library(tidyverse)
@@ -66,18 +67,21 @@ QCTempDate<-ST %>%
   summarize(Count=n())%>%
   arrange(Date)
 QCTempDate
-#     only 15 days for the sites included that are not full.
+#     only 43 dates for the sites included that are not full.
 QCTempY<-ST %>%
   group_by(SiteCode,Year)%>%
   summarize(Count=n())%>%
   arrange(Year)
 QCTempY
+#     Full year's worth of data ~ 35,040 logs
+#     Site-Year with most logs: Brunnerdale-2021; Sherman-2021; Dutchman-2021; 
+#                               SandSpring-2021;
 QCTempM<-ST %>%
-  group_by(SiteCode,Month)%>%
+  group_by(SiteCode,Year,Month)%>%
   summarize(Count=n())%>%
   arrange(Month)
 QCTempM
-
+#      39 incomplete months
 ###############################################################################
 #Create Min/Max reading for each Month-Year.
 Monthly_Extremes <- ST %>%
@@ -86,7 +90,7 @@ Monthly_Extremes <- ST %>%
     Highest_Temperature_C = max(Temp_C),
     Lowest_Temperature_C = min(Temp_C)
   )       
-Monthly_Extremes # 105 x 5
+Monthly_Extremes # 216 x 5
 ###############################################################################
 #Create Avg Min/Max reading for each Month-Year
 Daily_MinMax <- ST %>%
@@ -95,8 +99,7 @@ Daily_MinMax <- ST %>%
     DailyMin_tempC = min(Temp_C), 
     DailyMax_tempC = max(Temp_C)
   ) 
-Daily_MinMax
-#
+Daily_MinMax #5839 x4
 YM<- Daily_MinMax %>% #Like this code better
   mutate(
     Date = format(as.Date(Date),"%Y-%m-%d"),
@@ -107,19 +110,18 @@ YM<- Daily_MinMax %>% #Like this code better
   mutate_at(vars(Year,Month),factor)
 YM
 #
-
 Monthly_AvgMinMax <- YM %>%
   group_by(SiteCode,Year, Month) %>%
   summarise(
     AvgMin=mean(DailyMin_tempC), 
     AvgMax=mean(DailyMax_tempC))
-Monthly_AvgMinMax # 105 x 5
+Monthly_AvgMinMax # 216 x 5
 ###############################################################################
 ###############################################################################
 
 #Join Monthly_Extremes and Monthly_AvgMinMax together
 STPred<-left_join(Monthly_Extremes,Monthly_AvgMinMax, by = c("SiteCode","Year","Month"))
-STPred #105 x 7
+STPred #216 x 7
 #write.csv(STPred,"STPred.csv")
 #   looks good
 ###############################################################################
