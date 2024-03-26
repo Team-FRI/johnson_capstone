@@ -229,6 +229,8 @@ August <- subset(STPred, Month == "08")
 
 June_July_August <- subset(STPred, Month == "06" | Month == "07" | Month == "08")
 
+#Make Box plots for Highest Temperature_C
+
 boxplot(Highest_Temperature_C~Month+SiteCode, data=March)
 
 boxplot(Lowest_Temperature_C~Month+SiteCode, data=March)
@@ -260,6 +262,98 @@ boxplot(Lowest_Temperature_C~Month+SiteCode, data=August)
 boxplot(Highest_Temperature_C~Month, data=June_July_August)
 
 boxplot(Highest_Temperature_C~SiteCode, data=June_July_August)
+
+boxplot(Lowest_Temperature_C~Month, data=June_July_August)
+
+boxplot(Lowest_Temperature_C~SiteCode, data=June_July_August)
+
+#Make Box plots for AvgMin and AvgMax
+
+boxplot(AvgMax~Month+SiteCode, data=March)
+
+#Yellow still is low. 
+#All others generally between 4 and 6.
+
+boxplot(AvgMin~Month+SiteCode, data=March)
+
+#Yellow still low.
+#Two Trends here. one (middle) line between 2 and 3. Other (Top) between 4 and 5). Maybe that telling us that sites are acting different from one another. Maybe the middle line is moregroundwate fed?
+
+boxplot(AvgMax~SiteCode, data=March_April)
+
+#Yellow still low.
+#Most overlap so its generally consistent. A few don't. 
+
+boxplot(AvgMin~Month, data=March_April)
+
+#March is lower than April, What you would expect.
+
+boxplot(AvgMax~SiteCode, data=March_April)
+
+#Yellow is still low.
+#All generally in a consistent line. 
+
+boxplot(AvgMin~Month, data=March_April)
+
+#March is lower than April. What you would expect. 
+
+boxplot(AvgMax~Month+SiteCode, data=April)
+
+#A little bit all over the place. 
+
+boxplot(AvgMin~Month+SiteCode, data=April)
+
+#Kind of two negative sloping relationships and then the one outlier. Again maybe some sites more groundwater influcenced than others within the two lines. 
+
+boxplot(AvgMax~Month+SiteCode, data=June)
+
+#Some grouping at the bottom left between twelve and 16 degrees. 
+#Very big outlier at 20 degrees which could be interesting cause thermal stress and Brook Trout. 
+
+boxplot(AvgMin~Month+SiteCode, data=June)
+
+#Literally the same thing as above....
+#Some grouping at the bottom left between twelve and 14.5 degrees. 
+#Very big outlier at 16 to 17 degrees and a few at 15 which could be interesting for AvgMin.
+
+boxplot(AvgMax~Month+SiteCode, data=July)
+
+#Most between 16 and 18, but thats still pretty high!
+#One big outlier just bellow 22 degrees which is very interesting. 
+
+boxplot(AvgMin~Month+SiteCode, data=July)
+
+#Two main areas of Grouping. 
+#Multiple just bellow 18 degrres C. Thats interesting for AvgMin. 
+#One outlier down bellow 13 degrees C.
+
+boxplot(AvgMax~Month+SiteCode, data=August)
+
+#Again it seems like one outlier at 21 degres C is the same site consistently. Look into which site that is. 
+#Rest generally between 16 and 18 degrees C. 
+
+boxplot(AvgMin~Month+SiteCode, data=August)
+
+#2-3 at 18 degrees C. Decent amount at 17 and 14.5 degrees C. 
+#outlier ish down low. 
+
+boxplot(AvgMax~Month, data=June_July_August)
+
+#Pretty much what you'd expect. June lower and July and August about the same. 
+
+boxplot(AvgMax~SiteCode, data=June_July_August)
+
+#One big outlier at 21 degrees celcius. Thats interesting!
+#Lots between 14 and 18 degrees celcius. 
+
+boxplot(AvgMin~Month, data=June_July_August)
+
+#Again what you'd expect for AvgMin. Lower in June. July and August. 
+
+boxplot(AvgMax~SiteCode, data=June_July_August)
+
+#Between 14 and 18 degrees Celsius. 
+#One big outlier at 21 degrees Celsius. Very intersting and seems to be the same site in most of the graphs.
 
 
 mod6 <- gam(Lowest_Temperature_C~Month+SiteCode, data=STPred) 
