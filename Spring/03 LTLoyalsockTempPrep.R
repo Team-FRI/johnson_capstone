@@ -134,15 +134,31 @@ TempsL3MY <- ST %>%
   group_by(SiteCode, Year, Month, .drop=F) %>%
   summarise(numberoflogs_MYL3 = n()) 
 TempsL3MY #37 x4
-# Number of logs per Month Year less than 3 degrees Celsius.
+#  Number of logs per Month Year less than 3 degrees Celsius with Year-Month combos we don't need.
+#Do a join to get rid of rows where no temp data was collected
+LogCountL3<-left_join(QCTempM,TempsL3MY, by = c("SiteCode","Year","Month"))
+LogCountL3 #216 x 5
+PropLogL3<-LogCountL3%>%
+  mutate(
+    PropLogL3 = numberoflogs_MYL3/Count
+  )
+PropLogL3 #216 X 6   - Will need to add to STPred
 
-#Sites with Month-Year AvgYMTemp < 3 degrees C? why did we do this?
+# Avg Year-Month Temp
+Avg_YM_Temp <- ST %>%
+  group_by(SiteCode, Year, Month) %>% 
+  summarise(
+    Avg_YM_TempC = mean(Temp_C))
+Avg_YM_Temp #216 x 4   - Will need to add to STPred
+
+#Sites with Month-Year AvgYMTemp < 3 degrees C? Calculate the avg temp per month, 
+#   which months have an average less than 3 degrees
 Avg_YM_TempMYL3 <- ST %>%
   group_by(SiteCode, Year, Month) %>% 
   summarise(
     Avg_YM_TempC = mean(Temp_C)) %>%
   filter(Avg_YM_TempC < 3)
-Avg_YM_TempMYL3 #13 x 4
+Avg_YM_TempMYL3 #35 x 4
 
 
 #YM min temp < 3 degrees C 
