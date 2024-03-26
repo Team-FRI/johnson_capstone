@@ -134,7 +134,8 @@ TempsL3MY <- ST %>%
   group_by(SiteCode, Year, Month, .drop=F) %>%
   summarise(numberoflogs_MYL3 = n()) 
 TempsL3MY #37 x4
-#  Number of logs per Month Year less than 3 degrees Celsius with Year-Month combos we don't need.
+#  Number of logs per Month Year less than 3 degrees Celsius with Year-Month 
+#      combos we don't need.
 #Do a join to get rid of rows where no temp data was collected
 LogCountL3<-left_join(QCTempM,TempsL3MY, by = c("SiteCode","Year","Month"))
 LogCountL3 #216 x 5
@@ -151,7 +152,7 @@ Avg_YM_Temp <- ST %>%
     Avg_YM_TempC = mean(Temp_C))
 Avg_YM_Temp #216 x 4   - Will need to add to STPred
 
-#Sites with Month-Year AvgYMTemp < 3 degrees C? Calculate the avg temp per month, 
+#Sites with Month-Year AvgYMTemp < 3 degrees C. Calculate the avg temp per month, 
 #   which months have an average less than 3 degrees
 Avg_YM_TempMYL3 <- ST %>%
   group_by(SiteCode, Year, Month) %>% 
@@ -160,12 +161,12 @@ Avg_YM_TempMYL3 <- ST %>%
   filter(Avg_YM_TempC < 3)
 Avg_YM_TempMYL3 #35 x 4
 
-
-#YM min temp < 3 degrees C 
+#YM min temp < 3 degrees C. Calculate the min temp per month, which months 
+#   have a minimum temp less than 3 degrees
 MinTemp_MYL3 <- ST %>%
   group_by(SiteCode, Year, Month) %>%
   summarize(
-    YM_MaxTempC = min(Temp_C)) %>%
+    YM_MinTempC = min(Temp_C)) %>%
   filter(YM_MinTempC < 3)
 
 #For 5 degrees (Alevin and Eggs: Sub Lethal)
@@ -174,8 +175,20 @@ MinTemp_MYL3 <- ST %>%
 
 TempsL5MY <- ST %>%
   filter(Temp_C < 5) %>%
-  group_by(SiteCode, Year, Month) %>%
-  summarise(numberoflogs_MYG10 = n()) 
+  group_by(SiteCode, Year, Month, .drop=F) %>%
+  summarise(numberoflogs_MYL5 = n())
+TempsL5MY
+#  Number of logs per Month Year less than 5 degrees Celsius with Year-Month 
+#      combos we don't need.
+#Do a join to get rid of rows where no temp data was collected
+LogCountL5<-left_join(QCTempM,TempsL5MY, by = c("SiteCode","Year","Month"))
+LogCountL5 #216 x 5
+PropLogL5<-LogCountL5%>%
+  mutate(
+    PropLogL5 = numberoflogs_MYL5/Count
+  )
+PropLogL5 #216 X 6   - Will need to add to STPred
+
 
 #AvgYMTemp < 5 degres C
 
@@ -199,8 +212,19 @@ MaxTemp_MYL5 <- ST %>%
 
 TempsL4.5MY <- ST %>%
   filter(Temp_C < 4.5) %>%
-  group_by(SiteCode, Year, Month) %>%
-  summarise(numberoflogs_MYG10 = n()) 
+  group_by(SiteCode, Year, Month,.drop=F) %>%
+  summarise(numberoflogs_MYL4.5 = n()) 
+TempsL4.5MY
+#  Number of logs per Month Year less than 4.5 degrees Celsius with Year-Month 
+#      combos we don't need.
+#Do a join to get rid of rows where no temp data was collected
+LogCountL4.5<-left_join(QCTempM,TempsL4.5MY, by = c("SiteCode","Year","Month"))
+LogCountL4.5 #216 x 5
+PropLogL4.5<-LogCountL4.5%>%
+  mutate(
+    PropLogL4.5 = numberoflogs_MYL4.5/Count
+  )
+PropLogL4.5 #216 X 6   - Will need to add to STPred
 
 #AvgYMTemp < 4.5 degres C
 
@@ -226,8 +250,20 @@ MaxTemp_MYL4.5 <- ST %>%
 
 TempsG20MY <- ST %>%
   filter(Temp_C > 20) %>%
-  group_by(SiteCode, Year, Month) %>%
-  summarise(numberoflogs_MYG10 = n()) 
+  group_by(SiteCode, Year, Month, .drop=FALSE) %>%
+  summarise(numberoflogs_MYG20 = n()) 
+TempsG20MY
+#  Number of logs per Month Year greater than 20 degrees Celsius with Year-Month 
+#      combos we don't need.
+#Do a join to get rid of rows where no temp data was collected
+LogCountG20<-left_join(QCTempM,TempsG20MY, by = c("SiteCode","Year","Month"))
+LogCountG20 #216 x 5
+LogCountG20[is.na(LogCountG20)]<-0
+PropLogG20<-LogCountG20%>%
+  mutate(
+    PropLogG20 = numberoflogs_MYG20/Count
+  )
+PropLogG20 #216 X 6   - Will need to add to STPred
 
 #AvgYMTemp > 20 degres C
 
@@ -251,8 +287,20 @@ MaxTemp_MYL3 <- ST %>%
 
 TempsG24MY <- ST %>%
   filter(Temp_C > 24) %>%
-  group_by(SiteCode, Year, Month) %>%
-  summarise(numberoflogs_MYG10 = n()) 
+  group_by(SiteCode, Year, Month, .drop=F) %>%
+  summarise(numberoflogs_MYG24 = n()) 
+TempsG24MY
+#  Number of logs per Month Year greater than 24 degrees Celsius with Year-Month 
+#      combos we don't need.
+#Do a join to get rid of rows where no temp data was collected
+LogCountG24<-left_join(QCTempM,TempsG24MY, by = c("SiteCode","Year","Month"))
+LogCountG24 #216 x 5
+LogCountG24[is.na(LogCountG24)]<-0
+PropLogG24<-LogCountG24%>%
+  mutate(
+    PropLogG24 = numberoflogs_MYG24/Count
+  )
+PropLogG24 #216 X 6   - Will need to add to STPred
 
 #AvgYMTemp > 24 degres C
 
@@ -291,3 +339,32 @@ STPred4
 write.csv(STPred4,"STPred.csv")
 
 write.csv(STPred2, "STPred2.csv")
+
+############################################################################################
+#Join dataframes together
+STPred2<-left_join(STPred,Avg_YM_Temp, by = c("SiteCode","Year","Month"))
+STPred2 #216 x 8
+STPred3<-left_join(STPred2,PropLogL3, by = c("SiteCode","Year","Month"))
+STPred3 #216 x 11
+STPred3<-STPred3%>%
+  select(-Count,-numberoflogs_MYL3)
+STPred4<-left_join(STPred3,PropLogL4.5 , by = c("SiteCode","Year","Month"))
+STPred4 #216 x 12
+STPred4<-STPred4%>%
+  select(-Count,-numberoflogs_MYL4.5)
+STPred5<-left_join(STPred4,PropLogL5 , by = c("SiteCode","Year","Month"))
+STPred5 #216 x 13
+STPred5<-STPred5%>%
+  select(-Count,-numberoflogs_MYL5)
+STPred6<-left_join(STPred5,PropLogG20 , by = c("SiteCode","Year","Month"))
+STPred6 #216 x 14
+STPred6<-STPred6%>%
+  select(-Count,-numberoflogs_MYG20)
+STPred7<-left_join(STPred6,PropLogG24, by = c("SiteCode","Year","Month"))
+STPred7 #216 x 15
+STPred7<-STPred7%>%
+  select(-Count,-numberoflogs_MYG24)
+
+
+#write.csv(STPred7,"STPred.csv")
+#   looks good
