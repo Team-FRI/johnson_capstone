@@ -12,14 +12,14 @@ setwd("C:/GitHub/johnson_capstone/spring")
 #Load data - Stream Temp QC only
 BearT<-read_csv("Bear.Loyalsock_Stream_QC.csv")
 BrunT<-read_csv("Brunnerdale.Ogdonia_Stream_QC.csv")
-#CoalT<-read_csv("Coal.Loyalsock_Stream_QC.csv")
-#ConkT<-read_csv("Conklin.Mill_Stream_QC.csv")
+#CoalT<-read_csv("Coal.Loyalsock_Stream_QC.csv") #Data is too unusual
+ConkT<-read_csv("Conklin.Mill_Stream_QC.csv")
 #DryHBT<-read_csv("Dry.Hoagland_Stream_QC.csv")
 #DryLST<-read_csv("Dry.Loyalsock_Stream_QC.csv")
 DutcT<-read_csv("Dutchman.Loyalsock_Stream_20202021_QC.csv")
 #ElliT<-read_csv("Ellis.Loyalsock_Stream_QC.csv")
-#FallT<-read_csv("Fall.Hoagland_Stream_QC.csv")
-#FlagT<-read_csv("FlagMarsh.Pigeon_Stream_QC.csv")
+FallT<-read_csv("Fall.Hoagland_Stream_20202021QC.csv")
+FlagT<-read_csv("FlagMarsh.Pigeon_Stream_20202021QC.csv")
 GranT<-read_csv("Grandad.Hessler_Stream_QC.csv")
 ####HuckT<-read_csv("") #No logger retrieved
 #LakeT<-read_csv("Lake.Elk_Stream_QC.csv")
@@ -42,9 +42,10 @@ SwamT<-read_csv("Swamp.Hoagland_Stream_QC.csv")
 YellT<-read_csv("Yellow.LittleLoyalsock_Stream_QC.csv")
 ######################
 #Bind row so that all stream temperature data is in one tibble
-StreamTemp<-rbind(BearT,BrunT,DutcT,GranT,LeveT,PainT,RedT,SandT,SaSpT,StreT,SherT,SwamT,YellT)
-#   CoalT,ConkT,DryHBT,DryLST,   ElliT,FallT,FlagT,  LakeT,MillT,PortT,
-#   RockT,SherT,ShinT,SnakT,SwamT,YellT)
+StreamTemp<-rbind(BearT,BrunT,ConkT,DutcT,FallT,FlagT,GranT,LeveT,PainT,RedT,
+                  SandT,SaSpT,StreT,SherT,SwamT,YellT)
+#   CoalT,DryHBT,DryLST,ElliT,LakeT,MillT,PortT,
+#   RockT,ShinT,SnakT)
 StreamTemp
 #####################
 #Separate out Year-Month-Day-Time so that we can create different predictors.
