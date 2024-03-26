@@ -277,7 +277,7 @@ boxplot(AvgMax~Month+SiteCode, data=March)
 boxplot(AvgMin~Month+SiteCode, data=March)
 
 #Yellow still low.
-#Two Trends here. one (middle) line between 2 and 3. Other (Top) between 4 and 5). Maybe that telling us that sites are acting different from one another. Maybe the middle line is moregroundwate fed?
+#Two Trends here. one (middle) line between 2 and 3. Other (Top) between 4 and 5). Maybe that telling us that sites are acting different from one another. Maybe the middle line is more groundwater fed?
 
 boxplot(AvgMax~SiteCode, data=March_April)
 
@@ -350,7 +350,7 @@ boxplot(AvgMin~Month, data=June_July_August)
 
 #Again what you'd expect for AvgMin. Lower in June. July and August. 
 
-boxplot(AvgMax~SiteCode, data=June_July_August)
+boxplot(AvgMin~SiteCode, data=June_July_August)
 
 #Between 14 and 18 degrees Celsius. 
 #One big outlier at 21 degrees Celsius. Very intersting and seems to be the same site in most of the graphs.
@@ -382,7 +382,93 @@ mod11 <- gam(AvgMin~Month*SiteCode, data=STPred)
 summary(mod11)
 AIC(mod11)#276.30....super extra overfit; 505.98
 
+M1 <- gam(Avg_YM_TempC~Month+SiteCode, data=STPred)
+summary(M1)
+AIC(M1) #773.31
 
+M2 <- gam(Avg_YM_TempC~Month*SiteCode, data=STPred)
+summary(M2)
+AIC(M2) #602.65
+
+M3 <- gam(Avg_YM_TempC~Year+SiteCode, data=STPred)
+summary(M3)
+AIC(M3) #1343.696
+
+M4 <- gam(Avg_YM_TempC~Year*SiteCode, data=STPred)
+summary(M4)
+AIC(M4) #1349.25.
+
+M7 <- gam(PropLogL3~Month+SiteCode, data=STPred)
+summary(M7)
+AIC(M7) #-200.53
+
+M8 <- gam(PropLogL3~Month*SiteCode, data=STPred)
+summary(M8)
+AIC(M8) #-460.30 
+
+M5 <- gam(PropLogL3~Year+SiteCode, data=STPred)
+summary(M5)
+AIC(M5) #121.36
+
+M6 <- gam(PropLogL3~Year*SiteCode, data=STPred)
+summary(M6)
+AIC(M6) #110.36
+
+M9 <- gam(PropLogL4.5~Month+SiteCode, data=STPred)
+summary(M9)
+AIC(M9) #-311.95
+
+M10 <- gam(PropLogL4.5~Month*SiteCode, data=STPred)
+summary(M10)
+AIC(M10) #-706.26
+
+M11 <- gam(PropLogL4.5~Year+SiteCode, data=STPred)
+summary(M11)
+AIC(M11) #174.45
+
+M12 <- gam(PropLogL4.5~Year*SiteCode, data=STPred)
+summary(M12)
+AIC(M12) #179.14
+
+M13 <- gam(PropLogL5~Month+SiteCode, data=STPred)
+summary(M13)
+AIC(M13) #-329.07
+
+M14 <- gam(PropLogL5~Month*SiteCode, data=STPred)
+summary(M14)
+AIC(M14) #-734.91
+
+M15 <- gam(PropLogL5~Year+SiteCode, data=STPred)
+summary(M15)
+AIC(M15) #194.50
+
+M16 <- gam(PropLogL5~Year*SiteCode, data=STPred)
+summary(M16)
+AIC(M16) #201.90
+
+M17 <- gam(PropLogG20~Month+SiteCode, data=STPred)
+summary(M17)
+AIC(M17) #-599.48
+
+M18 <- gam(PropLogG20~Month*SiteCode, data=STPred)
+summary(M18)
+AIC(M18) #-493.39
+
+M19 <- gam(PropLogG20~Year+SiteCode, data=STPred)
+summary(M19)
+AIC(M19) #-609.90
+
+M20 <- gam(PropLogG20~Year*SiteCode, data=STPred)
+summary(M20)
+AIC(M20) #-638.58
+
+M21 <- G24
+
+M22
+
+M23
+
+M24
 
 mod12 <- gam(RatAY~Year+SiteCode, data=BKTVar)
 summary(mod12)
@@ -422,4 +508,6 @@ AIC(mod18)#228.29; With all years 13059.76; with updated QC2 23027.43
 mod18 <- gam(CPUE_Count~Year.x*AvgMax, data=Data_merge)
 summary(mod18)
 AIC(mod18)#228.29; With all years 8927.68; with updated QC2  14498.23
+
+mod19 <- 
 
