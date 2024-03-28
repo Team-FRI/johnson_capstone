@@ -350,10 +350,400 @@ boxplot(AvgMin~Month, data=June_July_August)
 
 #Again what you'd expect for AvgMin. Lower in June. July and August. 
 
-boxplot(AvgMin~SiteCode, data=June_July_August)
+
 
 #Between 14 and 18 degrees Celsius. 
 #One big outlier at 21 degrees Celsius. Very intersting and seems to be the same site in most of the graphs.
+
+#Now doing boxplots doing March,  April, March_April, June, July, August, June_July_August.
+#As well as new data!
+
+boxplot(Avg_YM_TempC~Year+SiteCode, data=March)
+
+#Most are between 3 and 5. Some outliers down low.
+
+boxplot(Avg_YM_TempC~Year*SiteCode, data=March)
+
+#Exact Same as above. Most are between 3 and 5. Some outliers down low.
+
+boxplot(Avg_YM_TempC~Month+SiteCode, data=March)
+
+#Exact Same as above. Most are between 3 and 5. Some outliers down low.
+
+boxplot(Avg_YM_TempC~Month*SiteCode, data=March)
+
+#No interaction?
+
+boxplot(Avg_YM_TempC~Year+SiteCode, data=April)
+
+#Lots between 7 and 8. Two just above 6.5. One outlier down low. 
+
+boxplot(Avg_YM_TempC~Year*SiteCode, data=April)
+
+#No interaction
+
+boxplot(Avg_YM_TempC~Month+SiteCode, data=April)
+
+#Same as above
+
+boxplot(Avg_YM_TempC~Year+SiteCode, data=March_April)
+
+#Most overlap between 3 and 8. Three outliers bellow zero. 
+
+boxplot(Avg_YM_TempC~Year*SiteCode, data=March_April)
+
+#Same as above
+
+boxplot(Avg_YM_TempC~Month+SiteCode, data=March_April)
+
+boxplot(Avg_YM_TempC~Year+SiteCode, data=June)
+
+#Three areas of groping. One between 3 and 4. One around 5 and 6. and one between 6 and 8.
+#Three outliers down low. 
+
+boxplot(Avg_YM_TempC~Month+SiteCode, data=June)
+
+#Most between 12 and 14. Some higher at 16. 
+#One really high sight at 18 which is inserting.
+
+boxplot(Avg_YM_TempC~Year+SiteCode, data=July)
+
+#Kind of a dowward curve and  an upward curve from 16. 
+#Odd looking. 
+#One outlier down low and one above 20 up high (That is very interesting)
+
+boxplot(Avg_YM_TempC~Month+SiteCode, data=July)
+
+#Kind of all over the place.
+#Coupple between 18 and 20 could be intersting. 
+
+boxplot(Avg_YM_TempC~Year+SiteCode, data=August)
+
+#Three areas of grouping. Some at 15 and. Some between 16 and 18. and a few above 18. 
+#one at 20 which could be interesting. 
+
+boxplot(Avg_YM_TempC~Month+SiteCode, data=August)
+
+#Most bewteen 15 and 18. 
+#One bewten 19 and 20 which is interesting. 
+#One low at 13 which is also interesting and could possibly be an example of a pristene site. 
+
+boxplot(Avg_YM_TempC~Year+SiteCode, data=June_July_August)
+
+#LOL this is complicated looking.
+#Downward curving line from 14 to 12 between sites.
+#Upward curving line from 14 to 17 between sites.
+#Same site seems to be at 2o again which is interesting.
+
+boxplot(Avg_YM_TempC~Month+SiteCode, data=June_July_August)
+
+#All over the place. 
+#Some between 18 and 20 which is interesting.
+#Some down low at 13 and 12 which is also interesting and again could be pristine cold water sites during hot summer months. 
+
+boxplot(PropLogL3~Year+SiteCode, data=March)
+
+#Most in middle. 
+#Some outloers up top and down low.
+
+boxplot(PropLogL3~Month+SiteCode, data=March)
+
+#Same as above
+
+boxplot(PropLogL3~Year+SiteCode, data=April)
+
+#Lots down low. 
+#one outlier up top.
+
+boxplot(PropLogL3~Month+SiteCode, data=April)
+
+#Same as above
+
+boxplot(PropLogL3~Year+SiteCode, data=March_April)
+
+#Most between 0.0 and 0.6.
+#3 outliers at 1.
+
+boxplot(PropLogL3~Month+SiteCode, data=March_April)
+
+#Most at 0 and bellow 0.2
+#Some between 0.4 and 0.6.
+#A few outliers up top.
+
+boxplot(PropLogL3~Year+SiteCode, data=June)
+
+#All 0's.
+
+boxplot(PropLogL3~Month+SiteCode, data=June)
+
+#All 0's.
+
+boxplot(PropLogL3~Year+SiteCode, data=July)
+
+#All 0's.
+
+boxplot(PropLogL3~Month+SiteCode, data=July)
+
+#All 0's.
+
+boxplot(PropLogL3~Year+SiteCode, data=August)
+
+#All 0's.
+
+boxplot(PropLogL3~Year+SiteCode, data=August)
+
+#All 0's.
+
+boxplot(PropLogL3~Year+SiteCode, data=June_July_August)
+
+#All 0's.
+
+boxplot(PropLogL3~Month+SiteCode, data=August)
+
+#All 0's.
+
+boxplot(PropLogL4.5~Year+SiteCode, data=March)
+
+#Most betwen 0.6 and 0.8. 
+#3 at 1. 
+#4 betwen 0.4 and 0.2
+
+boxplot(PropLogL4.5~Month+SiteCode, data=March)
+
+#Same as above. 
+
+boxplot(PropLogL4.5~Year+SiteCode, data=April)
+
+#Same as above.
+
+boxplot(PropLogL4.5~Month+SiteCode, data=April)
+
+#Same as above. 
+
+boxplot(PropLogL4.5~Year+SiteCode, data=March_April)
+
+#Most between 0.1 and 0.7. Mosst also overlap. 
+#3 at 1.0.
+
+boxplot(PropLogL4.5~Month+SiteCode, data=April)
+
+#A few between 0.10 and 0.20. One outlier at 0.35 which is interesting. 
+
+boxplot(PropLogL4.5~Year+SiteCode, data=June)
+
+#All 0's.
+
+boxplot(PropLogL4.5~Month+SiteCode, data=June)
+
+#All 0's.
+
+boxplot(PropLogL4.5~Year+SiteCode, data=July)
+
+#All 0's.
+
+boxplot(PropLogL4.5~Month+SiteCode, data=July)
+
+#All 0's.
+
+boxplot(PropLogL4.5~Year+SiteCode, data=August)
+
+#All 0's.
+
+boxplot(PropLogL4.5~Year+SiteCode, data=August)
+
+#All 0's.
+
+boxplot(PropLogL4.5~Year+SiteCode, data=August)
+
+#All 0's.
+
+boxplot(PropLogL4.5~Year+SiteCode, data=June_July_August)
+
+#All 0's.
+
+boxplot(PropLogL4.5~Month+SiteCode, data=June_July_August)
+
+#All 0's.
+
+boxplot(PropLogL5~Year+SiteCode, data=March)
+
+#Kind of all over the place. 
+#Three outliers up top at 1.0
+
+boxplot(PropLogL5~Month+SiteCode, data=March)
+
+#Line of them bweteen 0.7 and 0.8.
+#Three outliers up top at 1.0
+
+boxplot(PropLogL5~Year+SiteCode, data=April)
+
+#One outier above 0.6. 
+#Most bewteen 0.1 and 0.2. 
+
+boxplot(PropLogL5~Year+SiteCode, data=March_April)
+
+#Lots of overlaping between 0.2 and 0.7!
+#Three outliers up top at 1.0
+
+boxplot(PropLogL5~Month+SiteCode, data=March_April)
+
+#All over the place.
+
+boxplot(PropLogL5~Year+SiteCode, data=June)
+
+#All 0's.
+
+boxplot(PropLogL5~Month+SiteCode, data=June)
+
+#All 0's.
+
+boxplot(PropLogL5~Year+SiteCode, data=July)
+
+#All 0's
+
+boxplot(PropLogL5~Month+SiteCode, data=July)
+
+#All 0's.
+
+boxplot(PropLogL5~Year+SiteCode, data=August
+
+#All 0's.
+
+boxplot(PropLogL5~Month+SiteCode, data=August)
+
+#All 0's.
+
+
+boxplot(PropLogL5~Year+SiteCode, data=June_July_August)
+
+#All 0's.
+
+boxplot(PropLogL5~Month+SiteCode, data=June_July_August)
+
+#All 0's.
+
+
+boxplot(PropLogG20~Year+SiteCode, data=March)
+
+#All 0's.
+
+boxplot(PropLogG20~Month+SiteCode, data=March)
+
+#All 0's.
+
+boxplot(PropLogG20~Year+SiteCode, data=April)
+
+#All 0's.
+
+boxplot(PropLogG20~Month+SiteCode, data=April)
+
+#All 0's.
+
+boxplot(PropLogG20~Year+SiteCode, data=March_April)
+
+#All 0's.
+
+boxplot(PropLogG20~Month+SiteCode, data=March_April)
+
+#All 0's.
+
+boxplot(PropLogG20~Year+SiteCode, data=June)
+
+#All 0's.
+
+boxplot(PropLogG20~Month+SiteCode, data=June)
+
+#One at 0.25 that has big spread between 0.25 and 0.75 quartiles. 
+#One little itty bittty one down low. <0.5.
+
+boxplot(PropLogG20~Year+SiteCode, data=July)
+
+#One outliers at 0.7. Few small ones bweteen 0.0 and 0.1.
+
+boxplot(PropLogG20~Month+SiteCode, data=July)
+
+#One big one spaning from 0.0 to 0.7.
+
+boxplot(PropLogG20~Year+SiteCode, data=August)
+
+#One between 0.1 and 0.2.
+#One outlier above 0.4. 
+
+boxplot(PropLogG20~Month+SiteCode, data=August)
+
+#One spaning from 0.2 to 0.4.
+
+boxplot(PropLogG20~Year+SiteCode, data=June_July_August)
+
+#One biger one ta 0.5. 
+#One Smaller ones at 0.1.
+#Few tiny ones on very bottom. 
+
+boxplot(PropLogG20~Month+SiteCode, data=June_July_August)
+
+#Same as above. 
+
+boxplot(PropLogG24~Year+SiteCode, data=March)
+
+#All 0's.
+
+boxplot(PropLogG24~Month+SiteCode, data=March)
+
+#All 0's.
+
+boxplot(PropLogG24~Year+SiteCode, data=April)
+
+#All 0's.
+
+boxplot(PropLogG24~Year+SiteCode, data=April)
+
+#All 0's.
+
+
+boxplot(PropLogG24~Year+SiteCode, data=March_April)
+
+#All 0's.
+
+
+boxplot(PropLogG24~Month+SiteCode, data=March_April)
+
+#All 0's.
+
+boxplot(PropLogG24~Year+SiteCode, data=March_April)
+
+#All 0's.
+
+boxplot(PropLogG24~Year+SiteCode, data=June)
+
+#One outlier at 0.0010 hwich is interesting. 
+
+boxplot(PropLogG24~Month+SiteCode, data=June)
+
+#One extending from 0.00 to 0.0010. See if it is same site as one above.
+
+boxplot(PropLogG24~Year+SiteCode, data=July)
+
+#One outlier at 0.0010 hwich is interesting. 
+
+boxplot(PropLogG24~Month+SiteCode, data=July)
+
+#One extending from 0.00 to 0.0010. See if it is same site as one above.
+
+boxplot(PropLogG24~Year+SiteCode, data=August)
+
+#One outlier above 0.03. 
+
+boxplot(PropLogG24~Month+SiteCode, data=August)
+
+#One extedning from bottom to 0.03.
+
+boxplot(PropLogG24~Year+SiteCode, data=June_July_August)
+
+#One at 0.03 that extends all the way up to 0.07.  
+
+boxplot(PropLogG24~Month+SiteCode, data=June_July_August)
+
+#That's really interesting that only those three sites all right next to eachohter pop out. 
 
 
 mod6 <- gam(Lowest_Temperature_C~Month+SiteCode, data=STPred) 
@@ -462,13 +852,21 @@ M20 <- gam(PropLogG20~Year*SiteCode, data=STPred)
 summary(M20)
 AIC(M20) #-638.58
 
-M21 <- G24
+M21 <- gam(PropLogG24~Month+SiteCode, data=STPred)
+summary(M21)
+AIC(M21) #-1441.47
 
-M22
+M22 <- gam(PropLogG24~Month*SiteCode, data=STPred)
+summary(M22)
+AIC(M22) #-1274.81
 
-M23
+M23 <- gam(PropLogG24~Year+SiteCode, data=STPred)
+summary(M23)
+AIC(M23) #-1274.81
 
-M24
+M24 <- gam(PropLogG24~Year*SiteCode, data=STPred)
+summary(M24)
+AIC(M24) #-1460.24
 
 mod12 <- gam(RatAY~Year+SiteCode, data=BKTVar)
 summary(mod12)
