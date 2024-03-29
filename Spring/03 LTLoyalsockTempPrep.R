@@ -365,6 +365,5 @@ STPred7 #216 x 15
 STPred7<-STPred7%>%
   select(-Count,-numberoflogs_MYG24)
 
-
 #write.csv(STPred7,"STPred.csv")
 #   looks good
