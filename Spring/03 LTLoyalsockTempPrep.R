@@ -15,10 +15,10 @@ BearT<-read_csv("Bear.Loyalsock_Stream_QC.csv")
 BrunT<-read_csv("Brunnerdale.Ogdonia_Stream_QC.csv")
 #CoalT<-read_csv("Coal.Loyalsock_Stream_QC.csv") #Data is too unusual
 ConkT<-read_csv("Conklin.Mill_Stream_QC.csv")
-#DryHBT<-read_csv("Dry.Hoagland_Stream_QC.csv")
-#DryLST<-read_csv("Dry.Loyalsock_Stream_QC.csv")
+DryHBT<-read_csv("Dry.Hoagland_Stream_QC.csv")
+DryLST<-read_csv("Dry.Loyalsock_Stream_QC.csv")
 DutcT<-read_csv("Dutchman.Loyalsock_Stream_20202021_QC.csv")
-#ElliT<-read_csv("Ellis.Loyalsock_Stream_QC.csv")
+ElliT<-read_csv("Ellis.Loyalsock_Stream_QC.csv")
 FallT<-read_csv("Fall.Hoagland_Stream_20202021QC.csv")
 FlagT<-read_csv("FlagMarsh.Pigeon_Stream_20202021QC.csv")
 GranT<-read_csv("Grandad.Hessler_Stream_QC.csv")
@@ -35,7 +35,7 @@ SandT<-read_csv("Sand.Mill_Stream_QC.csv")
 SaSpT<-read_csv("SandSpring.LittleBear_Stream_QC.csv")
 ####ScarT<-read_csv("") #No logger retrieved
 SherT<-read_csv("Sherman.Loyalsock_Stream_QC.csv")
-#ShinT<-read_csv("Shingle.Bear_Stream_QC.csv")
+ShinT<-read_csv("Shingle.Bear_Stream_QCSR.csv")
 #SnakT<-read_csv("Snake.Bear_Stream_QC.csv")
 StreT<-read_csv("Streby.Lick_Stream_QC.csv")
 SwamT<-read_csv("Swamp.Hoagland_Stream_QC.csv")
@@ -43,10 +43,10 @@ SwamT<-read_csv("Swamp.Hoagland_Stream_QC.csv")
 YellT<-read_csv("Yellow.LittleLoyalsock_Stream_QC.csv")
 ######################
 #Bind row so that all stream temperature data is in one tibble
-StreamTemp<-rbind(BearT,BrunT,ConkT,DutcT,FallT,FlagT,GranT,LeveT,PainT,RedT,
-                  SandT,SaSpT,StreT,SherT,SwamT,YellT)
-#   CoalT,DryHBT,DryLST,ElliT,LakeT,MillT,PortT,
-#   RockT,ShinT,SnakT)
+StreamTemp<-rbind(BearT,BrunT,ConkT,DryHBT,DryLST,DutcT,ElliT,FallT,FlagT,GranT,
+                  LeveT,PainT,RedT,SandT,SaSpT,StreT,SherT,ShinT,SwamT,YellT)
+#   CoalT,LakeT,MillT,PortT,
+#   RockT,SnakT)
 StreamTemp
 #####################
 #Separate out Year-Month-Day-Time so that we can create different predictors.
@@ -67,21 +67,21 @@ QCTempDate<-ST %>%
   summarize(Count=n())%>%
   arrange(Date)
 QCTempDate
-#     only 43 dates for the sites included that are not full.
+#     only 56 dates out of 7860 for the sites included that are not full.
 QCTempY<-ST %>%
   group_by(SiteCode,Year)%>%
   summarize(Count=n())%>%
   arrange(Year)
 QCTempY
 #     Full year's worth of data ~ 35,040 logs
-#     Site-Year with most logs: Brunnerdale-2021; Sherman-2021; Dutchman-2021; 
-#                               SandSpring-2021;
+#     Site-Year with most logs: Dry.Hoagland-2017; Brunnerdale-2021; Sherman-2021; 
+#                               Ellis-2021; Dutchman-2021; SandSpring-2021;
 QCTempM<-ST %>%
   group_by(SiteCode,Year,Month)%>%
   summarize(Count=n())%>%
   arrange(Month)
 QCTempM
-#      39 incomplete months
+#      51 incomplete months out of 289
 ###############################################################################
 #Create Min/Max reading for each Month-Year.
 Monthly_Extremes <- ST %>%
@@ -90,7 +90,7 @@ Monthly_Extremes <- ST %>%
     Highest_Temperature_C = max(Temp_C),
     Lowest_Temperature_C = min(Temp_C)
   )       
-Monthly_Extremes # 216 x 5
+Monthly_Extremes # 289 x 5
 ###############################################################################
 #Create Avg Min/Max reading for each Month-Year
 Daily_MinMax <- ST %>%
@@ -99,7 +99,7 @@ Daily_MinMax <- ST %>%
     DailyMin_tempC = min(Temp_C), 
     DailyMax_tempC = max(Temp_C)
   ) 
-Daily_MinMax #5839 x4
+Daily_MinMax #7860 x4
 YM<- Daily_MinMax %>% #Like this code better
   mutate(
     Date = format(as.Date(Date),"%Y-%m-%d"),
@@ -115,13 +115,13 @@ Monthly_AvgMinMax <- YM %>%
   summarise(
     AvgMin=mean(DailyMin_tempC), 
     AvgMax=mean(DailyMax_tempC))
-Monthly_AvgMinMax # 216 x 5
+Monthly_AvgMinMax # 289 x 5
 ###############################################################################
 ###############################################################################
 
 #Join Monthly_Extremes and Monthly_AvgMinMax together
 STPred<-left_join(Monthly_Extremes,Monthly_AvgMinMax, by = c("SiteCode","Year","Month"))
-STPred #216 x 7
+STPred #289 x 7
 #write.csv(STPred,"STPred.csv")
 #   looks good
 ###############################################################################
@@ -143,14 +143,14 @@ PropLogL3<-LogCountL3%>%
   mutate(
     PropLogL3 = numberoflogs_MYL3/Count
   )
-PropLogL3 #216 X 6   - Will need to add to STPred
+PropLogL3 #289 X 6   - Will need to add to STPred
 
 # Avg Year-Month Temp
 Avg_YM_Temp <- ST %>%
   group_by(SiteCode, Year, Month) %>% 
   summarise(
     Avg_YM_TempC = mean(Temp_C))
-Avg_YM_Temp #216 x 4   - Will need to add to STPred
+Avg_YM_Temp #289 x 4   - Will need to add to STPred
 
 #Sites with Month-Year AvgYMTemp < 3 degrees C. Calculate the avg temp per month, 
 #   which months have an average less than 3 degrees
@@ -187,7 +187,7 @@ PropLogL5<-LogCountL5%>%
   mutate(
     PropLogL5 = numberoflogs_MYL5/Count
   )
-PropLogL5 #216 X 6   - Will need to add to STPred
+PropLogL5 #289 X 6   - Will need to add to STPred
 
 
 #AvgYMTemp < 5 degres C
@@ -224,7 +224,7 @@ PropLogL4.5<-LogCountL4.5%>%
   mutate(
     PropLogL4.5 = numberoflogs_MYL4.5/Count
   )
-PropLogL4.5 #216 X 6   - Will need to add to STPred
+PropLogL4.5 #289 X 6   - Will need to add to STPred
 
 #AvgYMTemp < 4.5 degres C
 
@@ -263,7 +263,7 @@ PropLogG20<-LogCountG20%>%
   mutate(
     PropLogG20 = numberoflogs_MYG20/Count
   )
-PropLogG20 #216 X 6   - Will need to add to STPred
+PropLogG20 #289 X 6   - Will need to add to STPred
 
 #AvgYMTemp > 20 degres C
 
@@ -300,7 +300,7 @@ PropLogG24<-LogCountG24%>%
   mutate(
     PropLogG24 = numberoflogs_MYG24/Count
   )
-PropLogG24 #216 X 6   - Will need to add to STPred
+PropLogG24 #289 X 6   - Will need to add to STPred
 
 #AvgYMTemp > 24 degres C
 
@@ -343,25 +343,25 @@ write.csv(STPred2, "STPred2.csv")
 ############################################################################################
 #Join dataframes together
 STPred2<-left_join(STPred,Avg_YM_Temp, by = c("SiteCode","Year","Month"))
-STPred2 #216 x 8
+STPred2 #289 x 8
 STPred3<-left_join(STPred2,PropLogL3, by = c("SiteCode","Year","Month"))
-STPred3 #216 x 11
+STPred3 #289 x 11
 STPred3<-STPred3%>%
   select(-Count,-numberoflogs_MYL3)
 STPred4<-left_join(STPred3,PropLogL4.5 , by = c("SiteCode","Year","Month"))
-STPred4 #216 x 12
+STPred4 #289 x 12
 STPred4<-STPred4%>%
   select(-Count,-numberoflogs_MYL4.5)
 STPred5<-left_join(STPred4,PropLogL5 , by = c("SiteCode","Year","Month"))
-STPred5 #216 x 13
+STPred5 #289 x 13
 STPred5<-STPred5%>%
   select(-Count,-numberoflogs_MYL5)
 STPred6<-left_join(STPred5,PropLogG20 , by = c("SiteCode","Year","Month"))
-STPred6 #216 x 14
+STPred6 #289 x 14
 STPred6<-STPred6%>%
   select(-Count,-numberoflogs_MYG20)
 STPred7<-left_join(STPred6,PropLogG24, by = c("SiteCode","Year","Month"))
-STPred7 #216 x 15
+STPred7 #289 x 15
 STPred7<-STPred7%>%
   select(-Count,-numberoflogs_MYG24)
 
