@@ -183,7 +183,7 @@ library(mgcv)
 
 mod1 <- gam(Highest_Temperature_C~Year+Month, data=STPred)
 summary(mod1)
-AIC(mod1) #372.46; with updated QC1 550.56; with updated QC2 779.55
+AIC(mod1) #372.46; with updated QC1 550.56; with updated QC2 779.55: with updated QC 3 1247.12
 
 mod2 <- gam(Highest_Temperature_C~Year+s(SiteCode, bs = 're'), data=STPred)#double check reason for error
 summary(mod2)
@@ -191,21 +191,21 @@ AIC(mod)
 
 mod2 <- gam(Highest_Temperature_C~Year+SiteCode, data=STPred)
 summary(mod2)
-AIC(mod2)#629.2585; with updated QC1 910.00; with updated QC2 1138.74
+AIC(mod2)#629.2585; with updated QC1 910.00; with updated QC2 1138.74; with updated QC 3 1847.81
 
 
 mod3 <- gam(Highest_Temperature_C~Year*SiteCode, data=STPred)
 summary(mod3)
-AIC(mod3)#631.99; with updated QC1 919.21; with updated QC2 1149.46
+AIC(mod3)#631.99; with updated QC1 919.21; with updated QC2 1149.46; with updated QC 3 1817.828
 
 
 mod4 <- gam(Highest_Temperature_C~Month+SiteCode, data=STPred)
 summary(mod4)
-AIC(mod4)#356.3311; with updated QC1 529.76; with updated QC2; 727.29
+AIC(mod4)#356.3311; with updated QC1 529.76; with updated QC2; 727.29; 1179.12
 
 mod5 <- gam(Highest_Temperature_C~Month*SiteCode, data=STPred)
 summary(mod5)
-AIC(mod5)#283.9091....super extra overfit ; with updated QC1 439.06; with updated QC2 574.04
+AIC(mod5)#283.9091....super extra overfit ; with updated QC1 439.06; with updated QC2 574.04; 1127.78
 
 #March <- subset()
 #boxplot(Highest_Temperature_C~Month+SiteCode, data=March)
@@ -746,31 +746,31 @@ boxplot(PropLogG24~Month+SiteCode, data=June_July_August)
 #That's really interesting that only those three sites all right next to eachohter pop out. 
 
 
-mod6 <- gam(Lowest_Temperature_C~Month+SiteCode, data=STPred) 
+mod6 <- gam(Lowest_Temperature_C ~ Month + SiteCode, data=STPred) 
 summary(mod6)
-AIC(mod6)#384.78; with updated QC1 536.6349; with updated QC2 695.03
+AIC(mod6)#384.78; with updated QC1 536.6349; with updated QC2 695.03: With qc 3 1151.37
 
 mod7 <- gam(Lowest_Temperature_C~Month*SiteCode, data=STPred)
 summary(mod7)
-AIC(mod7)#427.66....super extra overfit; with updated QC1 614.4394m; with updated QC2 768.98
+AIC(mod7)#427.66....super extra overfit; with updated QC1 614.4394m; with updated QC3 768.98; 1210.68
 
 
 mod8 <- gam(AvgMax~Month+SiteCode, data=STPred)
 summary(mod8)
-AIC(mod8)#346.03; with updated QC2 668.23
+AIC(mod8)#346.03; with updated QC2 668.23; With qc 3 1016.03
 
 mod9 <- gam(AvgMax~Month*SiteCode, data=STPred)
 summary(mod9)
-AIC(mod9)#278.73....super extra overfit; with updated QC2 550.33
+AIC(mod9)#278.73....super extra overfit; with updated QC2 550.33; With qc 3 889.34
 
 
 mod10 <- gam(AvgMin~Month+SiteCode, data=STPred)
 summary(mod10)
-AIC(mod10)#339.86; with updated QC2 618.38
+AIC(mod10)#339.86; with updated QC2 618.38; With qc 3 959.18
 
 mod11 <- gam(AvgMin~Month*SiteCode, data=STPred)
 summary(mod11)
-AIC(mod11)#276.30....super extra overfit; 505.98
+AIC(mod11)#276.30....super extra overfit; 505.98; With qc 3 815.29
 
 M1 <- gam(Avg_YM_TempC~Month+SiteCode, data=STPred)
 summary(M1)
