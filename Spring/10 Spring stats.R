@@ -774,35 +774,35 @@ AIC(mod11)#276.30....super extra overfit; 505.98; With qc 3 815.29
 
 M1 <- gam(Avg_YM_TempC~Month+SiteCode, data=STPred)
 summary(M1)
-AIC(M1) #773.31
+AIC(M1) #773.31; With qc 3 977.26
 
 M2 <- gam(Avg_YM_TempC~Month*SiteCode, data=STPred)
 summary(M2)
-AIC(M2) #602.65
+AIC(M2) #602.65; With qc 3 834.82
 
 M3 <- gam(Avg_YM_TempC~Year+SiteCode, data=STPred)
 summary(M3)
-AIC(M3) #1343.696
+AIC(M3) #1343.696; With qc 3 1838.58
 
 M4 <- gam(Avg_YM_TempC~Year*SiteCode, data=STPred)
 summary(M4)
-AIC(M4) #1349.25.
+AIC(M4) #1349.25; With qc 3  1820
 
 M7 <- gam(PropLogL3~Month+SiteCode, data=STPred)
 summary(M7)
-AIC(M7) #-200.53
+AIC(M7) #-200.53; With qc 3 -309.68
 
 M8 <- gam(PropLogL3~Month*SiteCode, data=STPred)
 summary(M8)
-AIC(M8) #-460.30 
+AIC(M8) #-460.30; -514.85
 
 M5 <- gam(PropLogL3~Year+SiteCode, data=STPred)
 summary(M5)
-AIC(M5) #121.36
+AIC(M5) #121.36; With qc 3 196.47
 
 M6 <- gam(PropLogL3~Year*SiteCode, data=STPred)
 summary(M6)
-AIC(M6) #110.36
+AIC(M6) #110.36; 166.24
 
 M9 <- gam(PropLogL4.5~Month+SiteCode, data=STPred)
 summary(M9)
