@@ -868,7 +868,6 @@ M24 <- gam(PropLogG24~Year*SiteCode, data=STPred)
 summary(M24)
 AIC(M24) #-1460.24: With qc 3 -2044.87
 
-#Left of on mod12!!!!!!!!!!!!12
 
 mod12 <- gam(RatAY~Year+SiteCode, data=BKTVar)
 summary(mod12)
@@ -923,7 +922,7 @@ mod25 <- gam(RatAY~Year+PropLogL3, data=Data_merge)
 summary(mod25)
 AIC(mod25) #With 3/29 added qc sites:4645.63: After adjusting data merge 262.82 
 
-mod26 <- gam(RatAY~Year.x*PropLogL3, data=Data_merge)
+mod26 <- gam(RatAY~Year*PropLogL3, data=Data_merge)
 summary(mod26)
 AIC(mod26) #With 3/29 added qc sites:4647.58
 
