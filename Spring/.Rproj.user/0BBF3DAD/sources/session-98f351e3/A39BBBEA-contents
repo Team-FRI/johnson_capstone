@@ -806,67 +806,69 @@ AIC(M6) #110.36; 166.24
 
 M9 <- gam(PropLogL4.5~Month+SiteCode, data=STPred)
 summary(M9)
-AIC(M9) #-311.95
+AIC(M9) #-311.95; With qc 3 -464.15
 
 M10 <- gam(PropLogL4.5~Month*SiteCode, data=STPred)
 summary(M10)
-AIC(M10) #-706.26
+AIC(M10) #-706.26; With qc 3 -720.79
 
 M11 <- gam(PropLogL4.5~Year+SiteCode, data=STPred)
 summary(M11)
-AIC(M11) #174.45
+AIC(M11) #174.45; With qc 3 276.13
 
 M12 <- gam(PropLogL4.5~Year*SiteCode, data=STPred)
 summary(M12)
-AIC(M12) #179.14
+AIC(M12) #179.14; With qc 3 260.14
 
 M13 <- gam(PropLogL5~Month+SiteCode, data=STPred)
 summary(M13)
-AIC(M13) #-329.07
+AIC(M13) #-329.07; With qc 3 -488.14
 
 M14 <- gam(PropLogL5~Month*SiteCode, data=STPred)
 summary(M14)
-AIC(M14) #-734.91
+AIC(M14) #-734.91; With qc 3 -727.74
 
 M15 <- gam(PropLogL5~Year+SiteCode, data=STPred)
 summary(M15)
-AIC(M15) #194.50
+AIC(M15) #194.50; With qc 3303.13
 
 M16 <- gam(PropLogL5~Year*SiteCode, data=STPred)
 summary(M16)
-AIC(M16) #201.90
+AIC(M16) #201.90; With qc 3 290.11
 
 M17 <- gam(PropLogG20~Month+SiteCode, data=STPred)
 summary(M17)
-AIC(M17) #-599.48
+AIC(M17) #-599.48; With qc 3 -884.02
 
 M18 <- gam(PropLogG20~Month*SiteCode, data=STPred)
 summary(M18)
-AIC(M18) #-493.39
+AIC(M18) #-493.39; With qc 3 -772.35
 
 M19 <- gam(PropLogG20~Year+SiteCode, data=STPred)
 summary(M19)
-AIC(M19) #-609.90
+AIC(M19) #-609.90; With qc 3 -886.64
 
 M20 <- gam(PropLogG20~Year*SiteCode, data=STPred)
 summary(M20)
-AIC(M20) #-638.58
+AIC(M20) #-638.58; With qc 3 -927.25
 
 M21 <- gam(PropLogG24~Month+SiteCode, data=STPred)
 summary(M21)
-AIC(M21) #-1441.47
+AIC(M21) #-1441.47; -2020.84
 
 M22 <- gam(PropLogG24~Month*SiteCode, data=STPred)
 summary(M22)
-AIC(M22) #-1274.81
+AIC(M22) #-1274.81; -1819.38
 
 M23 <- gam(PropLogG24~Year+SiteCode, data=STPred)
 summary(M23)
-AIC(M23) #-1455.38
+AIC(M23) #-1455.38; -2033.12
 
 M24 <- gam(PropLogG24~Year*SiteCode, data=STPred)
 summary(M24)
-AIC(M24) #-1460.24
+AIC(M24) #-1460.24: With qc 3 -2044.87
+
+#Left of on mod12!!!!!!!!!!!!12
 
 mod12 <- gam(RatAY~Year+SiteCode, data=BKTVar)
 summary(mod12)
