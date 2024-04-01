@@ -183,7 +183,7 @@ library(mgcv)
 
 mod1 <- gam(Highest_Temperature_C~Year+Month, data=STPred)
 summary(mod1)
-AIC(mod1) #372.46; with updated QC1 550.56; with updated QC2 779.55
+AIC(mod1) #372.46; with updated QC1 550.56; with updated QC2 779.55: with updated QC 3 1247.12
 
 mod2 <- gam(Highest_Temperature_C~Year+s(SiteCode, bs = 're'), data=STPred)#double check reason for error
 summary(mod2)
@@ -191,21 +191,21 @@ AIC(mod)
 
 mod2 <- gam(Highest_Temperature_C~Year+SiteCode, data=STPred)
 summary(mod2)
-AIC(mod2)#629.2585; with updated QC1 910.00; with updated QC2 1138.74
+AIC(mod2)#629.2585; with updated QC1 910.00; with updated QC2 1138.74; with updated QC 3 1847.81
 
 
 mod3 <- gam(Highest_Temperature_C~Year*SiteCode, data=STPred)
 summary(mod3)
-AIC(mod3)#631.99; with updated QC1 919.21; with updated QC2 1149.46
+AIC(mod3)#631.99; with updated QC1 919.21; with updated QC2 1149.46; with updated QC 3 1817.828
 
 
 mod4 <- gam(Highest_Temperature_C~Month+SiteCode, data=STPred)
 summary(mod4)
-AIC(mod4)#356.3311; with updated QC1 529.76; with updated QC2; 727.29
+AIC(mod4)#356.3311; with updated QC1 529.76; with updated QC2; 727.29; 1179.12
 
 mod5 <- gam(Highest_Temperature_C~Month*SiteCode, data=STPred)
 summary(mod5)
-AIC(mod5)#283.9091....super extra overfit ; with updated QC1 439.06; with updated QC2 574.04
+AIC(mod5)#283.9091....super extra overfit ; with updated QC1 439.06; with updated QC2 574.04; 1127.78
 
 #March <- subset()
 #boxplot(Highest_Temperature_C~Month+SiteCode, data=March)
@@ -715,7 +715,7 @@ boxplot(PropLogG24~Year+SiteCode, data=March_April)
 
 boxplot(PropLogG24~Year+SiteCode, data=June)
 
-#One outlier at 0.0010 hwich is interesting. 
+#One outlier at 0.0010 wich is interesting. 
 
 boxplot(PropLogG24~Month+SiteCode, data=June)
 
@@ -723,7 +723,7 @@ boxplot(PropLogG24~Month+SiteCode, data=June)
 
 boxplot(PropLogG24~Year+SiteCode, data=July)
 
-#One outlier at 0.0010 hwich is interesting. 
+#One outlier at 0.0010 wich is interesting. 
 
 boxplot(PropLogG24~Month+SiteCode, data=July)
 
@@ -746,127 +746,128 @@ boxplot(PropLogG24~Month+SiteCode, data=June_July_August)
 #That's really interesting that only those three sites all right next to eachohter pop out. 
 
 
-mod6 <- gam(Lowest_Temperature_C~Month+SiteCode, data=STPred) 
+mod6 <- gam(Lowest_Temperature_C ~ Month + SiteCode, data=STPred) 
 summary(mod6)
-AIC(mod6)#384.78; with updated QC1 536.6349; with updated QC2 695.03
+AIC(mod6)#384.78; with updated QC1 536.6349; with updated QC2 695.03: With qc 3 1151.37
 
 mod7 <- gam(Lowest_Temperature_C~Month*SiteCode, data=STPred)
 summary(mod7)
-AIC(mod7)#427.66....super extra overfit; with updated QC1 614.4394m; with updated QC2 768.98
+AIC(mod7)#427.66....super extra overfit; with updated QC1 614.4394m; with updated QC3 768.98; 1210.68
 
 
 mod8 <- gam(AvgMax~Month+SiteCode, data=STPred)
 summary(mod8)
-AIC(mod8)#346.03; with updated QC2 668.23
+AIC(mod8)#346.03; with updated QC2 668.23; With qc 3 1016.03
 
 mod9 <- gam(AvgMax~Month*SiteCode, data=STPred)
 summary(mod9)
-AIC(mod9)#278.73....super extra overfit; with updated QC2 550.33
+AIC(mod9)#278.73....super extra overfit; with updated QC2 550.33; With qc 3 889.34
 
 
 mod10 <- gam(AvgMin~Month+SiteCode, data=STPred)
 summary(mod10)
-AIC(mod10)#339.86; with updated QC2 618.38
+AIC(mod10)#339.86; with updated QC2 618.38; With qc 3 959.18
 
 mod11 <- gam(AvgMin~Month*SiteCode, data=STPred)
 summary(mod11)
-AIC(mod11)#276.30....super extra overfit; 505.98
+AIC(mod11)#276.30....super extra overfit; 505.98; With qc 3 815.29
 
 M1 <- gam(Avg_YM_TempC~Month+SiteCode, data=STPred)
 summary(M1)
-AIC(M1) #773.31
+AIC(M1) #773.31; With qc 3 977.26
 
 M2 <- gam(Avg_YM_TempC~Month*SiteCode, data=STPred)
 summary(M2)
-AIC(M2) #602.65
+AIC(M2) #602.65; With qc 3 834.82
 
 M3 <- gam(Avg_YM_TempC~Year+SiteCode, data=STPred)
 summary(M3)
-AIC(M3) #1343.696
+AIC(M3) #1343.696; With qc 3 1838.58
 
 M4 <- gam(Avg_YM_TempC~Year*SiteCode, data=STPred)
 summary(M4)
-AIC(M4) #1349.25.
+AIC(M4) #1349.25; With qc 3  1820
 
 M7 <- gam(PropLogL3~Month+SiteCode, data=STPred)
 summary(M7)
-AIC(M7) #-200.53
+AIC(M7) #-200.53; With qc 3 -309.68
 
 M8 <- gam(PropLogL3~Month*SiteCode, data=STPred)
 summary(M8)
-AIC(M8) #-460.30 
+AIC(M8) #-460.30; -514.85
 
 M5 <- gam(PropLogL3~Year+SiteCode, data=STPred)
 summary(M5)
-AIC(M5) #121.36
+AIC(M5) #121.36; With qc 3 196.47
 
 M6 <- gam(PropLogL3~Year*SiteCode, data=STPred)
 summary(M6)
-AIC(M6) #110.36
+AIC(M6) #110.36; 166.24
 
 M9 <- gam(PropLogL4.5~Month+SiteCode, data=STPred)
 summary(M9)
-AIC(M9) #-311.95
+AIC(M9) #-311.95; With qc 3 -464.15
 
 M10 <- gam(PropLogL4.5~Month*SiteCode, data=STPred)
 summary(M10)
-AIC(M10) #-706.26
+AIC(M10) #-706.26; With qc 3 -720.79
 
 M11 <- gam(PropLogL4.5~Year+SiteCode, data=STPred)
 summary(M11)
-AIC(M11) #174.45
+AIC(M11) #174.45; With qc 3 276.13
 
 M12 <- gam(PropLogL4.5~Year*SiteCode, data=STPred)
 summary(M12)
-AIC(M12) #179.14
+AIC(M12) #179.14; With qc 3 260.14
 
 M13 <- gam(PropLogL5~Month+SiteCode, data=STPred)
 summary(M13)
-AIC(M13) #-329.07
+AIC(M13) #-329.07; With qc 3 -488.14
 
 M14 <- gam(PropLogL5~Month*SiteCode, data=STPred)
 summary(M14)
-AIC(M14) #-734.91
+AIC(M14) #-734.91; With qc 3 -727.74
 
 M15 <- gam(PropLogL5~Year+SiteCode, data=STPred)
 summary(M15)
-AIC(M15) #194.50
+AIC(M15) #194.50; With qc 3303.13
 
 M16 <- gam(PropLogL5~Year*SiteCode, data=STPred)
 summary(M16)
-AIC(M16) #201.90
+AIC(M16) #201.90; With qc 3 290.11
 
 M17 <- gam(PropLogG20~Month+SiteCode, data=STPred)
 summary(M17)
-AIC(M17) #-599.48
+AIC(M17) #-599.48; With qc 3 -884.02
 
 M18 <- gam(PropLogG20~Month*SiteCode, data=STPred)
 summary(M18)
-AIC(M18) #-493.39
+AIC(M18) #-493.39; With qc 3 -772.35
 
 M19 <- gam(PropLogG20~Year+SiteCode, data=STPred)
 summary(M19)
-AIC(M19) #-609.90
+AIC(M19) #-609.90; With qc 3 -886.64
 
 M20 <- gam(PropLogG20~Year*SiteCode, data=STPred)
 summary(M20)
-AIC(M20) #-638.58
+AIC(M20) #-638.58; With qc 3 -927.25
 
 M21 <- gam(PropLogG24~Month+SiteCode, data=STPred)
 summary(M21)
-AIC(M21) #-1441.47
+AIC(M21) #-1441.47; -2020.84
 
 M22 <- gam(PropLogG24~Month*SiteCode, data=STPred)
 summary(M22)
-AIC(M22) #-1274.81
+AIC(M22) #-1274.81; -1819.38
 
 M23 <- gam(PropLogG24~Year+SiteCode, data=STPred)
 summary(M23)
-AIC(M23) #-1274.81
+AIC(M23) #-1455.38; -2033.12
 
 M24 <- gam(PropLogG24~Year*SiteCode, data=STPred)
 summary(M24)
-AIC(M24) #-1460.24
+AIC(M24) #-1460.24: With qc 3 -2044.87
+
 
 mod12 <- gam(RatAY~Year+SiteCode, data=BKTVar)
 summary(mod12)
@@ -878,34 +879,86 @@ AIC(mod13)#68.78; With all years 537.38
 
 
 
-Data_merge <- merge(BKTVar, STPred, by = "SiteCode", all = TRUE)
+Data_merge <- merge(BKTVar, STPred, by = c("SiteCode", "Year"), all = FALSE)
 
 colnames(Data_merge)
-mod14 <- gam(RatAY~Year.x, data=Data_merge)
+mod14 <- gam(RatAY~Year, data=Data_merge)
 summary(mod14)
-AIC(mod14)#295.85; With all years 1980.35
+AIC(mod14)#295.85; With all years 1980.35; With 3/29 added qc sites: 4879.35: After adjusting data merge 262.69 
 
-mod15 <- gam(RatAY~Year.x*Highest_Temperature_C, data=Data_merge)
+mod15 <- gam(RatAY~Year*Highest_Temperature_C, data=Data_merge)
 summary(mod15)
-AIC(mod15)#235.28; With all years 1583.071
+AIC(mod15)#235.28; With all years 1583.071: With 3/29 added qc sites: 4707.27; After adjusting data merge 264.69 
 
-mod16 <- gam(RatAY~Year.x*Lowest_Temperature_C, data=Data_merge)
+mod16 <- gam(RatAY~Year*Lowest_Temperature_C, data=Data_merge)
 summary(mod16)
-AIC(mod16)#249.42; With all years 1582.182; with updated QC2 2930.87
+AIC(mod16)#249.42; With all years 1582.182; with updated QC2 2930.87: With 3/29 added qc sites:4709.22; After adjusting data merge 266.57.
+
+mod19 <- gam(RatAY~Year*AvgMax, data=Data_merge)
+summary(mod19)
+AIC(mod19) #With 3/29 added qc sites:4708.84; 265.06
+
+mod20 <- gam(RatAY~Year+AvgMax, data=Data_merge)
+summary(mod20)
+AIC(mod20) #With 3/29 added qc sites:4706.889: After adjusting data merge 264.62
+
+mod21 <- gam(RatAY~Year*AvgMin, data=Data_merge)
+summary(mod21)
+AIC(mod21) #With 3/29 added qc sites:4709.38: After adjusting data merge 264.96 
+
+mod22 <- gam(RatAY~Year+AvgMin, data=Data_merge)
+summary(mod22)
+AIC(mod22) #With 3/29 added qc sites:4706.88: After adjusting data merge 264.51
+
+mod23 <- gam(RatAY~Year+Avg_YM_TempC, data=Data_merge)
+summary(mod23)
+AIC(mod23) #With 3/29 added qc sites:4707.43: After adjusting data merge 264.59
+
+mod24 <- gam(RatAY~Year*Avg_YM_TempC, data=Data_merge)
+summary(mod24)
+AIC(mod24) #With 3/29 added qc sites:4709.32: After adjusting data merge 265.01 
+
+mod25 <- gam(RatAY~Year+PropLogL3, data=Data_merge)
+summary(mod25)
+AIC(mod25) #With 3/29 added qc sites:4645.63: After adjusting data merge 262.82 
+
+mod26 <- gam(RatAY~Year*PropLogL3, data=Data_merge)
+summary(mod26)
+AIC(mod26) #With 3/29 added qc sites:4647.58
+
+mod27 <- gam(RatAY~Year+PropLogG20, data=Data_merge)
+summary(mod27)
+AIC(mod27) #With 3/29 added qc sites:4686.89: After adjusting data merge 263.03
+
+mod28 <- gam(RatAY~Year*PropLogG20, data=Data_merge)
+summary(mod28)
+AIC(mod28) #With 3/29 added qc sites:4688.85; After adjusting data merge 263.03
+
+#With interaction, its not signifcant anymore as it was with additve for mod27.
 
 
 mod17 <- gam(RatAY~Year.x+Lowest_Temperature_C, data=Data_merge)
 summary(mod17)
-AIC(mod17)#228.26; With all years 1580.324; with updated QC2 2928.93
+AIC(mod17)#228.26; With all years 1580.324; with updated QC2 2928.93:  With 3/29 added qc sites:4707.402
 
 #scratchpad
-mod18 <- gam(CPUE_Biomass~Year.x*AvgMax, data=Data_merge)
+mod18 <- gam(CPUE_Biomass~Year*AvgMax, data=Data_merge)
 summary(mod18)
-AIC(mod18)#228.29; With all years 13059.76; with updated QC2 23027.43
+AIC(mod18)#228.29; With all years 13059.76; with updated QC2 23027.43: After adjusting data merge 2262.35
 
-mod18 <- gam(CPUE_Count~Year.x*AvgMax, data=Data_merge)
-summary(mod18)
-AIC(mod18)#228.29; With all years 8927.68; with updated QC2  14498.23
+mod29 <- gam(CPUE_Biomass~Year+AvgMax, data=Data_merge)
+summary(mod29)
+AIC(mod29) # After adjusting data merge 2264.35
 
-mod19 <- 
+#No longer signifcant without interaction
+
+mod30 <- gam(CPUE_Count~Year*AvgMax, data=Data_merge)
+summary(mod30)
+AIC(mod30)#228.29; With all years 8927.68; with updated QC2  14498.23: After adjusting data merge 1611.74
+
+mod31 <- gam(CPUE_Count~Year+AvgMax, data=Data_merge)
+summary(mod31)
+AIC(mod31)#228.29; With all years 8927.68; with updated QC2  14498.23: After adjusting data merge 1612.56
+
+
 
