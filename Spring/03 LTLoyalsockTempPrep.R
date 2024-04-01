@@ -61,6 +61,8 @@ ST<- StreamTemp %>% #Like this code better
   mutate_at(vars(Year,Month,Day),factor)
 ST
 
+write.csv(ST, "ST.csv")
+
 #QC - Date,Year,Month
 QCTempDate<-ST %>%
   group_by(SiteCode,Date)%>%
