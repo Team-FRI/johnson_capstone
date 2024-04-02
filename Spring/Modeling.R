@@ -2,7 +2,10 @@
 
 setwd("C:/GitHub/johnson_capstone/spring")
 
-#Read Both BKTVar and STDPred csv's
+#Read Both BKTVar and STDPred csv's\
+
+install.packages("readr")
+library(readr)
 
 BKTVar <- read_csv("BKTVar.csv") #correct
 BKTVar_AllSites <- read_csv("BKTVar_AllSites.csv") #Correct 
@@ -32,7 +35,9 @@ Data_merge_Summer <- filter(Data_merge_Summer,(!(SiteCode=="Brunnerdale.Ogdonia"
            SiteCode=="Sherman.Loyalsock" & Year.x=="2020" & Year.y=="2021"|
              SiteCode=="Shingle.Bear" & Year.x=="2020" & Year.y=="2021")))
 
-Data_merge_CompleteOnly <- merge(BKTVar, STPred_completeOnly, by = c("SiteCode", "Year"), all = FALSE)  
+Data_merge_CompleteOnly <- merge(BKTVar, STPred_completeOnly, by = c("SiteCode", "Year"), all = FALSE) 
+
+ 
 
 #Filter out BKTVAr for 2021
 
