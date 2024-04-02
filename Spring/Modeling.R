@@ -58,7 +58,6 @@ STPred1 <- STPred %>%
   filter(Year == "2020" | Year == "2021")
 
 
-
 #STPred2 <- STPred1 %>%
 #  filter(as.numeric(Month) >= 6)
 
@@ -68,7 +67,11 @@ STPred1 <- STPred %>%
 STPred2 <- STPred1 %>%
   filter((Year == "2021") | (Year == "2020" & as.numeric(Month) >= 6))
 
-Data_merge_Model <- merge(BKTVar2021, STPred1, by = c("SiteCode", "Year"), all = FALSE)
+Data_merge_Model <- merge(BKTVar2021, STPred1, by = c("SiteCode"), all = FALSE)
+
+Data_merge_Model_Test  <- merge(BKTVar2021, STPred1, by = c("SiteCode", "Year"), all = FALSE)
+
+
 
 
 #Filter for 6 sites in BKTVar2021!!!!!!!!
