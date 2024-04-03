@@ -67,11 +67,11 @@ STPred1 <- STPred %>%
 STPred2 <- STPred1 %>%
   filter((Year == "2021") | (Year == "2020" & as.numeric(Month) >= 6))
 
-Data_merge_Model <- merge(BKTVar2021, STPred1, by = c("SiteCode"), all = FALSE)
+Data_merge_Model <- merge(BKTVar2021, STPred2, by = c("SiteCode"), all = FALSE)
 
-Data_merge_Model_Test  <- merge(BKTVar2021, STPred1, by = c("SiteCode", "Year"), all = FALSE)
+#Data_merge_Model_Test  <- merge(BKTVar2021, STPred1, by = c("SiteCode", "Year"), all = FALSE)
 
-Data_merge-Model2 <- left_join(BKTVar2021, STPred1, by = c("SiteCode"), all = FALSE)
+#Data_merge-Model2 <- left_join(BKTVar2021, STPred1, by = c("SiteCode"), all = FALSE)
 
 #Filter for 6 sites in BKTVar2021!!!!!!!! (Dont need to do anymore)
 
@@ -87,7 +87,7 @@ MR1 <- gam(CPUE_Count ~ Year.x+Month, data = Data_merge_Model)
 summary(MR1)
 AIC(MR1) #382.42
 
-MR2 <- gam(CPUE_Count ~ Year.x*Month, data = Data_merge_Model)
+MR2 <- gam(CPUE_Count ~ SiteCode*Highest_Temperature_C, data = Data_merge_Model)
 summary(MR2)
 AIC(MR2) #382.46
 
@@ -115,15 +115,23 @@ MR8 <- gam(CPUE_Count ~ Month+Lowest_Temperature_C, data = Data_merge_Model)
 summary(MR8)
 AIC(MR8) # 377.17
 
-MR8 <- gam(CPUE_Count ~ Month*Lowest_Temperature_C, data = Data_merge_Model)
-summary(MR8)
-AIC(MR8) # 392.17
+#For MR8, June July August are Signifcant 
+
+MR8.1 <- gam(CPUE_Count ~ Month*Lowest_Temperature_C, data = Data_merge_Model)
+summary(MR8.1)
+AIC(MR8.1) # 392.17
+
+#Deviance explained went up from MR8.
+
+MR8.2 <- gam(CPUE_Count ~ Lowest_Temperature_C, data = Data_merge_Model)
+summary(MR8.2)
+AIC(MR8.2) # 362.07
 
 MR9 <- gam(CPUE_Count ~ Year.x+AvgMax, data = Data_merge_Model)
 summary(MR9)
 AIC(MR9) # 362.09
 
-MR10 <- gam(CPUE_Count ~ Year.x*AvgMax, data = Data_merge_Model)
+MR10 <- gam(CPUE_Count ~ AvgMax, data = Data_merge_Model)
 summary(MR10)
 AIC(MR10) # 362.09
 
@@ -131,15 +139,19 @@ MR11 <- gam(CPUE_Count ~ Month+AvgMax, data = Data_merge_Model)
 summary(MR11)
 AIC(MR11) # 373.09
 
+#Lots of months for MR11 are significant for MR11 and deviance explained is 19%.
+
 MR12 <- gam(CPUE_Count ~ Month*AvgMax, data = Data_merge_Model)
 summary(MR12)
 AIC(MR12) # 382.76
+
+#MR12, deviance explained is 36.6%
 
 MR13 <- gam(CPUE_Count ~ Year.x+AvgMin, data = Data_merge_Model)
 summary(MR13)
 AIC(MR13) # 362.09
 
-MR14 <- gam(CPUE_Count ~ Year.x*AvgMin, data = Data_merge_Model)
+MR14 <- gam(CPUE_Count ~ AvgMin, data = Data_merge_Model)
 summary(MR14)
 AIC(MR14) # 362.13
 
@@ -147,15 +159,23 @@ MR15 <- gam(CPUE_Count ~ Month+AvgMin, data = Data_merge_Model)
 summary(MR15)
 AIC(MR15) # 371.48
 
+#For MR15, lots of months and average min is significant. 
+
 MR16 <- gam(CPUE_Count ~ Month*AvgMin, data = Data_merge_Model)
 summary(MR16)
 AIC(MR16) # 386.76
+
+#For MR16, Deviance explained is 31.8%
+
+MR16.1 <- gam(CPUE_Count ~ Month, data = Data_merge_Model)
+summary(MR16.1)
+AIC(MR16.1) # 382.46
 
 MR17 <- gam(RatAY ~ Year.x+Highest_Temperature_C, data = Data_merge_Model)
 summary(MR17)
 AIC(MR17) # 64.76
 
-MR18 <- gam(RatAY ~ Year.x*Highest_Temperature_C, data = Data_merge_Model)
+MR18 <- gam(RatAY ~ Highest_Temperature_C, data = Data_merge_Model)
 summary(MR18)
 AIC(MR18) # 64.76
 
@@ -171,13 +191,15 @@ MR21 <- gam(RatAY ~ Year.x+Lowest_Temperature_C, data = Data_merge_Model)
 summary(MR21)
 AIC(MR21) # 64.76
 
-MR22 <- gam(RatAY ~ Year.x*Highest_Temperature_C, data = Data_merge_Model)
-summary(MR22)
-AIC(MR22) # 64.76
+#MR22 <- gam(RatAY ~ Year.x*Highest_Temperature_C, data = Data_merge_Model)
+#summary(MR22)
+#AIC(MR22) # 64.76
 
 MR23 <- gam(RatAY ~ Month+Lowest_Temperature_C, data = Data_merge_Model)
 summary(MR23)
 AIC(MR23) # 82.18
+
+#Lowest Tempt almost signifcant.
 
 MR24 <- gam(RatAY ~ Month*Lowest_Temperature_C, data = Data_merge_Model)
 summary(MR24)
@@ -187,7 +209,7 @@ MR25 <- gam(RatAY ~ Year.x+AvgMax, data = Data_merge_Model)
 summary(MR25)
 AIC(MR25) # 64.92
 
-MR26 <- gam(RatAY ~ Year.x*AvgMax, data = Data_merge_Model)
+MR26 <- gam(RatAY ~ AvgMax, data = Data_merge_Model)
 summary(MR26)
 AIC(MR26) # 64.92
 
@@ -199,11 +221,13 @@ MR28 <- gam(RatAY ~ Month*AvgMax, data = Data_merge_Model)
 summary(MR28)
 AIC(MR28) # 87.96
 
+#May and June almost significant for the interaction. 
+
 MR29 <- gam(RatAY ~ Year.x+AvgMin, data = Data_merge_Model)
 summary(MR29)
 AIC(MR29) # 64.92
 
-MR30 <- gam(RatAY ~ Year.x*AvgMin, data = Data_merge_Model)
+MR30 <- gam(RatAY ~ AvgMin, data = Data_merge_Model)
 summary(MR30)
 AIC(MR30) # 64.92
 
@@ -211,21 +235,33 @@ MR31 <- gam(RatAY ~ Month+AvgMin, data = Data_merge_Model)
 summary(MR31)
 AIC(MR31) # 86.92
 
+#AvgMin almost signifcant  for M31
+
 MR32 <- gam(RatAY ~ Month*AvgMin, data = Data_merge_Model)
 summary(MR32)
 AIC(MR32) # 94.27
+
+MR32.1 <- gam(RatAY ~ Month, data = Data_merge_Model)
+summary(MR32.1)
+AIC(MR32.1) # 84.94
+
+MR32.2 <- gam(RatAY ~ SiteCode, data = Data_merge_Model)
+summary(MR32.2)
+AIC(MR32.2) # 84.94
 
 MR33 <- gam(RatAY ~ Year.x+PropLogL3, data = Data_merge_Model)
 summary(MR33)
 AIC(MR33) #63.97
 
-MR34 <- gam(RatAY ~ Year.x*PropLogL3, data = Data_merge_Model)
+MR34 <- gam(RatAY ~ PropLogL3, data = Data_merge_Model)
 summary(MR34)
 AIC(MR34) #63.97
 
 MR35 <- gam(RatAY ~ Month+PropLogL3, data = Data_merge_Model)
 summary(MR35)
 AIC(MR35) #78.11
+
+#MR35 June, January, and February are almost significant. PropLogL3 is significant. 
 
 MR36 <- gam(RatAY ~ Month*PropLogL3, data = Data_merge_Model)
 summary(MR36)
@@ -243,68 +279,88 @@ MR39 <- gam(RatAY ~ Year.x+PropLogG20, data = Data_merge_Model)
 summary(MR39)
 AIC(MR39) #63.48
 
-MR40 <- gam(RatAY ~ Year.x*PropLogG20, data = Data_merge_Model)
+MR40 <- gam(RatAY ~ PropLogG20, data = Data_merge_Model)
 summary(MR40)
 AIC(MR40) #63.48
 
-
-MR41 <- gam(CPUE_Count ~ Year.x+Highest_Temperature_C, data = Data_merge_Model)
+MR41 <- gam(CPUE_Biomass ~ Year.x+Highest_Temperature_C, data = Data_merge_Model)
 summary(MR41)
-AIC(MR41) #382.42
+AIC(MR41) #668.42
 
-MR42 <- gam(CPUE_Count ~ Month+Highest_Temperature_C, data = Data_merge_Model)
+MR42 <- gam(CPUE_Biomass ~ Month+Highest_Temperature_C, data = Data_merge_Model)
 summary(MR42)
-AIC(MR42) #383.23
+AIC(MR42) #688.61
 
-MR43 <- gam(CPUE_Count ~ Year.x+Lowest_Temperature_C, data = Data_merge_Model)
+MR43 <- gam(CPUE_Biomass ~ Year.x+Lowest_Temperature_C, data = Data_merge_Model)
 summary(MR43)
-AIC(MR43) #362.07
+AIC(MR43) #668.67
 
-MR44 <- gam(CPUE_Count ~ Month*Lowest_Temperature_C, data = Data_merge_Model)
+MR44 <- gam(CPUE_Biomass ~ Month+Lowest_Temperature_C, data = Data_merge_Model)
 summary(MR44)
-AIC(MR44) #362.07
+AIC(MR44) #685.89
 
-#M44 is intersing in terms of June, July, Agust Time period!
+#For M44
 
-MR45 <- gam(CPUE_Count ~ Month*Lowest_Temperature_C, data = Data_merge_Model)
+#M44 is inserting in terms of lowest temp being almost significant as well as June July August and January. 
+
+MR45 <- gam(CPUE_Biomass ~ Month*Lowest_Temperature_C, data = Data_merge_Model)
 summary(MR45)
-AIC(MR45) #392.29
+AIC(MR45) #683.93
 
-MR46 <- gam(CPUE_Count ~ Year.x+AvgMin, data = Data_merge_Model)
+#January is still significant, but everything else becomes less signifcant. 
+
+MR46 <- gam(CPUE_Biomass ~ Year.x+AvgMin, data = Data_merge_Model)
 summary(MR46)
-AIC(MR43) #362.13
+AIC(MR43) #668.67
 
-MR47 <- gam(CPUE_Count ~ Month+AvgMin, data = Data_merge_Model)
+MR47 <- gam(CPUE_Biomass ~ Month+AvgMin, data = Data_merge_Model)
 summary(MR47)
-AIC(MR47) #371.48
+AIC(MR47) #668.70
 
-#For M47, April through November is signifcant. 
+#M47 is inserting in terms of lowest temp being almost significant as well as June July August and January. 
 
-MR48 <- gam(CPUE_Count ~ Year.x+AvgMax, data = Data_merge_Model)
+MR48 <- gam(CPUE_Biomass~ Year.x+AvgMax, data = Data_merge_Model)
 summary(MR48)
-AIC(MR48) #362.09
+AIC(MR48) #668.94
 
-MR49 <- gam(CPUE_Count ~ Month+AvgMax, data = Data_merge_Model)
+MR49 <- gam(CPUE_Biomass ~ Month+AvgMax, data = Data_merge_Model)
 summary(MR49)
-AIC(MR49) #362.13
+AIC(MR49) #690.06
 
 #For M49, April through October are significant.
 
-MR50 <- gam(CPUE_Count ~ Month*AvgMax, data = Data_merge_Model)
+MR50 <- gam(CPUE_Biomass ~ Month*AvgMax, data = Data_merge_Model)
 summary(MR50)
-AIC(MR50) #362.13
+AIC(MR50) #687.28
 
-MR51 <- gam(CPUE_Count ~ Year.x+PropLogL3, data = Data_merge_Model)
+#For M50, jaunary, May and, June are significant. April is almost significant. 
+
+MR51 <- gam(CPUE_Biomass ~ Year.x+PropLogL3, data = Data_merge_Model)
 summary(MR51)
-AIC(MR51) #362.16
+AIC(MR51) #667.80
 
-MR52 <- gam(CPUE_Count ~ Month+PropLogL3, data = Data_merge_Model)
+MR52 <- gam(CPUE_Biomass ~ Month+PropLogL3, data = Data_merge_Model)
 summary(MR52)
-AIC(MR52) #381.85
+AIC(MR52) #680.19
+
+#February and June are signifcant. ProplogL3 is significant. Lots of months are almost signficant. 
+
+MR52.1 <- gam(CPUE_Biomass ~ PropLogL3, data = Data_merge_Model)
+summary(MR52.1)
+AIC(MR52.1) #667.80
 
 MR53 <- gam(CPUE_Count ~ Month+PropLogL5, data = Data_merge_Model)
 summary(MR53)
 AIC(MR53) #378.06
+
+#For MR53, April through November are sigifcant. ProplogL5 is also significant.
+
+MR53.1 <- gam(CPUE_Biomass ~ Month+PropLogL5, data = Data_merge_Model)
+summary(MR53.1)
+AIC(MR53.1) #676.57
+
+#For MR53.1, January and March through December are signifcant. 
+#PropLogL5 is signifcant. 
 
 MR54 <- gam(CPUE_Count ~ Year.x+PropLogL5, data = Data_merge_Model)
 summary(MR54)
@@ -317,6 +373,14 @@ AIC(MR55) #357.18
 MR56 <- gam(CPUE_Count ~ Month+PropLogG20, data = Data_merge_Model)
 summary(MR56)
 AIC(MR56) #377.63
+
+#For MR56, January is significant as well as PropLogG20. 
+
+MR56.1 <- gam(CPUE_Biomass ~ Month+PropLogG20, data = Data_merge_Model)
+summary(MR56.1)
+AIC(MR56.1) #668.97
+
+#For MR56.1, January is significant. 
 
 
 #####################
