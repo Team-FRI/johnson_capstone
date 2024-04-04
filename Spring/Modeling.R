@@ -299,9 +299,8 @@ MR44 <- gam(CPUE_Biomass ~ Month+Lowest_Temperature_C, data = Data_merge_Model)
 summary(MR44)
 AIC(MR44) #685.89
 
-#For M44
-
-#M44 is inserting in terms of lowest temp being almost significant as well as June July August and January. 
+#M44 is inserting in terms of lowest temp being almost significant as well as June July August
+#January is significant. 
 
 MR45 <- gam(CPUE_Biomass ~ Month*Lowest_Temperature_C, data = Data_merge_Model)
 summary(MR45)
@@ -317,7 +316,8 @@ MR47 <- gam(CPUE_Biomass ~ Month+AvgMin, data = Data_merge_Model)
 summary(MR47)
 AIC(MR47) #668.70
 
-#M47 is inserting in terms of lowest temp being almost significant as well as June July August and January. 
+#M47 is inserting in terms of lowest temp being almost significant as well as June July August. 
+#January is significant.
 
 MR48 <- gam(CPUE_Biomass~ Year.x+AvgMax, data = Data_merge_Model)
 summary(MR48)
@@ -327,7 +327,7 @@ MR49 <- gam(CPUE_Biomass ~ Month+AvgMax, data = Data_merge_Model)
 summary(MR49)
 AIC(MR49) #690.06
 
-#For M49, April through October are significant.
+#For M49, January is significant.
 
 MR50 <- gam(CPUE_Biomass ~ Month*AvgMax, data = Data_merge_Model)
 summary(MR50)
