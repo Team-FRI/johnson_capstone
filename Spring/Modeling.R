@@ -389,6 +389,23 @@ AIC(MR56.1) #668.97
 #When should use Year.x and Year.y?
 #Any other models I should try?
 
+#Read in table with Lat and Long in it for sites so you can make models for it. 
+
+SitesLoyalU <- read.csv("SitesLoyalU.csv")
+
+#Filter for 5 sites in Reduced data 
+
+SitesLoyalU1 <- filter(SitesLoyalU,(!(SiteCode=="Brunnerdale.Ogdonia"|
+                                                   SiteCode=="Dutchman.Loyalsock"|
+                                                   SiteCode=="Ellis.Loyalsock"|
+                                                   SiteCode=="Sherman.Loyalsock"|
+                                                   SiteCode=="Shingle.Bear")))
+
+#Now need to delte all columns besides lat and long so we can merge it. 
+
+SitesLoyalU3 <- SitesLoyalU1[, -c(2,3,4)]
+
+#Now merge to 
 
 mod1 <- gam(Highest_Temperature_C~Year+Month, data=STPred)
 summary(mod1)
