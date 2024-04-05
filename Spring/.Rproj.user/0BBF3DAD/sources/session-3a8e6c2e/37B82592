@@ -3,25 +3,25 @@
     "path": "C:/GitHub/johnson_capstone/Spring/Modeling.R",
     "project_path": null,
     "type": "r_source",
-    "hash": "1327513985",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1711996069762.0,
     "source_on_save": false,
-    "relative_order": 11,
+    "relative_order": 8,
     "properties": {
         "tempName": "Untitled1",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "2,42",
-        "scrollLine": "0"
+        "cursorPosition": "381,0",
+        "scrollLine": "368"
     },
     "folds": "",
-    "lastKnownWriteTime": 1712251490,
+    "lastKnownWriteTime": 1712278406,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1712251490103,
+    "last_content_update": 1712278406293,
     "read_only": false,
     "read_only_alternatives": []
 }

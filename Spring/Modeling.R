@@ -2,7 +2,7 @@
 
 setwd("C:/GitHub/johnson_capstone/spring")
 
-#Read Both BKTVar and STDPred csv's\
+#Read Both BKTVar and STDPred csv's
 
 install.packages("readr")
 library(readr)
@@ -401,11 +401,136 @@ SitesLoyalU1 <- filter(SitesLoyalU,(!(SiteCode=="Brunnerdale.Ogdonia"|
                                                    SiteCode=="Sherman.Loyalsock"|
                                                    SiteCode=="Shingle.Bear")))
 
-#Now need to delte all columns besides lat and long so we can merge it. 
+#Now need to delete all columns besides lat and long so we can merge it. 
 
 SitesLoyalU3 <- SitesLoyalU1[, -c(2,3,4)]
 
-#Now merge to 
+#Now merge Data_merge_Model with SitesLoaylU3
+
+Data_merge_Model <- merge(Data_merge_Model, SitesLoyalU3, by = c("SiteCode"), all = FALSE)
+
+#Now do more moeling to see if site lat and long is any good. 
+
+MR57 <- gam(Highest_Temperature_C ~ SiteLat+SiteLon, data = Data_merge_Model)
+summary(MR57)
+AIC(MR57) #321.92
+
+MR58 <- gam(Highest_Temperature_C ~ SiteLat*SiteLon, data = Data_merge_Model)
+summary(MR58)
+AIC(MR58) #321.92
+
+MR59 <- gam(Highest_Temperature_C~ SiteLat, data = Data_merge_Model)
+summary(MR59)
+AIC(MR59) #320.29
+
+MR60 <- gam(Highest_Temperature_C~ SiteLon, data = Data_merge_Model)
+summary(MR60)
+AIC(MR60) #321.06
+
+MR61 <- gam(Lowest_Temperature_C~ SiteLat+SiteLon, data = Data_merge_Model)
+summary(MR61)
+AIC(MR61) #321.88
+
+MR62 <- gam(Lowest_Temperature_C~ SiteLat*SiteLon, data = Data_merge_Model)
+summary(MR62)
+AIC(MR62) #321.88
+
+MR63 <- gam(Lowest_Temperature_C~ SiteLat, data = Data_merge_Model)
+summary(MR63)
+AIC(MR63) #320.04
+
+MR64 <- gam(Lowest_Temperature_C~ SiteLon, data = Data_merge_Model)
+summary(MR64)
+AIC(MR64) #319.88
+
+MR65 <- gam(AvgMin~ SiteLat*SiteLon, data = Data_merge_Model)
+summary(MR65)
+AIC(MR65) #318.13
+
+MR66 <- gam(AvgMin~ SiteLat+SiteLon, data = Data_merge_Model)
+summary(MR66)
+AIC(MR66) #318.13
+
+MR66 <- gam(AvgMin~ SiteLat, data = Data_merge_Model)
+summary(MR66)
+AIC(MR66) #316.38
+
+MR67 <- gam(AvgMin~ SiteLon, data = Data_merge_Model)
+summary(MR67)
+AIC(MR67) #316.39
+
+MR68 <- gam(AvgMax~ SiteLat+SiteLon, data = Data_merge_Model)
+summary(MR68)
+AIC(MR68) #322.00
+
+MR69 <- gam(AvgMax~ SiteLat*SiteLon, data = Data_merge_Model)
+summary(MR69)
+AIC(MR69) #322.00
+
+MR70 <- gam(AvgMax~ SiteLat, data = Data_merge_Model)
+summary(MR70)
+AIC(MR70) #322.29
+
+MR71 <- gam(AvgMax~ SiteLon, data = Data_merge_Model)
+summary(MR71)
+AIC(MR71) #320.24
+
+MR72 <- gam(PropLogL3~ SiteLat+SiteLon, data = Data_merge_Model)
+summary(MR72)
+AIC(MR72) #22.69
+
+MR73 <- gam(PropLogL3~ SiteLat+SiteLon+Month, data = Data_merge_Model)
+summary(MR73)
+AIC(MR73) #-78.69
+
+MR74 <- gam(PropLogL3~ SiteLat*SiteLon, data = Data_merge_Model)
+summary(MR74)
+AIC(MR74) #22.69
+
+MR75 <- gam(PropLogL3~ SiteLat, data = Data_merge_Model)
+summary(MR75)
+AIC(MR75) #20.69
+
+
+MR76 <- gam(PropLogL3~ SiteLon, data = Data_merge_Model)
+summary(MR76)
+AIC(MR76) #21.28
+
+MR77 <- gam(PropLogL5~ SiteLat*SiteLon, data = Data_merge_Model)
+summary(MR77)
+AIC(MR77) #53.04
+
+MR78 <- gam(PropLogL5~ SiteLat+SiteLon, data = Data_merge_Model)
+summary(MR78)
+AIC(MR78) #53.04
+
+MR79 <- gam(PropLogL5~ SiteLat, data = Data_merge_Model)
+summary(MR79)
+AIC(MR79) #51.06
+
+MR80 <- gam(PropLogL5~ SiteLon, data = Data_merge_Model)
+summary(MR80)
+AIC(MR80) #51.09
+
+MR81 <- gam(PropLogG20~ SiteLat+SiteLon, data = Data_merge_Model)
+summary(MR81)
+AIC(MR81) #-623.42
+
+#For MR81, Intercept and SiteLon are almost significant.
+
+MR82 <- gam(PropLogL5~ SiteLat*SiteLon, data = Data_merge_Model)
+summary(MR82)
+AIC(MR82) #53.04
+
+MR83 <- gam(PropLogL5~ SiteLat, data = Data_merge_Model)
+summary(MR83)
+AIC(MR83) #51.05
+
+MR84 <- gam(PropLogL5~ SiteLon, data = Data_merge_Model)
+summary(MR84)
+AIC(MR84) #51.09
+
+
 
 mod1 <- gam(Highest_Temperature_C~Year+Month, data=STPred)
 summary(mod1)
