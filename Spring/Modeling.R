@@ -20,6 +20,9 @@ JulAugSTpred <- read_csv("JulAugSTPred.csv")
 install.packages("mgcv")
 library(mgcv)
 
+install.packages("tidyverse")
+library(tidyverse)
+
 #BKTVar <- BKTVar %>%
 #  filter(!(Year=="2019"))
 
@@ -37,7 +40,6 @@ Data_merge_Summer <- filter(Data_merge_Summer,(!(SiteCode=="Brunnerdale.Ogdonia"
 
 Data_merge_CompleteOnly <- merge(BKTVar, STPred_completeOnly, by = c("SiteCode", "Year"), all = FALSE) 
 
- 
 
 #Filter out BKTVAr for 2021
 
@@ -530,6 +532,70 @@ MR84 <- gam(PropLogL5~ SiteLon, data = Data_merge_Model)
 summary(MR84)
 AIC(MR84) #51.09
 
+#Now we need to make plots 
+install.packages("ggplot2")
+library(ggplot2)
+
+#The first plot I will be making is looking at the Stream temp for 2020 and 2021. We need to use the ST data set for this. 
+#We also need to filter the ST data set for the five sites in the reduced data and years 2020 and 2021. 
+
+STPlot <- filter(ST,
+  (SiteCode == "Brunnerdale.Ogdonia" & (Year == "2020" | Year == "2021")) |
+    (SiteCode == "Dutchman.Loyalsock" & (Year == "2020" | Year == "2021")) |
+    (SiteCode == "Ellis.Loyalsock" & (Year == "2020" | Year == "2021")) |
+    (SiteCode == "Sherman.Loyalsock" & (Year == "2020" | Year == "2021")) |
+    (SiteCode == "Shingle.Bear" & (Year == "2020" | Year == "2021"))
+)
+
+
+ggplot(ST, aes(x = , y = value)) +
+  geom_line()
+
+#Plot=
+
+x11(height=12,width=16)#brings plot outside of RStudio, controls plot window size
+
+op<-par(mar=c(2,4,1,1), bty = "n")
+
+plot(Rock.LittleLoyalsock_Land_Jul20$ID,Rock.LittleLoyalsock_Land_Jul20$Temp_C,
+     
+     type="n",xlim=c(1114,4089),   ylim=c(8,27)   ,xlab="",ylab="",axes=F,bty="n",
+     
+     main="Rock.LittleLoyalsock - July 2020")
+
+points(Rock.LittleLoyalsock_Land_Jul20$ID,Rock.LittleLoyalsock_Land_Jul20$Temp_C,
+       
+       type="p",pch=18,cex=1.5)#solid diamonds
+
+points(Rock.LittleLoyalsock_Stream_Jul20$ID,Rock.LittleLoyalsock_Stream_Jul20$Temp_C,
+       
+       type="p",pch=21,bg="blue",cex=1.5)#blue circle
+
+lines(Rock.LittleLoyalsock_Land_Jul20$ID,Rock.LittleLoyalsock_Land_Jul20$Temp_C,
+      
+      type = "l",lty=1,lwd=1)
+
+lines(Rock.LittleLoyalsock_Stream_Jul20$ID,Rock.LittleLoyalsock_Stream_Jul20$Temp_C,
+      
+      type = "l",lty=3,col="blue",lwd=1)
+
+maj1<-c(1100,1200,1300,1400,1500,1600,1700,1800,1900,2000,2100,2200,2300,2400,
+        
+        2500,2600,2700,2800,2900,3000,3100,3200,3300,3400,3500,3600,3700,3800,
+        
+        3900,4000,4100)# IDs
+
+lab1<-c("July1","July2","July3","July4","July5","July6","July7","","","","","",
+        
+        "","","","","","","","","","","","","","","","","","","")
+
+axis(1,at=maj1,lty=1,lwd=0.5,   pos=8   ,labels=lab1,tck=10)
+
+maj2<-c(8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27)#temps
+
+axis(2,at=maj2,lty=1,lwd=0.5,las=2,pos=1100,tck=1)#y-axis add tck=1 for gridlines
+
+#Water Temp
 
 
 mod1 <- gam(Highest_Temperature_C~Year+Month, data=STPred)
