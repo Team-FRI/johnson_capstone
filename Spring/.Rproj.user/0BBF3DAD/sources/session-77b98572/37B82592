@@ -1,26 +1,27 @@
 {
-    "id": "9211D1D5",
-    "path": "C:/GitHub/johnson_capstone/Spring/05 LTLoyalsockTempPrep - timelines.R",
+    "id": "37B82592",
+    "path": "C:/GitHub/johnson_capstone/Spring/Modeling.R",
     "project_path": null,
     "type": "r_source",
-    "hash": "3431149531",
+    "hash": "1136922601",
     "contents": "",
     "dirty": false,
-    "created": 1711995047326.0,
+    "created": 1711996069762.0,
     "source_on_save": false,
-    "relative_order": 13,
+    "relative_order": 8,
     "properties": {
+        "tempName": "Untitled1",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "34,54",
-        "scrollLine": "0"
+        "cursorPosition": "575,0",
+        "scrollLine": "556"
     },
     "folds": "",
-    "lastKnownWriteTime": 1711994493,
+    "lastKnownWriteTime": 1712545698,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1711994493,
+    "last_content_update": 1712545698158,
     "read_only": false,
     "read_only_alternatives": []
 }

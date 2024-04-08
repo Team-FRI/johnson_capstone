@@ -548,8 +548,30 @@ STPlot <- filter(ST,
 )
 
 
-ggplot(ST, aes(x = , y = value)) +
+ggplot(STPlot, aes(x = Year, y = Temp_C)) +
   geom_line()
+
+ggplot(STPlot, aes(x = Year, y = Temp_C, color = SiteCode)) +
+  geom_line() +
+  labs(x = "Year", y = "Temperature (°C)", color = "Site") +
+  theme_minimal()
+
+ggplot(STPlot, aes(x = Date, y = Temp_C, color = SiteCode)) +
+  geom_line() +
+  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
+  theme_minimal()
+
+
+# Create the ggplot with custom line colors for each site
+
+site_colors <- c("Brunnerdale.Ogdonia" = "gray1", "Dutchman.Loyalsock" = "blue", "Ellis.Loyalsock" = "forestgreen", "Sherman.Loyalsock" = "firebrick", "Shingle.Bear" = "slateblue2")
+
+
+ggplot(STPlot, aes(x = Date, y = Temp_C, color = SiteCode)) +
+  geom_line() +
+  scale_color_manual(values = site_colors) +  # Apply custom color palette
+  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
+  theme_minimal()
 
 #Plot=
 
@@ -603,7 +625,6 @@ summary(mod1)
 AIC(mod1)
 
 
-
-
+("Colors")
 
 
