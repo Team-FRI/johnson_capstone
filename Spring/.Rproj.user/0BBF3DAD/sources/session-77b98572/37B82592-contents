@@ -46,6 +46,9 @@ Data_merge_CompleteOnly <- merge(BKTVar, STPred_completeOnly, by = c("SiteCode",
 BKTVar2021 <- BKTVar %>%
   filter(Year=="2021")
 
+BKTVar2020_2021 <- BKTVar %>%
+  filter(Year=="2020" | Year == "2021")
+
 #Instal packages to filter STPred for 2020, idk if I need these anymore though. From when I was trying to figure out how to filter STPred for 2020. 
 
 install.packages("dplyr")
@@ -572,6 +575,31 @@ ggplot(STPlot, aes(x = Date, y = Temp_C, color = SiteCode)) +
   scale_color_manual(values = site_colors) +  # Apply custom color palette
   labs(x = "Date", y = "Temperature (°C)", color = "Site") +
   theme_minimal()
+
+#Make plots of significant data 
+
+ggplot(Data_merge_Model, aes(x = Month, y = CPUE_Count, color = SiteCode)) +
+  geom_line() +
+  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
+  theme_minimal()
+
+ggplot(Data_merge_Model, aes(x = Month , y = CPUE_Count, color = Lowest_Temperature_C)) +
+  geom_point() +  # Add points for the actual data
+  labs(x = "Month", y = "CPUE Count", color = "Lowest Temperature (°C)") +
+  scale_color_gradient(low = "blue", high = "red") +  # Custom color scale
+  theme_minimal()
+
+#Make plot Showing Number of days over certain temperature. 
+
+#Its a ratio so how do I do this??????
+
+STPlotPropLog <- filter(ST,
+  (SiteCode == "Brunnerdale.Ogdonia" & (Year == "2020" | Year == "2021")) |
+    (SiteCode == "Dutchman.Loyalsock" & (Year == "2020" | Year == "2021")) |
+    (SiteCode == "Ellis.Loyalsock" & (Year == "2020" | Year == "2021")) |
+    (SiteCode == "Sherman.Loyalsock" & (Year == "2020" | Year == "2021")) |
+    (SiteCode == "Shingle.Bear" & (Year == "2020" | Year == "2021"))
+)
 
 #Plot=
 
