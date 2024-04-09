@@ -536,11 +536,11 @@ library(ggplot2)
 #We also need to filter the ST data set for the five sites in the reduced data and years 2020 and 2021. 
 
 STPlot <- filter(ST,
-  (SiteCode == "Brunnerdale.Ogdonia" & (Year == "2020" | Year == "2021")) |
-    (SiteCode == "Dutchman.Loyalsock" & (Year == "2020" | Year == "2021")) |
-    (SiteCode == "Ellis.Loyalsock" & (Year == "2020" | Year == "2021")) |
+  (SiteCode == "Dry.Hogland" & (Year == "2020" | Year == "2021")) |
+    (SiteCode == "Grandad.Hessler" & (Year == "2020" | Year == "2021")) |
+    (SiteCode == "Painter.LittleBear" & (Year == "2020" | Year == "2021")) |
     (SiteCode == "Sherman.Loyalsock" & (Year == "2020" | Year == "2021")) |
-    (SiteCode == "Shingle.Bear" & (Year == "2020" | Year == "2021"))
+    (SiteCode == "Red.LittleBear" & (Year == "2020" | Year == "2021"))
 )
 
 
