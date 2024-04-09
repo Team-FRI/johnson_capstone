@@ -398,17 +398,10 @@ AIC(MR56.1) #668.97
 
 SitesLoyalU <- read.csv("SitesLoyalU.csv")
 
-#Filter for 5 sites in Reduced data 
-
-SitesLoyalU1 <- filter(SitesLoyalU,(!(SiteCode=="Brunnerdale.Ogdonia"|
-                                                   SiteCode=="Dutchman.Loyalsock"|
-                                                   SiteCode=="Ellis.Loyalsock"|
-                                                   SiteCode=="Sherman.Loyalsock"|
-                                                   SiteCode=="Shingle.Bear")))
 
 #Now need to delete all columns besides lat and long so we can merge it. 
 
-SitesLoyalU3 <- SitesLoyalU1[, -c(2,3,4)]
+SitesLoyalU3 <- SitesLoyalU[, -c(2,3,4)]
 
 #Now merge Data_merge_Model with SitesLoaylU3
 
@@ -576,30 +569,49 @@ ggplot(STPlot, aes(x = Date, y = Temp_C, color = SiteCode)) +
   labs(x = "Date", y = "Temperature (°C)", color = "Site") +
   theme_minimal()
 
-#Make plots of significant data 
 
-ggplot(Data_merge_Model, aes(x = Month, y = CPUE_Count, color = SiteCode)) +
-  geom_line() +
-  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
-  theme_minimal()
-
-ggplot(Data_merge_Model, aes(x = Month , y = CPUE_Count, color = Lowest_Temperature_C)) +
-  geom_point() +  # Add points for the actual data
-  labs(x = "Month", y = "CPUE Count", color = "Lowest Temperature (°C)") +
-  scale_color_gradient(low = "blue", high = "red") +  # Custom color scale
-  theme_minimal()
 
 #Make plot Showing Number of days over certain temperature. 
 
-#Its a ratio so how do I do this??????
 
-STPlotPropLog <- filter(ST,
-  (SiteCode == "Brunnerdale.Ogdonia" & (Year == "2020" | Year == "2021")) |
-    (SiteCode == "Dutchman.Loyalsock" & (Year == "2020" | Year == "2021")) |
-    (SiteCode == "Ellis.Loyalsock" & (Year == "2020" | Year == "2021")) |
-    (SiteCode == "Sherman.Loyalsock" & (Year == "2020" | Year == "2021")) |
-    (SiteCode == "Shingle.Bear" & (Year == "2020" | Year == "2021"))
-)
+
+#Make Plots of signicnt Data 
+
+model_84 <- predict.gam(M84)
+model_p
+
+cars %>%
+  mutate( my_model = predict(fit) ) %>%
+  ggplot() +
+  geom_point( aes(speed, dist) ) +
+  geom_line( aes(speed, my_model)  )
+
+
+#Test 
+Data_merge_Model %>%
+  mutate(MP84 = predict.gam(MR84))  %>%
+  ggplot() +
+  geom_point(aes(SiteLon, PropLogL5)) +
+  geom_line(aes(SiteLon, MP84))
+#Yay it worked :)
+
+#MR8
+Data_merge_Model %>%
+  mutate(MP8 = predict.gam(MR8))  %>%
+  ggplot() +
+  geom_point(aes(c(Month, Lowest_Temperature_C), CPUE_Count)) +
+  geom_line(aes(c(Month, Lowest_Temperature_C), MP8))
+
+Data_merge_Model %>%
+  mutate(MP8 = predict.gam(MR8))  %>%
+  ggplot() +
+  geom_point(aes(Lowest_Temperature_C, CPUE_Count, color = Month)) +
+  geom_line(aes(Lowest_Temperature_C, MP8))
+
+MR8 <- gam(CPUE_Count ~ Month+Lowest_Temperature_C, data = Data_merge_Model)
+summary(MR8)
+AIC(MR8) # 377.17
+
 
 #Plot=
 
@@ -645,14 +657,6 @@ maj2<-c(8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27)#temps
 
 axis(2,at=maj2,lty=1,lwd=0.5,las=2,pos=1100,tck=1)#y-axis add tck=1 for gridlines
 
-#Water Temp
 
-
-mod1 <- gam(Highest_Temperature_C~Year+Month, data=STPred)
-summary(mod1)
-AIC(mod1)
-
-
-("Colors")
 
 
