@@ -1,29 +1,27 @@
 {
-    "id": "A39BBBEA",
-    "path": "C:/GitHub/johnson_capstone/Spring/10 Spring stats.R",
+    "id": "8099ACD0",
+    "path": "C:/GitHub/johnson_capstone/Spring/04 LH LTLoyalsockTempPrep.R",
     "project_path": null,
     "type": "r_source",
-    "hash": "0",
+    "hash": "3131957416",
     "contents": "",
     "dirty": false,
-    "created": 1710957826558.0,
+    "created": 1710788582226.0,
     "source_on_save": false,
-    "relative_order": 7,
+    "relative_order": 15,
     "properties": {
         "tempName": "Untitled1",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "862,37",
-        "scrollLine": "850",
-        "useRainbowParens": "false",
-        "softWrapLines": "false"
+        "cursorPosition": "0,0",
+        "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1711905678,
+    "lastKnownWriteTime": 1711507764,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1711905678656,
+    "last_content_update": 1711507764112,
     "read_only": false,
     "read_only_alternatives": []
 }

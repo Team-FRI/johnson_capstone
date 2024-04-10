@@ -536,7 +536,7 @@ library(ggplot2)
 #We also need to filter the ST data set for the five sites in the reduced data and years 2020 and 2021. 
 
 STPlot <- filter(ST,
-  (SiteCode == "Dry.Hogland" & (Year == "2020" | Year == "2021")) |
+    (SiteCode == "Dry.Hoagland" & (Year == "2020" | Year == "2021")) |
     (SiteCode == "Grandad.Hessler" & (Year == "2020" | Year == "2021")) |
     (SiteCode == "Painter.LittleBear" & (Year == "2020" | Year == "2021")) |
     (SiteCode == "Sherman.Loyalsock" & (Year == "2020" | Year == "2021")) |
@@ -560,7 +560,7 @@ ggplot(STPlot, aes(x = Date, y = Temp_C, color = SiteCode)) +
 
 # Create the ggplot with custom line colors for each site
 
-site_colors <- c("Brunnerdale.Ogdonia" = "gray1", "Dutchman.Loyalsock" = "blue", "Ellis.Loyalsock" = "forestgreen", "Sherman.Loyalsock" = "firebrick", "Shingle.Bear" = "slateblue2")
+site_colors <- c("Dry.Hoagland" = "gray1", "Grandad.Hessler" = "blue", "Painter.LittleBear" = "forestgreen", "Sherman.Loyalsock" = "firebrick", "Red.LittleBear" = "slateblue2")
 
 
 ggplot(STPlot, aes(x = Date, y = Temp_C, color = SiteCode)) +
