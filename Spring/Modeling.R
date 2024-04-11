@@ -596,11 +596,11 @@ Data_merge_Model %>%
 #Yay it worked :)
 
 #MR8
-Data_merge_Model %>%
-  mutate(MP8 = predict.gam(MR8))  %>%
-  ggplot() +
-  geom_point(aes(c(Month, Lowest_Temperature_C), CPUE_Count)) +
-  geom_line(aes(c(Month, Lowest_Temperature_C), MP8))
+#Data_merge_Model %>%
+#  mutate(MP8 = predict.gam(MR8))  %>%
+#  ggplot() +
+#  geom_point(aes(c(Month, Lowest_Temperature_C), CPUE_Count)) +
+#  geom_line(aes(c(Month, Lowest_Temperature_C), MP8))
 
 Data_merge_Model %>%
   mutate(MP8 = predict.gam(MR8))  %>%
@@ -612,6 +612,17 @@ MR8 <- gam(CPUE_Count ~ Month+Lowest_Temperature_C, data = Data_merge_Model)
 summary(MR8)
 AIC(MR8) # 377.17
 
+#MR11
+
+Data_merge_Model %>%
+  mutate(MP11 = predict.gam(MR11))  %>%
+  ggplot() +
+  geom_point(aes(AvgMin, CPUE_Count, color = Month)) +
+  geom_line(aes(AvgMin, MP11))
+
+MR11 <- gam(CPUE_Count ~ Month+AvgMax, data = Data_merge_Model)
+summary(MR11)
+AIC(MR11) # 373.09
 
 #Plot=
 
