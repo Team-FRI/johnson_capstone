@@ -557,7 +557,6 @@ ggplot(STPlot, aes(x = Date, y = Temp_C, color = SiteCode)) +
   labs(x = "Date", y = "Temperature (°C)", color = "Site") +
   theme_minimal()
 
-
 # Create the ggplot with custom line colors for each site
 
 site_colors <- c("Dry.Hoagland" = "gray1", "Grandad.Hessler" = "blue", "Painter.LittleBear" = "forestgreen", "Sherman.Loyalsock" = "firebrick", "Red.LittleBear" = "slateblue2")
@@ -595,7 +594,7 @@ Data_merge_Model %>%
   geom_line(aes(SiteLon, MP84))
 #Yay it worked :)
 
-#MR8
+#MP8
 #Data_merge_Model %>%
 #  mutate(MP8 = predict.gam(MR8))  %>%
 #  ggplot() +
@@ -608,11 +607,11 @@ Data_merge_Model %>%
   geom_point(aes(Lowest_Temperature_C, CPUE_Count, color = Month)) +
   geom_line(aes(Lowest_Temperature_C, MP8))
 
-MR8 <- gam(CPUE_Count ~ Month+Lowest_Temperature_C, data = Data_merge_Model)
-summary(MR8)
-AIC(MR8) # 377.17
+#MP8 <- gam(CPUE_Count ~ Month+Lowest_Temperature_C, data = Data_merge_Model)
+#summary(MR8)
+#AIC(MR8) # 377.17
 
-#MR11
+#MP11
 
 Data_merge_Model %>%
   mutate(MP11 = predict.gam(MR11))  %>%
@@ -620,9 +619,159 @@ Data_merge_Model %>%
   geom_point(aes(AvgMin, CPUE_Count, color = Month)) +
   geom_line(aes(AvgMin, MP11))
 
-MR11 <- gam(CPUE_Count ~ Month+AvgMax, data = Data_merge_Model)
-summary(MR11)
-AIC(MR11) # 373.09
+Data_merge_Model %>%
+  mutate(MP11 = predict.gam(MR11)) %>%
+  ggplot() +
+  geom_boxplot(aes(x = AvgMin, y = CPUE_Count, fill = Month)) +
+  geom_point(aes(x = AvgMin, y = CPUE_Count, color = Month)) +
+  labs(x = "AvgMin", y = "CPUE_Count", title = "MP11") +
+  theme_minimal()
+
+#MP23
+
+Data_merge_Model %>%
+  mutate(MP23 = predict.gam(MR23))  %>%
+  ggplot() +
+  geom_point(aes(Lowest_Temperature_C, RatAY, color = Month)) +
+  geom_line(aes(Lowest_Temperature_C, MP23))
+
+
+#MP28 (Interaction)
+
+Data_merge_Model %>%
+  mutate(MP28 = predict.gam(MR28))  %>%
+  ggplot() +
+  geom_point(aes(AvgMax, RatAY, color = Month)) +
+  geom_line(aes(AvgMax, MP28))
+
+ggplot(Data_merge_Model,aes(y=RatAY,x=AvgMax,color=factor(Month)))+geom_point()+stat_smooth(method="MR28",se=FALSE)
+
+ggplot(Data_merge_Model, aes(x = AvgMax, y = RatAY, color = Month)) +
+  geom_point() +  # Scatter plot of actual data
+  geom_line(aes(y = MP28)) +  # Line plot of predicted values
+  labs(x = "Average Maximum Temperature", y = "RatAY", color = "Month") +
+  theme_minimal()
+
+#Dont undderstand how to do the interaction :(
+
+#MR31
+
+Data_merge_Model %>%
+  mutate(MP31 = predict.gam(MR31))  %>%
+  ggplot() +
+  geom_point(aes(AvgMin, RatAY, color = Month)) +
+  geom_line(aes(AvgMin, MP31))
+
+#MP35
+
+Data_merge_Model %>%
+  mutate(MP35 = predict.gam(MR35))  %>%
+  ggplot() +
+  geom_point(aes(PropLogL3, RatAY, color = Month)) +
+  geom_line(aes(PropLogL3, MP35))
+
+#MP44
+
+Data_merge_Model %>%
+  mutate(MP44 = predict.gam(MR44))  %>%
+  ggplot() +
+  geom_point(aes(Lowest_Temperature_C, CPUE_Biomass, color = Month)) +
+  geom_line(aes(Lowest_Temperature_C, MP44))
+
+#MP45 (Interaction)
+
+Data_merge_Model %>%
+  mutate(MP45 = predict.gam(MR45))  %>%
+  ggplot() +
+  geom_point(aes(Lowest_Temperature_C, CPUE_Biomass, color = Month)) +
+  geom_line(aes(Lowest_Temperature_C, MP45))
+
+MR45 <- gam(CPUE_Biomass ~ Month*Lowest_Temperature_C, data = Data_merge_Model)
+summary(MR45)
+AIC(MR45) #683.93
+
+#Don't understand how to do interaction
+
+#MP47
+
+Data_merge_Model %>%
+  mutate(MP47 = predict.gam(MR47))  %>%
+  ggplot() +
+  geom_point(aes(AvgMin, CPUE_Biomass, color = Month)) +
+  geom_line(aes(AvgMin, MP47))
+
+#MP49 
+
+Data_merge_Model %>%
+  mutate(MP49 = predict.gam(MR49))  %>%
+  ggplot() +
+  geom_point(aes(AvgMax, CPUE_Biomass, color = Month)) +
+  geom_line(aes(AvgMax, MP49))
+
+#MP50 (Interaction)
+
+Data_merge_Model %>%
+  mutate(MP50 = predict.gam(MR50))  %>%
+  ggplot() +
+  geom_point(aes(AvgMax, CPUE_Biomass, color = Month)) +
+  geom_line(aes(AvgMax, MP50))
+
+MR50 <- gam(CPUE_Biomass ~ Month*AvgMax, data = Data_merge_Model)
+summary(MR50)
+AIC(MR50) #687.28
+
+#MP52
+
+Data_merge_Model %>%
+  mutate(MP52 = predict.gam(MR52))  %>%
+  ggplot() +
+  geom_point(aes(PropLogL3, CPUE_Biomass, color = Month)) +
+  geom_line(aes(PropLogL3, MP52))
+
+#MP53
+
+Data_merge_Model %>%
+  mutate(MP53 = predict.gam(MR53))  %>%
+  ggplot() +
+  geom_point(aes(PropLogL5, CPUE_Count, color = Month)) +
+  geom_line(aes(PropLogL5, MP53))
+
+#MP53.1
+
+Data_merge_Model %>%
+  mutate(MP53.1 = predict.gam(MR53.1))  %>%
+  ggplot() +
+  geom_point(aes(PropLogL5, CPUE_Biomass, color = Month)) +
+  geom_line(aes(PropLogL5, MP53.1))
+
+#MP56
+
+Data_merge_Model %>%
+  mutate(MP56 = predict.gam(MR56))  %>%
+  ggplot() +
+  geom_point(aes(PropLogG20, CPUE_Count, color = Month)) +
+  geom_line(aes(PropLogG20, MP56))
+
+#This one is really interesting I think at least.....
+
+#MP56.1
+
+Data_merge_Model %>%
+  mutate(MP56.1 = predict.gam(MR56.1))  %>%
+  ggplot() +
+  geom_point(aes(PropLogG20, CPUE_Biomass, color = Month)) +
+  geom_line(aes(PropLogG20, MP56.1))
+
+#Also pretty interesting 
+
+#MP81
+
+Data_merge_Model %>%
+  mutate(MP81 = predict.gam(MR81))  %>%
+  ggplot() +
+  geom_point(aes(PropLogG20, SiteLat, color = SiteLon)) +
+  geom_line(aes(PropLogG20, MP81))
+#This one just straight up sucks.
 
 #Plot=
 
