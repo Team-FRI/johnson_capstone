@@ -635,6 +635,12 @@ Data_merge_Model %>%
   geom_point(aes(Lowest_Temperature_C, RatAY, color = Month)) +
   geom_line(aes(Lowest_Temperature_C, MP23))
 
+Data_merge_Model %>%
+  mutate(MP23 = predict.gam(MR23))  %>%
+  ggplot() +
+  geom_point(aes(Lowest_Temperature_C, RatAY, color = SiteCode)) +
+  geom_line(aes(Lowest_Temperature_C, MP23))
+
 
 #MP28 (Interaction)
 
@@ -678,12 +684,20 @@ Data_merge_Model %>%
   geom_point(aes(Lowest_Temperature_C, CPUE_Biomass, color = Month)) +
   geom_line(aes(Lowest_Temperature_C, MP44))
 
+#Has a lot more dots that you can see.
+
 #MP45 (Interaction)
 
 Data_merge_Model %>%
   mutate(MP45 = predict.gam(MR45))  %>%
   ggplot() +
   geom_point(aes(Lowest_Temperature_C, CPUE_Biomass, color = Month)) +
+  geom_line(aes(Lowest_Temperature_C, MP45))
+
+Data_merge_Model %>%
+  mutate(MP45 = predict.gam(MR45))  %>%
+  ggplot() +
+  geom_point(aes(Lowest_Temperature_C, CPUE_Biomass, color = SiteCode)) +
   geom_line(aes(Lowest_Temperature_C, MP45))
 
 MR45 <- gam(CPUE_Biomass ~ Month*Lowest_Temperature_C, data = Data_merge_Model)
@@ -707,6 +721,18 @@ Data_merge_Model %>%
   ggplot() +
   geom_point(aes(AvgMax, CPUE_Biomass, color = Month)) +
   geom_line(aes(AvgMax, MP49))
+
+Data_merge_Model %>%
+  mutate(MP49 = predict.gam(MR49))  %>%
+  ggplot() +
+  geom_point(aes(AvgMax, CPUE_Biomass, color = Month)) +
+  geom_smooth(aes(AvgMax, MP49))
+
+MP49 <- predict.gam(MR49) 
+MP49 <- fortify(MP49)
+MP49 %>%
+  ggplot(aes(AvgMax, fit)) + geom_smooth(Month)
+
 
 #MP50 (Interaction)
 
@@ -736,6 +762,12 @@ Data_merge_Model %>%
   geom_point(aes(PropLogL5, CPUE_Count, color = Month)) +
   geom_line(aes(PropLogL5, MP53))
 
+Data_merge_Model %>%
+  mutate(MP53 = predict.gam(MR53))  %>%
+  ggplot() +
+  geom_point(aes(PropLogL5, CPUE_Count, color = SiteCode)) +
+  geom_line(aes(PropLogL5, MP53))
+
 #MP53.1
 
 Data_merge_Model %>%
@@ -752,8 +784,6 @@ Data_merge_Model %>%
   geom_point(aes(PropLogG20, CPUE_Count, color = Month)) +
   geom_line(aes(PropLogG20, MP56))
 
-#This one is really interesting I think at least.....
-
 #MP56.1
 
 Data_merge_Model %>%
@@ -762,7 +792,6 @@ Data_merge_Model %>%
   geom_point(aes(PropLogG20, CPUE_Biomass, color = Month)) +
   geom_line(aes(PropLogG20, MP56.1))
 
-#Also pretty interesting 
 
 #MP81
 
@@ -820,20 +849,13 @@ axis(2,at=maj2,lty=1,lwd=0.5,las=2,pos=1100,tck=1)#y-axis add tck=1 for gridline
 #Making and Extracng data frames/tables for thesis 
 
 Eggs <- STPlot %>%
-  filter(Month == 03 | Month == 04) %>%
+  filter(Month == "03" | Month == "04") %>%
   summarise(
   min = min(Temp_C),
   max = max(Temp_C),
-  Avg = mean(Temp_C),
+  AvgTemp = mean(Temp_C),
   SD = sd(Temp_C)
 )
 
-Eggs <- STPlot %>%
-  filter(Month == 03 | Month == 04) %>%
-  summarise(
-    min = min(Temp_C, na.rm = TRUE),
-    max = max(Temp_C, na.rm = TRUE),
-    Avg = mean(Temp_C, na.rm = TRUE),
-    SD = sd(Temp_C, na.rm = TRUE)
-  )
+write.csv(Eggs, "Eggs.csv")
 
