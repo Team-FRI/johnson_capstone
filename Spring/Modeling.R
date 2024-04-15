@@ -817,6 +817,23 @@ maj2<-c(8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27)#temps
 
 axis(2,at=maj2,lty=1,lwd=0.5,las=2,pos=1100,tck=1)#y-axis add tck=1 for gridlines
 
+#Making and Extracng data frames/tables for thesis 
 
+Eggs <- STPlot %>%
+  filter(Month == 03 | Month == 04) %>%
+  summarise(
+  min = min(Temp_C),
+  max = max(Temp_C),
+  Avg = mean(Temp_C),
+  SD = sd(Temp_C)
+)
 
+Eggs <- STPlot %>%
+  filter(Month == 03 | Month == 04) %>%
+  summarise(
+    min = min(Temp_C, na.rm = TRUE),
+    max = max(Temp_C, na.rm = TRUE),
+    Avg = mean(Temp_C, na.rm = TRUE),
+    SD = sd(Temp_C, na.rm = TRUE)
+  )
 
