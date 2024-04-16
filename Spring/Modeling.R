@@ -543,6 +543,13 @@ STPlot <- filter(ST,
     (SiteCode == "Red.LittleBear" & (Year == "2020" | Year == "2021"))
 )
 
+STPlot1 <- filter(ST,
+                  (SiteCode == "Dry.Hoagland" & (Year == "2020" | Year == "2021")) |
+                   (SiteCode == "Grandad.Hessler" & (Year == "2020" | Year == "2021")) |
+                   (SiteCode == "Painter.LittleBear" & (Year == "2020" | Year == "2021")) |
+                   (SiteCode == "Red.LittleBear" & (Year == "2020" | Year == "2021"))
+)
+
 
 ggplot(STPlot, aes(x = Year, y = Temp_C)) +
   geom_line()
@@ -569,7 +576,6 @@ ggplot(STPlot, aes(x = Date, y = Temp_C, color = SiteCode)) +
   theme_minimal()
 
 
-aaa
 #Make plot Showing Number of days over certain temperature. 
 
 
@@ -846,16 +852,60 @@ maj2<-c(8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27)#temps
 
 axis(2,at=maj2,lty=1,lwd=0.5,las=2,pos=1100,tck=1)#y-axis add tck=1 for gridlines
 
-#Making and Extracng data frames/tables for thesis 
+#Making and Extract data frames/tables for thesis 
 
-Eggs <- STPlot %>%
-  filter(Month == "03" | Month == "04") %>%
+#Make Tables for life History
+
+Eggs <- STPlot1 %>%
+  filter(Month == "01"| Month == "02" | Month == "03" | Month == "11" | Month == "12") %>%
   summarise(
-  min = min(Temp_C),
-  max = max(Temp_C),
+  MinTemp = min(Temp_C),
+  MaxTemp = max(Temp_C),
   AvgTemp = mean(Temp_C),
   SD = sd(Temp_C)
 )
 
-write.csv(Eggs, "Eggs.csv")
+#write.csv(Eggs, "Eggs.csv")
 
+Alevin <- STPlot1 %>%
+  filter(Month == "02" | Month == "03" | Month == "04") %>%
+  summarise(
+    MinTemp = min(Temp_C),
+    MaxTemp = max(Temp_C),
+    AvgTemp = mean(Temp_C),
+    SD = sd(Temp_C)
+  )
+
+#write.csv(Alevin, "Alevin.csv")
+
+YOY <- STPlot1 %>%
+  filter(Month == "06"| Month == "07" | Month == "08" | Month == "09" | Month == "10") %>%
+  summarise(
+    MinTemp = min(Temp_C),
+    MaxTemp = max(Temp_C),
+    AvgTemp = mean(Temp_C),
+    SD = sd(Temp_C)
+  )
+
+#write.csv(YOY, "YOY.csv")
+
+Spawning <- STPlot1 %>%
+  filter(Month == "09"| Month == "10" | Month == "11" ) %>%
+  summarise(
+    MinTemp = min(Temp_C),
+    MaxTemp = max(Temp_C),
+    AvgTemp = mean(Temp_C),
+    SD = sd(Temp_C)
+  )
+
+#write.csv(Spawning, "Spawning.csv")
+
+Adult_Survival <- STPlot1 %>%
+  filter(Month == "06"| Month == "07" | Month == "18" ) %>%
+  summarise(
+    MinTemp = min(Temp_C),
+    MaxTemp = max(Temp_C),
+    AvgTemp = mean(Temp_C),
+    SD = sd(Temp_C)
+  )
+#write.csv(Adult_Survival, "Adult_Survival.csv")
