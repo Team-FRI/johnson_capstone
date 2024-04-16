@@ -909,3 +909,60 @@ Adult_Survival <- STPlot1 %>%
     SD = sd(Temp_C)
   )
 #write.csv(Adult_Survival, "Adult_Survival.csv")
+
+#Read in Life History Table
+
+install.packages("readxl")
+library(readxl)
+
+LifeHistoryTable <- read_xlsx("LifeHistoryTable.xlsx")
+
+#Stuff that kina workds 
+
+LifeHistoryTable$LH_Stage <- factor(LifeHistoryTable$LH_Stage, levels = unique(LifeHistoryTable$LH_Stage))
+
+ggplot(LifeHistoryTable, aes(x=LH_Stage, y=AvgTemp, fill="Month")) + 
+  geom_bar(stat="identity", color="black", 
+           position=position_dodge()) + 
+  geom_errorbar(aes(ymin=AvgTemp-SD, ymax=AvgTemp+SD), width=.2, 
+                position=position_dodge(.9))
+
+#Trring to get things to work bellow, but its not. 
+
+LifeHistoryTable$LH_Stage <- factor(LifeHistoryTable$LH_Stage, levels = unique(LifeHistoryTable$LH_Stage))
+
+LifeHistoryTable$Month <- NA  # Initialize the "Month" column
+
+# Convert the DateColumn to Date object
+LifeHistoryTable$Month <- as.Date(LifeHistoryTable$Month)
+
+LifeHistoryTable$Month[2] <- c("01", "02")
+
+LifeHistoryTable$Month[2] <- list(c("01", "02"))
+
+LifeHistoryTable$Month[c(1, 3, 5)] <- list(c("January", "February"))
+
+# Extract the month from the DateColumn
+LifeHistoryTable$Month <- month(LifeHistoryTable$Month)
+
+LifeHistoryTable <- read_excel("LifeHistoryTable.xlsx", col_types$Month = "numeric")
+
+LifeHistoryTable <- read_excel("LifeHistoryTable.xlsx", col_types = c("text", "numeric", "numeric", "numeric", "numeric", "numeric"))
+
+new_column <- c("A", "B", "C", "D", "E")  # Example new column data
+
+
+
+LHP<- ggplot(df2, aes(x=dose, y=len, color=Month)) + geom_bar(stat="identity", color="black", 
+                                                              position=position_dodge()) + geom_errorbar(aes(ymin=AvgTemp-sd, ymax=AvgTemp+sd), width=.2, 
+                                                                                                         position=position_dodge(.9))
+LifeHistoryTable$Month <- as.numeric(LifeHistoryTable$Month)
+
+ggplot(LifeHistoryTable, aes(x=LH_Stage, y=AvgTemp, color="black")) + geom_bar(stat="identity", color="black", 
+                                                              position=position_dodge()) + geom_errorbar(aes(ymin=AvgTemp-SD, ymax=AvgTemp+SD), width=.2, 
+                                                                                                         position=position_dodge(.9))
+
+ggplot(LifeHistoryTable, aes(x = LH_Stage, y = AvgTemp)) +
+  geom_bar(stat = "identity", color = "black") +
+  geom_errorbar(aes(ymin = AvgTemp - sd, ymax = AvgTemp + sd), width = 0.2) +
+  labs(x = "LH Stage", y = "Avg Temperature")
