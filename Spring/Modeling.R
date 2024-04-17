@@ -575,6 +575,46 @@ ggplot(STPlot, aes(x = Date, y = Temp_C, color = SiteCode)) +
   labs(x = "Date", y = "Temperature (°C)", color = "Site") +
   theme_minimal()
 
+#Bellow is plot that adds line one at a time 
+
+# Define site colors 
+site_colors <- c("Dry.Hoagland" = "gray1", "Grandad.Hessler" = "blue", "Painter.LittleBear" = "forestgreen", "Sherman.Loyalsock" = "firebrick", "Red.LittleBear" = "slateblue2")
+
+# Filter for 2020 and 2021 <7 so you can get sherman to stop going into 2022 when other data doesn't
+STPlot_2020_2021 <- filter(STPlot, (year(Date) == 2020) | (year(Date) == 2021 & month(Date) < 7))
+
+# Create an empty plot
+p <- ggplot(STPlot_2020_2021, aes(x = Date, y = Temp_C, color = SiteCode)) +
+  geom_line() +
+  scale_color_manual(values = site_colors) +  # Apply custom color palette
+  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
+  theme_minimal() +
+  theme(legend.key.size = unit(2, "lines"))  # Adjust the legend key size
+
+# Loop through each site and gradually add lines one at a time
+for (i in 1:length(unique(STPlot_2020_2021$SiteCode))) {
+  # Subset the data up to the current site
+  sub_data <- subset(STPlot_2020_2021, SiteCode %in% unique(STPlot_2020_2021$SiteCode)[1:i])
+  
+  # Create a color vector
+  color_values <- rep(NA, length(unique(STPlot_2020_2021$SiteCode)))
+  color_values[1:i] <- site_colors[1:i]
+  
+  # Add a line for the current site
+  p <- p +
+    geom_line(data = sub_data, aes(x = Date, y = Temp_C, color = SiteCode)) +
+    scale_color_manual(values = color_values, na.value = "transparent")  # Use colors up to the current site
+  
+  # Display the plot
+  print(p)
+}
+
+# Create an empty plot
+p <- ggplot(STPlot_2020, aes(x = Date, y = Temp_C, color = SiteCode)) +
+  geom_line() +
+  scale_color_manual(values = site_colors) +  # Apply custom color palette
+  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
+  theme_minimal()
 
 #Make plot Showing Number of days over certain temperature. 
 
@@ -917,17 +957,36 @@ library(readxl)
 
 LifeHistoryTable <- read_xlsx("LifeHistoryTable.xlsx")
 
-#Stuff that kina workds 
+#Stuff that kinda works 
 
 LifeHistoryTable$LH_Stage <- factor(LifeHistoryTable$LH_Stage, levels = unique(LifeHistoryTable$LH_Stage))
 
-ggplot(LifeHistoryTable, aes(x=LH_Stage, y=AvgTemp, fill="Month")) + 
+#Bar plot 
+ggplot(LifeHistoryTable, aes(x=LH_Stage, y=AvgTemp, color=LH_Stage)) + 
   geom_bar(stat="identity", color="black", 
            position=position_dodge()) + 
   geom_errorbar(aes(ymin=AvgTemp-SD, ymax=AvgTemp+SD), width=.2, 
                 position=position_dodge(.9))
 
-#Trring to get things to work bellow, but its not. 
+#Point line plot
+ggplot(LifeHistoryTable, aes(x=LH_Stage, y=AvgTemp, color=LH_Stage)) + 
+  geom_point(stat="identity", color="black", 
+           position=position_dodge()) + 
+  geom_errorbar(aes(ymin=AvgTemp-SD, ymax=AvgTemp+SD), width=.2, 
+                position=position_dodge(.9))
+
+#Point line plot with biger legend 
+ggplot(LifeHistoryTable, aes(x = LH_Stage, y = AvgTemp, color = LH_Stage)) + 
+  geom_point(stat = "identity", color = "black", position = position_dodge()) + 
+  geom_errorbar(aes(ymin = AvgTemp - SD, ymax = AvgTemp + SD), width = 0.2, position = position_dodge(0.9)) +
+  theme(legend.key.size = unit(2, "lines"))  # Adjust the legend key size
+
+ggplot(LifeHistoryTable, aes(x = LH_Stage, y = AvgTemp, color = LH_Stage)) + 
+  geom_point(stat = "identity", color = "black", size = 3) +  # Adjust point size (e.g., size = 3)
+  geom_errorbar(aes(ymin = AvgTemp - SD, ymax = AvgTemp + SD), width = 0.2, size = 1.0) +  # Adjust error bar size (e.g., size = 1.5)
+  theme(legend.key.size = unit(2, "lines"))  # Adjust the legend key size
+
+#Trying to get things to work bellow, but its not. 
 
 LifeHistoryTable$LH_Stage <- factor(LifeHistoryTable$LH_Stage, levels = unique(LifeHistoryTable$LH_Stage))
 
