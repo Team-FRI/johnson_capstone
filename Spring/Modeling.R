@@ -704,10 +704,14 @@ Data_merge_Model %>%
   geom_line(aes(AvgMin, MP11))
 
 Data_merge_Model %>%
-  mutate(MP11 = predict.gam(MR11))  %>%
+  mutate(MP11 = predict.gam(MR11)) %>%
   ggplot() +
-  geom_point(aes(AvgMin, CPUE_Count, color = Month)) +
-  geom_smooth(aes(AvgMin, MP11))
+  geom_point(aes(AvgMin, CPUE_Count, color = Month, shape = Month), size = 2) +
+  geom_smooth(aes(AvgMin, MP11)) +
+  scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
+                                "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
+                                "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
+  theme_minimal()
 
 Data_merge_Model %>%
   mutate(MP11 = predict.gam(MR11)) %>%
@@ -728,8 +732,12 @@ Data_merge_Model %>%
 Data_merge_Model %>%
   mutate(MP23 = predict.gam(MR23))  %>%
   ggplot() +
-  geom_point(aes(Lowest_Temperature_C, RatAY, color = Month)) +
-  geom_smooth(aes(Lowest_Temperature_C, MP23))
+  geom_point(aes(Lowest_Temperature_C, RatAY, color = Month, shape = Month), size = 2) +
+  geom_smooth(aes(Lowest_Temperature_C, MP23)) +
+  scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
+                                "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
+                                "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
+  theme_minimal()
 
 Data_merge_Model %>%
   mutate(MP23 = predict.gam(MR23))  %>%
@@ -747,10 +755,14 @@ Data_merge_Model %>%
   geom_line(aes(AvgMax, MP28))
 
 Data_merge_Model %>%
-  mutate(MP28 = predict.gam(MR28))  %>%
+  mutate(MP28 = predict.gam(MR28)) %>%
   ggplot() +
-  geom_point(aes(AvgMax, RatAY, color = Month)) +
-  geom_smooth(aes(AvgMax, MP28))
+  geom_point(aes(AvgMax, RatAY, color = Month, shape = Month)) +
+  geom_smooth(aes(AvgMax, MP28)) +
+  scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
+                                "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
+                                "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
+  theme_minimal()
 
 ggplot(Data_merge_Model,aes(y=RatAY,x=AvgMax,color=factor(Month)))+geom_point()+stat_smooth(method="MR28",se=FALSE)
 
