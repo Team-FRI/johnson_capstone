@@ -580,7 +580,7 @@ ggplot(STPlot, aes(x = Date, y = Temp_C, color = SiteCode)) +
 # Define site colors 
 site_colors <- c("Dry.Hoagland" = "gray1", "Grandad.Hessler" = "blue", "Painter.LittleBear" = "forestgreen", "Sherman.Loyalsock" = "firebrick", "Red.LittleBear" = "slateblue2")
 #Fore some reason this second one works after I flipped firebrick to sheman and slateblue2 to red, even though thats backwords to what should be working...idk it worked at least :).
-site_colors <- c("Dry.Hoagland" = "gray1", "Grandad.Hessler" = "blue", "Painter.LittleBear" = "forestgreen", "Sherman.Loyalsock" = "slateblue2", "Red.LittleBear" = "firebrick")
+site_colors <- c("Dry.Hoagland" = "gray1", "Grandad.Hessler" = "blue", "Painter.LittleBear" = "forestgreen", "Sherman.Loyalsock" = "darkorange2", "Red.LittleBear" = "firebrick")
 
 
 # Filter for 2020 and 2021 <7 so you can get sherman to stop going into 2022 when other data doesn't
@@ -662,12 +662,41 @@ Data_merge_Model %>%
   geom_point(aes(Lowest_Temperature_C, CPUE_Count, color = Month)) +
   geom_smooth(aes(Lowest_Temperature_C, MP8))
 
+Data_merge_Model %>%
+  mutate(MP8 = predict.gam(MR8)) %>%
+  ggplot() +
+  geom_point(aes(Lowest_Temperature_C, CPUE_Count, color = Month, shape = Month), size = 2) +
+  geom_smooth(aes(Lowest_Temperature_C, MP8)) +
+  scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
+                                "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
+                                "09" = 15, "10" = 15, "11" = 15, "12" = 17))
+
+?points
+
+#From here on out:
+#Winter Months: December January, February.
+#Spring and Fall Months: March, April, May, September, October, November.
+#Summer Months: June, July, August. 
+
+# Check the levels of the Month variable in your data
+levels(Data_merge_Model$Month)
+
+# Make sure the levels in scale_shape_manual match with the levels in your data
+Data_merge_Model %>%
+  mutate(MP8 = predict.gam(MR8)) %>%
+  ggplot() +
+  geom_point(aes(Lowest_Temperature_C, CPUE_Count, color = Month, shape = Month)) +
+  geom_smooth(aes(Lowest_Temperature_C, MP8)) +
+  scale_shape_manual(values = c("January" = 17, "February" = 17, "March" = 15, "April" = 15, 
+                                "May" = 15, "June" = 16, "July" = 16, "August" = 16, 
+                                "September" = 15, "October" = 15, "November" = 15, "December" = 17))
+
 #MP8 <- gam(CPUE_Count ~ Month+Lowest_Temperature_C, data = Data_merge_Model)
 #summary(MR8)
 #AIC(MR8) # 377.17
 
 #MP11
-
+?shape
 Data_merge_Model %>%
   mutate(MP11 = predict.gam(MR11))  %>%
   ggplot() +
