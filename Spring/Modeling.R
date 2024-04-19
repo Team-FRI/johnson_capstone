@@ -785,8 +785,12 @@ Data_merge_Model %>%
 Data_merge_Model %>%
   mutate(MP31 = predict.gam(MR31))  %>%
   ggplot() +
-  geom_point(aes(AvgMin, RatAY, color = Month)) +
-  geom_smooth(aes(AvgMin, MP31))
+  geom_point(aes(AvgMin, RatAY, color = Month, shape = Month)) +
+  geom_smooth(aes(AvgMin, MP31))+
+  scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
+                                "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
+                                "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
+  theme_minimal()
 
 #MP35
 
@@ -799,8 +803,12 @@ Data_merge_Model %>%
 Data_merge_Model %>%
   mutate(MP35 = predict.gam(MR35))  %>%
   ggplot() +
-  geom_point(aes(PropLogL3, RatAY, color = Month)) +
-  geom_smooth(aes(PropLogL3, MP35))
+  geom_point(aes(PropLogL3, RatAY, color = Month, shape = Month)) +
+  geom_smooth(aes(PropLogL3, MP35))+
+  scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
+                                "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
+                                "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
+  theme_minimal()
 
 #MP44 **
 
@@ -809,6 +817,16 @@ Data_merge_Model %>%
   ggplot() +
   geom_point(aes(Lowest_Temperature_C, CPUE_Biomass, color = Month)) +
   geom_line(aes(Lowest_Temperature_C, MP44))
+
+Data_merge_Model %>%
+  mutate(MP44 = predict.gam(MR44))  %>%
+  ggplot() +
+  geom_point(aes(Lowest_Temperature_C, CPUE_Biomass, color = Month, shape = Month)) +
+  geom_smooth(aes(Lowest_Temperature_C, MP44)) +
+  scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
+                                "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
+                                "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
+  theme_minimal()
 
 #Has a lot more dots that you can see.
 
@@ -823,8 +841,12 @@ Data_merge_Model %>%
 Data_merge_Model %>%
   mutate(MP45 = predict.gam(MR45))  %>%
   ggplot() +
-  geom_point(aes(Lowest_Temperature_C, CPUE_Biomass, color = SiteCode)) +
-  geom_line(aes(Lowest_Temperature_C, MP45))
+  geom_point(aes(Lowest_Temperature_C, CPUE_Biomass, color = SiteCode, shape = Month)) +
+  geom_smooth(aes(Lowest_Temperature_C, MP45)) +
+  scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
+                                "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
+                                "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
+  theme_minimal()
 
 MR45 <- gam(CPUE_Biomass ~ Month*Lowest_Temperature_C, data = Data_merge_Model)
 summary(MR45)
@@ -840,6 +862,23 @@ Data_merge_Model %>%
   geom_point(aes(AvgMin, CPUE_Biomass, color = Month)) +
   geom_line(aes(AvgMin, MP47))
 
+Data_merge_Model %>% 
+  mutate(MP47 = predict.gam(MR47))  %>%
+  ggplot() +
+  geom_point(aes(AvgMin, CPUE_Biomass, color = Month)) +
+  geom_smooth(aes(AvgMin, MP47))
+
+Data_merge_Model %>% 
+  mutate(MP47 = predict.gam(MR47))  %>%
+  ggplot() +
+  geom_point(aes(AvgMin, CPUE_Biomass, color = Month, shape = Month)) +
+  geom_smooth(aes(AvgMin, MP47)) +
+  scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
+                                "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
+                                "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
+  theme_minimal()
+
+
 #MP49 
 
 Data_merge_Model %>%
@@ -851,8 +890,12 @@ Data_merge_Model %>%
 Data_merge_Model %>%
   mutate(MP49 = predict.gam(MR49))  %>%
   ggplot() +
-  geom_point(aes(AvgMax, CPUE_Biomass, color = Month)) +
-  geom_smooth(aes(AvgMax, MP49))
+  geom_point(aes(AvgMax, CPUE_Biomass, color = Month, shape = Month)) +
+  geom_smooth(aes(AvgMax, MP49)) +
+  scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
+                                "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
+                                "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
+  theme_minimal()
 
 MP49 <- predict.gam(MR49) 
 MP49 <- fortify(MP49)
@@ -860,7 +903,7 @@ MP49 %>%
   ggplot(aes(AvgMax, fit)) + geom_smooth(Month)
 
 
-#MP50 (Interaction)
+#MP50 (Interaction) *
 
 Data_merge_Model %>%
   mutate(MP50 = predict.gam(MR50))  %>%
@@ -871,8 +914,12 @@ Data_merge_Model %>%
 Data_merge_Model %>%
   mutate(MP50 = predict.gam(MR50))  %>%
   ggplot() +
-  geom_point(aes(AvgMax, CPUE_Biomass, color = Month)) +
-  geom_smooth(aes(AvgMax, MP50))
+  geom_point(aes(AvgMax, CPUE_Biomass, color = Month, shape = Month)) +
+  geom_smooth(aes(AvgMax, MP50)) +
+  scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
+                                "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
+                                "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
+  theme_minimal()
 
 MR50 <- gam(CPUE_Biomass ~ Month*AvgMax, data = Data_merge_Model)
 summary(MR50)
@@ -889,8 +936,12 @@ Data_merge_Model %>%
 Data_merge_Model %>%
   mutate(MP52 = predict.gam(MR52))  %>%
   ggplot() +
-  geom_point(aes(PropLogL3, CPUE_Biomass, color = Month)) +
-  geom_smooth(aes(PropLogL3, MP52))
+  geom_point(aes(PropLogL3, CPUE_Biomass, color = Month, shape = Month)) +
+  geom_smooth(aes(PropLogL3, MP52)) +
+  scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
+                                "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
+                                "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
+  theme_minimal()
 
 
 #MP53
@@ -904,8 +955,13 @@ Data_merge_Model %>%
 Data_merge_Model %>%
   mutate(MP53 = predict.gam(MR53))  %>%
   ggplot() +
-  geom_point(aes(PropLogL5, CPUE_Count, color = Month)) +
-  geom_smooth(aes(PropLogL5, MP53))
+  geom_point(aes(PropLogL5, CPUE_Count, color = Month, shape = Month)) +
+  geom_smooth(aes(PropLogL5, MP53)) +
+  scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
+                                "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
+                                "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
+  theme_minimal()
+
 
 
 Data_merge_Model %>%
@@ -925,8 +981,13 @@ Data_merge_Model %>%
 Data_merge_Model %>%
   mutate(MP53.1 = predict.gam(MR53.1))  %>%
   ggplot() +
-  geom_point(aes(PropLogL5, CPUE_Biomass, color = Month)) +
-  geom_smooth(aes(PropLogL5, MP53.1))
+  geom_point(aes(PropLogL5, CPUE_Biomass, color = Month, shape = Month)) +
+  geom_smooth(aes(PropLogL5, MP53.1)) +
+  scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
+                                "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
+                                "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
+  theme_minimal()
+
 
 #MP56
 
