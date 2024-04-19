@@ -674,22 +674,10 @@ Data_merge_Model %>%
 ?points
 
 #From here on out:
-#Winter Months: December January, February.
-#Spring and Fall Months: March, April, May, September, October, November.
-#Summer Months: June, July, August. 
+#Winter Months: December January, February. Triangles. 
+#Spring and Fall Months: March, April, May, September, October, November. Squares.
+#Summer Months: June, July, August. Circles. 
 
-# Check the levels of the Month variable in your data
-levels(Data_merge_Model$Month)
-
-# Make sure the levels in scale_shape_manual match with the levels in your data
-Data_merge_Model %>%
-  mutate(MP8 = predict.gam(MR8)) %>%
-  ggplot() +
-  geom_point(aes(Lowest_Temperature_C, CPUE_Count, color = Month, shape = Month)) +
-  geom_smooth(aes(Lowest_Temperature_C, MP8)) +
-  scale_shape_manual(values = c("January" = 17, "February" = 17, "March" = 15, "April" = 15, 
-                                "May" = 15, "June" = 16, "July" = 16, "August" = 16, 
-                                "September" = 15, "October" = 15, "November" = 15, "December" = 17))
 
 #MP8 <- gam(CPUE_Count ~ Month+Lowest_Temperature_C, data = Data_merge_Model)
 #summary(MR8)
@@ -757,7 +745,7 @@ Data_merge_Model %>%
 Data_merge_Model %>%
   mutate(MP28 = predict.gam(MR28)) %>%
   ggplot() +
-  geom_point(aes(AvgMax, RatAY, color = Month, shape = Month)) +
+  geom_point(aes(AvgMax, RatAY, color = Month, shape = Month), size = 2) +
   geom_smooth(aes(AvgMax, MP28)) +
   scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
                                 "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
@@ -774,7 +762,7 @@ ggplot(Data_merge_Model, aes(x = AvgMax, y = RatAY, color = Month)) +
 
 #Dont undderstand how to do the interaction :(
 
-#MR31
+#MR31 Maybe more intersting- SA
 
 Data_merge_Model %>%
   mutate(MP31 = predict.gam(MR31))  %>%
@@ -785,7 +773,7 @@ Data_merge_Model %>%
 Data_merge_Model %>%
   mutate(MP31 = predict.gam(MR31))  %>%
   ggplot() +
-  geom_point(aes(AvgMin, RatAY, color = Month, shape = Month)) +
+  geom_point(aes(AvgMin, RatAY, color = Month, shape = Month), size = 2) +
   geom_smooth(aes(AvgMin, MP31))+
   scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
                                 "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
@@ -803,7 +791,7 @@ Data_merge_Model %>%
 Data_merge_Model %>%
   mutate(MP35 = predict.gam(MR35))  %>%
   ggplot() +
-  geom_point(aes(PropLogL3, RatAY, color = Month, shape = Month)) +
+  geom_point(aes(PropLogL3, RatAY, color = Month, shape = Month), size = 2) +
   geom_smooth(aes(PropLogL3, MP35))+
   scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
                                 "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
@@ -821,7 +809,7 @@ Data_merge_Model %>%
 Data_merge_Model %>%
   mutate(MP44 = predict.gam(MR44))  %>%
   ggplot() +
-  geom_point(aes(Lowest_Temperature_C, CPUE_Biomass, color = Month, shape = Month)) +
+  geom_point(aes(Lowest_Temperature_C, CPUE_Biomass, color = Month, shape = Month), size = 2) +
   geom_smooth(aes(Lowest_Temperature_C, MP44)) +
   scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
                                 "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
@@ -841,7 +829,7 @@ Data_merge_Model %>%
 Data_merge_Model %>%
   mutate(MP45 = predict.gam(MR45))  %>%
   ggplot() +
-  geom_point(aes(Lowest_Temperature_C, CPUE_Biomass, color = SiteCode, shape = Month)) +
+  geom_point(aes(Lowest_Temperature_C, CPUE_Biomass, color = SiteCode, shape = Month), size = 2) +
   geom_smooth(aes(Lowest_Temperature_C, MP45)) +
   scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
                                 "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
@@ -871,7 +859,7 @@ Data_merge_Model %>%
 Data_merge_Model %>% 
   mutate(MP47 = predict.gam(MR47))  %>%
   ggplot() +
-  geom_point(aes(AvgMin, CPUE_Biomass, color = Month, shape = Month)) +
+  geom_point(aes(AvgMin, CPUE_Biomass, color = Month, shape = Month), size = 2) +
   geom_smooth(aes(AvgMin, MP47)) +
   scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
                                 "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
@@ -890,7 +878,7 @@ Data_merge_Model %>%
 Data_merge_Model %>%
   mutate(MP49 = predict.gam(MR49))  %>%
   ggplot() +
-  geom_point(aes(AvgMax, CPUE_Biomass, color = Month, shape = Month)) +
+  geom_point(aes(AvgMax, CPUE_Biomass, color = Month, shape = Month), size = 2) +
   geom_smooth(aes(AvgMax, MP49)) +
   scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
                                 "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
@@ -903,7 +891,7 @@ MP49 %>%
   ggplot(aes(AvgMax, fit)) + geom_smooth(Month)
 
 
-#MP50 (Interaction) *
+#MP50 (Interaction) * Most interesting one for biomass so far.
 
 Data_merge_Model %>%
   mutate(MP50 = predict.gam(MR50))  %>%
@@ -914,7 +902,7 @@ Data_merge_Model %>%
 Data_merge_Model %>%
   mutate(MP50 = predict.gam(MR50))  %>%
   ggplot() +
-  geom_point(aes(AvgMax, CPUE_Biomass, color = Month, shape = Month)) +
+  geom_point(aes(AvgMax, CPUE_Biomass, color = Month, shape = Month), size = 2) +
   geom_smooth(aes(AvgMax, MP50)) +
   scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
                                 "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
@@ -936,7 +924,7 @@ Data_merge_Model %>%
 Data_merge_Model %>%
   mutate(MP52 = predict.gam(MR52))  %>%
   ggplot() +
-  geom_point(aes(PropLogL3, CPUE_Biomass, color = Month, shape = Month)) +
+  geom_point(aes(PropLogL3, CPUE_Biomass, color = Month, shape = Month), size = 2) +
   geom_smooth(aes(PropLogL3, MP52)) +
   scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
                                 "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
@@ -955,7 +943,7 @@ Data_merge_Model %>%
 Data_merge_Model %>%
   mutate(MP53 = predict.gam(MR53))  %>%
   ggplot() +
-  geom_point(aes(PropLogL5, CPUE_Count, color = Month, shape = Month)) +
+  geom_point(aes(PropLogL5, CPUE_Count, color = Month, shape = Month), size = 2) +
   geom_smooth(aes(PropLogL5, MP53)) +
   scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
                                 "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
@@ -981,7 +969,7 @@ Data_merge_Model %>%
 Data_merge_Model %>%
   mutate(MP53.1 = predict.gam(MR53.1))  %>%
   ggplot() +
-  geom_point(aes(PropLogL5, CPUE_Biomass, color = Month, shape = Month)) +
+  geom_point(aes(PropLogL5, CPUE_Biomass, color = Month, shape = Month), size = 2) +
   geom_smooth(aes(PropLogL5, MP53.1)) +
   scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
                                 "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
@@ -1105,8 +1093,8 @@ Alevin <- STPlot1 %>%
 
 #write.csv(Alevin, "Alevin.csv")
 
-YOY <- STPlot1 %>%
-  filter(Month == "06"| Month == "07" | Month == "08" | Month == "09" | Month == "10") %>%
+YOY2020 <- STPlot1 %>%
+  filter(Month == "06" & Year == "2020"| Month == "07" | Month == "08" | Month == "09" | Month == "10") %>%
   summarise(
     MinTemp = min(Temp_C),
     MaxTemp = max(Temp_C),
@@ -1114,7 +1102,18 @@ YOY <- STPlot1 %>%
     SD = sd(Temp_C)
   )
 
-#write.csv(YOY, "YOY.csv")
+#write.csv(YOY2020, "YOY2020.csv")
+
+YOY2021 <- STPlot1 %>%
+  filter(Month == "04" | Month == "05" | Month == "06" & Year == "2021") %>%
+  summarise(
+    MinTemp = min(Temp_C),
+    MaxTemp = max(Temp_C),
+    AvgTemp = mean(Temp_C),
+    SD = sd(Temp_C)
+  )
+
+#write.csv(YOY2021, "YOY2021.csv")
 
 Spawning <- STPlot1 %>%
   filter(Month == "09"| Month == "10" | Month == "11" ) %>%
@@ -1128,7 +1127,7 @@ Spawning <- STPlot1 %>%
 #write.csv(Spawning, "Spawning.csv")
 
 Adult_Survival <- STPlot1 %>%
-  filter(Month == "06"| Month == "07" | Month == "18" ) %>%
+  filter(Month == "06" & Year == "2020"| Month == "07" | Month == "08" ) %>%
   summarise(
     MinTemp = min(Temp_C),
     MaxTemp = max(Temp_C),

@@ -113,6 +113,7 @@ Ad_YOY<-BKTRecLoy19to21 %>%
     TotalCount = n()
   )
 Ad_YOY
+#Bellow Per = proportion!
 #Changing strategy to "percent Adults - percent YOY"
 RatioAY<-Ad_YOY %>%
   mutate(
