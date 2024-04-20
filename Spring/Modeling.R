@@ -592,777 +592,12 @@ p <- ggplot(STPlot_2020_2021, aes(x = Date, y = Temp_C, color = SiteCode)) +
   scale_color_manual(values = site_colors) +  # Apply custom color palette
   labs(x = "Date", y = "Temperature (°C)", color = "Site") +
   theme_minimal() +
-  theme(legend.key.size = unit(2, "lines"))  # Adjust the legend key size
+  theme(legend.key.size = unit(2, "lines"), # Adjust the legend key size
+        legend.title = element_text(size = 14))  # Adjust legend title size
 
-# Loop through each site and gradually add lines one at a time
-for (i in 1:length(unique(STPlot_2020_2021$SiteCode))) {
-  # Subset the data up to the current site
-  sub_data <- subset(STPlot_2020_2021, SiteCode %in% unique(STPlot_2020_2021$SiteCode)[1:i])
-  
-  # Create a color vector
-  color_values <- rep(NA, length(unique(STPlot_2020_2021$SiteCode)))
-  color_values[1:i] <- site_colors[1:i]
-  
-  # Add a line for the current site
-  p <- p +
-    geom_line(data = sub_data, aes(x = Date, y = Temp_C, color = SiteCode)) +
-    scale_color_manual(values = color_values, na.value = "transparent")  # Use colors up to the current site
-  
-  # Display the plot
-  print(p)
-}
+#Bellow is the final plot you ended up using
 
-
-
-User
-
-ggplot(LifeHistoryTable, aes(x=LH_Stage, y=AvgTemp, fill="Eggs", "Alevin")) + 
-  geom_point(stat="identity", color="black", 
-             position=position_dodge()) + 
-  geom_errorbar(aes(ymin=AvgTemp-SD, ymax=AvgTemp+SD), width=.2, 
-                position=position_dodge(.9))
-ChatGPT
-User
-How can I make each error bar a different color based on the stages of the life hisory?
-  ChatGPT
-To make each error bar a different color based on the stages of the life history in a plot, you can utilize the matplotlib library in Python. Assuming you have data for different stages of life history and their respective error bars, you can specify colors for each stage and assign them accordingly to the error bars.
-
-Here's a basic example of how you can achieve this:
-
-python
-Copy code
-import matplotlib.pyplot as plt
-
-# Example data for life history stages
-stages = ['Stage 1', 'Stage 2', 'Stage 3']
-means = [10, 15, 20]  # Example mean values for each stage
-errors = [1, 2, 1]    # Example error values for each stage
-
-# Assigning colors to each stage
-colors = ['red', 'green', 'blue']
-
-# Plotting the data with error bars
-plt.bar(stages, means, yerr=errors, color=colors)
-
-# Adding labels and title
-plt.xlabel('Life History Stages')
-plt.ylabel('Mean Value')
-plt.title('Mean Values with Error Bars for Different Life History Stages')
-
-# Display the plot
-plt.show()
-In this example, each stage of the life history is assigned a different color, and these colors are used when plotting the error bars. You can modify the means, errors, and colors lists according to your actual data.
-
-User
-Im using R studio
-ChatGPT
-In R, you can achieve this using the ggplot2 package, which provides a powerful and flexible system for creating graphics. You can use the geom_errorbar() function along with ggplot() to create a plot with error bars, and then specify the colors for each stage of the life history using the scale_color_manual() function.
-
-Here's an example of how you can do this in R:
-  
-  R
-Copy code
-library(ggplot2)
-
-# Example data for life history stages
-stages <- c('Stage 1', 'Stage 2', 'Stage 3')
-means <- c(10, 15, 20)  # Example mean values for each stage
-errors <- c(1, 2, 1)    # Example error values for each stage
-
-# Create a data frame
-data <- data.frame(stages, means, errors)
-
-# Specify colors for each stage
-colors <- c('red', 'green', 'blue')
-
-# Plot with ggplot
-p <- ggplot(data, aes(x = stages, y = means, color = stages)) +
-  geom_errorbar(aes(ymin = means - errors, ymax = means + errors), width = 0.2) +
-  geom_point(size = 3) +
-  scale_color_manual(values = colors) +  # Assign colors
-  labs(x = 'Life History Stages', y = 'Mean Value', title = 'Mean Values with Error Bars for Different Life History Stages')
-
-# Display the plot
-print(p)
-In this R code:
-  
-  We create a data frame containing the stages, means, and errors.
-We specify the colors for each stage in the colors vector.
-We use ggplot() to create the plot, mapping the stages to the x-axis, means to the y-axis, and colors to the color aesthetic.
-We use geom_errorbar() to add error bars to the plot.
-We use scale_color_manual() to assign the specified colors to each stage.
-Finally, we add labels and a title to the plot using labs().
-User
-ggplot(LifeHistoryTable, aes(x=LH_Stage, y=AvgTemp, color=LH_Stage)) + 
-  geom_point(stat="identity", color="black", 
-             position=position_dodge()) + 
-  geom_errorbar(aes(ymin=AvgTemp-SD, ymax=AvgTemp+SD), width=.2, 
-                position=position_dodge(.9)) How do i make the legend biger
-ChatGPT
-To make the legend bigger in a ggplot2 plot in R, you can adjust the size of the legend key using the theme() function. Here's how you can modify your code to increase the size of the legend:
-
-R
-Copy code
-library(ggplot2)
-
-ggplot(LifeHistoryTable, aes(x = LH_Stage, y = AvgTemp, color = LH_Stage)) + 
-  geom_point(stat = "identity", color = "black", position = position_dodge()) + 
-  geom_errorbar(aes(ymin = AvgTemp - SD, ymax = AvgTemp + SD), width = 0.2, position = position_dodge(0.9)) +
-  theme(legend.key.size = unit(2, "lines"))  # Adjust the legend key size
-In the theme() function, legend.key.size is set to unit(2, "lines"), where 2 specifies the number of lines for the legend key. You can adjust this number to make the legend key bigger or smaller as desired.
-
-User
-What if I wan't to make the color of lines biger within the legend 
-ChatGPT
-To make the color of lines bigger within the legend in a ggplot2 plot in R, you can adjust the size of the legend key and the size of the lines within it separately. Here's how you can modify your code to achieve this:
-
-R
-Copy code
-library(ggplot2)
-
-ggplot(LifeHistoryTable, aes(x = LH_Stage, y = AvgTemp, color = LH_Stage)) + 
-  geom_point(stat = "identity", color = "black", position = position_dodge()) + 
-  geom_errorbar(aes(ymin = AvgTemp - SD, ymax = AvgTemp + SD), width = 0.2, position = position_dodge(0.9)) +
-  theme(legend.key.size = unit(2, "lines"),     # Adjust the legend key size
-        legend.key.height = unit(2, "lines"),   # Adjust the height of the legend key
-        legend.key.width = unit(5, "lines"))   # Adjust the width of the legend key
-In the theme() function, legend.key.height and legend.key.width specify the height and width of the legend key, respectively. Adjust these values as needed to make the color lines within the legend bigger or smaller.
-
-User
-What it I want the size of the point and error bar to be biger?
-ChatGPT
-To adjust the size of the points and error bars in your ggplot, you can modify their size using the size parameter within the geom_point() and geom_errorbar() functions. Here's how you can do it:
-  
-  R
-Copy code
-library(ggplot2)
-
-ggplot(LifeHistoryTable, aes(x = LH_Stage, y = AvgTemp, color = LH_Stage)) + 
-  geom_point(stat = "identity", color = "black", size = 3, position = position_dodge()) +  # Adjust point size (e.g., size = 3)
-  geom_errorbar(aes(ymin = AvgTemp - SD, ymax = AvgTemp + SD), width = 0.2, size = 1.5, position = position_dodge(0.9)) +  # Adjust error bar size (e.g., size = 1.5)
-  theme(legend.key.size = unit(2, "lines"),     # Adjust the legend key size
-        legend.key.height = unit(2, "lines"),   # Adjust the height of the legend key
-        legend.key.width = unit(5, "lines"))   # Adjust the width of the legend key
-In this code:
-  
-  size = 3 within geom_point() adjusts the size of the points.
-size = 1.5 within geom_errorbar() adjusts the size of the error bars.
-Adjust these values as needed to make the points and error bars bigger or smaller.
-User
-#Point line plot with biger legend 
-ggplot(LifeHistoryTable, aes(x = LH_Stage, y = AvgTemp, color = LH_Stage)) + 
-  geom_point(stat = "identity", color = "black", position = position_dodge()) + 
-  geom_errorbar(aes(ymin = AvgTemp - SD, ymax = AvgTemp + SD), width = 0.2, position = position_dodge(0.9)) +
-  theme(legend.key.size = unit(2, "lines"))  # Adjust the legend key size
-
-What if I want to use this code. how would I make the size of the pont and bars biger?
-  ChatGPT
-To make the size of the points and error bars bigger in your existing code while keeping the legend key bigger, you can simply add the size parameter to both geom_point() and geom_errorbar(). Here's how you can modify your code:
-
-R
-Copy code
-ggplot(LifeHistoryTable, aes(x = LH_Stage, y = AvgTemp, color = LH_Stage)) + 
-  geom_point(stat = "identity", color = "black", size = 3) +  # Adjust point size (e.g., size = 3)
-  geom_errorbar(aes(ymin = AvgTemp - SD, ymax = AvgTemp + SD), width = 0.2, size = 1.5) +  # Adjust error bar size (e.g., size = 1.5)
-  theme(legend.key.size = unit(2, "lines"))  # Adjust the legend key size
-In this modified code:
-
-size = 3 within geom_point() adjusts the size of the points.
-size = 1.5 within geom_errorbar() adjusts the size of the error bars.
-You can adjust these values as needed to make the points and error bars bigger or smaller.
-User
-site_colors <- c("Dry.Hoagland" = "gray1", "Grandad.Hessler" = "blue", "Painter.LittleBear" = "forestgreen", "Sherman.Loyalsock" = "firebrick", "Red.LittleBear" = "slateblue2")
-
-
-ggplot(STPlot, aes(x = Date, y = Temp_C, color = SiteCode)) +
-  geom_line() +
-  scale_color_manual(values = site_colors) +  # Apply custom color palette
-  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
-  theme_minimal() What if I want to indrocude one line one color at a time
-ChatGPT
-If you want to introduce one line with its color at a time in the plot, you can create separate plots for each line and then combine them using a loop. Here's how you can modify your code to achieve this:
-  
-  R
-Copy code
-# Create an empty list to store individual plots
-plot_list <- list()
-
-# Loop through each site and create a plot with only one line at a time
-for (site in unique(STPlot$SiteCode)) {
-  # Subset the data for the current site
-  site_data <- subset(STPlot, SiteCode == site)
-  
-  # Create a plot for the current site
-  plot <- ggplot(site_data, aes(x = Date, y = Temp_C, color = SiteCode)) +
-    geom_line() +
-    scale_color_manual(values = site_colors[site]) +  # Apply color for the current site only
-    labs(x = "Date", y = "Temperature (°C)", color = "Site") +
-    theme_minimal()
-  
-  # Add the plot to the list
-  plot_list[[site]] <- plot
-}
-
-# Combine all individual plots into one plot using patchwork
-combined_plot <- patchwork::wrap_plots(plotlist = plot_list)
-
-# Display the combined plot
-print(combined_plot)
-In this code:
-  
-  We loop through each unique site code in the data.
-For each site, we subset the data to contain only observations for that site.
-We create a plot for the current site using ggplot() and customize it accordingly.
-Each plot is stored in the plot_list.
-Finally, we combine all individual plots into one plot using the patchwork::wrap_plots() function from the patchwork package and display it.
-User
-What if I want to do each line one color at a time
-ChatGPT
-If you want to gradually introduce each line with its color one at a time in the plot, you can iteratively add lines to the plot within a loop. Here's how you can modify your code to achieve this:
-
-R
-Copy code
-# Create an empty plot
-p <- ggplot() +
-  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
-  theme_minimal()
-
-# Loop through each site and gradually add lines with their colors
-for (site in unique(STPlot$SiteCode)) {
-  # Subset the data for the current site
-  site_data <- subset(STPlot, SiteCode == site)
-  
-  # Add a line for the current site with its color
-  p <- p +
-    geom_line(data = site_data, aes(x = Date, y = Temp_C, color = SiteCode)) +
-    scale_color_manual(values = site_colors[1:length(unique(site_data$SiteCode))])  # Use color for the current site only
-  
-  # Display the plot
-  print(p)
-}
-In this code:
-
-We start with an empty plot p.
-We loop through each unique site code in the data.
-For each site, we subset the data to contain only observations for that site.
-We add a line for the current site with its color to the plot p.
-Inside the loop, the print(p) function is called to display the plot after each line is added. This will gradually show the plot with each line and its corresponding color.
-User
-site_colors <- c("Dry.Hoagland" = "gray1", "Grandad.Hessler" = "blue", "Painter.LittleBear" = "forestgreen", "Sherman.Loyalsock" = "firebrick", "Red.LittleBear" = "slateblue2")
-
-
-ggplot(STPlot, aes(x = Date, y = Temp_C, color = SiteCode)) +
-  geom_line() +
-  scale_color_manual(values = site_colors) +  # Apply custom color palette
-  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
-  theme_minimal()
-What if I want to plot one line at a time and make multiple plots with one new line each time
-ChatGPT
-If you want to plot one line at a time and create multiple plots with one new line added each time, you can loop through each site code, subset the data for that site, and plot the data up to that point. Here's how you can modify your code to achieve this:
-  
-  R
-Copy code
-# Create an empty plot
-p <- ggplot() +
-  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
-  theme_minimal()
-
-# Loop through each site and gradually add lines one at a time
-for (i in 1:length(unique(STPlot$SiteCode))) {
-  # Subset the data up to the current site
-  sub_data <- subset(STPlot, SiteCode %in% unique(STPlot$SiteCode)[1:i])
-  
-  # Add a line for the current site
-  p <- p +
-    geom_line(data = sub_data, aes(x = Date, y = Temp_C, color = SiteCode)) +
-    scale_color_manual(values = site_colors[1:i])  # Use colors up to the current site
-  
-  # Display the plot
-  print(p)
-}
-In this code:
-  
-  We start with an empty plot p.
-We loop through each site code up to the current iteration.
-For each iteration, we subset the data to include observations for all sites up to the current site.
-We add a line for the current subset of data to the plot p, using colors up to the current site.
-Inside the loop, the print(p) function is called to display the plot after each line is added. This will create multiple plots with one new line added each time.
-User
-Why is their an extra grey line in adittion to the two I want on their? site_colors <- c("Dry.Hoagland" = "gray1", "Grandad.Hessler" = "blue")
-
-ggplot(STPlot, aes(x = Date, y = Temp_C, color = SiteCode)) +
-  geom_line() +
-  scale_color_manual(values = site_colors) +  # Apply custom color palette
-  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
-  theme_minimal()
-ChatGPT
-The extra grey line is likely caused by the default color provided by ggplot for the first line. To avoid this, you can explicitly set the colors for all lines using scale_color_manual() and provide NA values for the colors that should not be plotted in the initial iteration. Here's how you can modify your code to address this issue:
-
-R
-Copy code
-# Define site colors
-site_colors <- c("Dry.Hoagland" = "gray1", "Grandad.Hessler" = "blue")
-
-# Create an empty plot
-p <- ggplot() +
-  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
-  theme_minimal()
-
-# Loop through each site and gradually add lines one at a time
-for (i in 1:length(unique(STPlot$SiteCode))) {
-  # Subset the data up to the current site
-  sub_data <- subset(STPlot, SiteCode %in% unique(STPlot$SiteCode)[1:i])
-  
-  # Create a color vector
-  color_values <- rep(NA, length(unique(STPlot$SiteCode)))
-  color_values[1:i] <- site_colors[1:i]
-  
-  # Add a line for the current site
-  p <- p +
-    geom_line(data = sub_data, aes(x = Date, y = Temp_C, color = SiteCode)) +
-    scale_color_manual(values = color_values, na.value = "transparent")  # Use colors up to the current site
-  
-  # Display the plot
-  print(p)
-}
-In this code:
-
-I set the color values for all lines using scale_color_manual() within the loop, making sure to set na.value = "transparent" to avoid plotting the lines for which there are NA color values.
-By initializing color_values with NA values and updating it only up to the current iteration, we ensure that the lines beyond the current iteration are not plotted.
-User
-What if I want to only plot months in 2020 # Create an empty plot
-
-p <- ggplot(STPlot, aes(x = Date, y = Temp_C, color = SiteCode)) +
-  geom_line() +
-  scale_color_manual(values = site_colors) +  # Apply custom color palette
-  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
-  theme_minimal()
-
-# Loop through each site and gradually add lines one at a time
-for (i in 1:length(unique(STPlot$SiteCode))) {
-  # Subset the data up to the current site
-  sub_data <- subset(STPlot, SiteCode %in% unique(STPlot$SiteCode)[1:i])
-  
-  # Create a color vector
-  color_values <- rep(NA, length(unique(STPlot$SiteCode)))
-  color_values[1:i] <- site_colors[1:i]
-  
-  # Add a line for the current site
-  p <- p +
-    geom_line(data = sub_data, aes(x = Date, y = Temp_C, color = SiteCode)) +
-    scale_color_manual(values = color_values, na.value = "transparent")  # Use colors up to the current site
-  
-  # Display the plot
-  print(p)
-}
-ChatGPT
-To only plot data for the months in 2020, you can filter the data before creating the plot. Here's how you can modify your code to achieve this:
-  
-  R
-Copy code
-library(dplyr)  # Load the dplyr package for data manipulation
-
-# Filter the data to include only months in 2020
-STPlot_2020 <- filter(STPlot, year(Date) == 2020)
-
-# Create an empty plot
-p <- ggplot(STPlot_2020, aes(x = Date, y = Temp_C, color = SiteCode)) +
-  geom_line() +
-  scale_color_manual(values = site_colors) +  # Apply custom color palette
-  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
-  theme_minimal()
-
-# Loop through each site and gradually add lines one at a time
-for (i in 1:length(unique(STPlot_2020$SiteCode))) {
-  # Subset the data up to the current site
-  sub_data <- subset(STPlot_2020, SiteCode %in% unique(STPlot_2020$SiteCode)[1:i])
-  
-  # Create a color vector
-  color_values <- rep(NA, length(unique(STPlot_2020$SiteCode)))
-  color_values[1:i] <- site_colors[1:i]
-  
-  # Add a line for the current site
-  p <- p +
-    geom_line(data = sub_data, aes(x = Date, y = Temp_C, color = SiteCode)) +
-    scale_color_manual(values = color_values, na.value = "transparent")  # Use colors up to the current site
-  
-  # Display the plot
-  print(p)
-}
-In this code:
-  
-  We use the filter() function from the dplyr package to filter the STPlot data frame to include only months in the year 2020.
-We then proceed with plotting the filtered data in the same way as before. This ensures that only data for the months in 2020 is included in the plot.
-User
-What if i want 2020 and 2021
-ChatGPT
-If you want to include data for both 2020 and 2021, you can extend the filtering condition to include both years. Here's how you can modify the code to achieve this:
-
-R
-Copy code
-library(dplyr)  # Load the dplyr package for data manipulation
-
-# Filter the data to include only months in 2020 and 2021
-STPlot_2020_2021 <- filter(STPlot, year(Date) %in% c(2020, 2021))
-
-# Create an empty plot
-p <- ggplot(STPlot_2020_2021, aes(x = Date, y = Temp_C, color = SiteCode)) +
-  geom_line() +
-  scale_color_manual(values = site_colors) +  # Apply custom color palette
-  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
-  theme_minimal()
-
-# Loop through each site and gradually add lines one at a time
-for (i in 1:length(unique(STPlot_2020_2021$SiteCode))) {
-  # Subset the data up to the current site
-  sub_data <- subset(STPlot_2020_2021, SiteCode %in% unique(STPlot_2020_2021$SiteCode)[1:i])
-  
-  # Create a color vector
-  color_values <- rep(NA, length(unique(STPlot_2020_2021$SiteCode)))
-  color_values[1:i] <- site_colors[1:i]
-  
-  # Add a line for the current site
-  p <- p +
-    geom_line(data = sub_data, aes(x = Date, y = Temp_C, color = SiteCode)) +
-    scale_color_manual(values = color_values, na.value = "transparent")  # Use colors up to the current site
-  
-  # Display the plot
-  print(p)
-}
-This code will filter the data to include only months from both 2020 and 2021 and then proceed with plotting as before.
-
-User
-What if I want to include the years 2020 and 2021, but not plot from August on\
-ChatGPT
-To include data from the years 2020 and 2021 but exclude data from August onwards, you can extend the filtering condition to include both years and then specify that the month should be less than August. Here's how you can modify the code:
-  
-  R
-Copy code
-library(dplyr)  # Load the dplyr package for data manipulation
-
-# Filter the data to include only months in 2020 and 2021, but not from August onwards
-STPlot_2020_2021 <- filter(STPlot, year(Date) %in% c(2020, 2021) & month(Date) < 8)
-
-# Create an empty plot
-p <- ggplot(STPlot_2020_2021, aes(x = Date, y = Temp_C, color = SiteCode)) +
-  geom_line() +
-  scale_color_manual(values = site_colors) +  # Apply custom color palette
-  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
-  theme_minimal()
-
-# Loop through each site and gradually add lines one at a time
-for (i in 1:length(unique(STPlot_2020_2021$SiteCode))) {
-  # Subset the data up to the current site
-  sub_data <- subset(STPlot_2020_2021, SiteCode %in% unique(STPlot_2020_2021$SiteCode)[1:i])
-  
-  # Create a color vector
-  color_values <- rep(NA, length(unique(STPlot_2020_2021$SiteCode)))
-  color_values[1:i] <- site_colors[1:i]
-  
-  # Add a line for the current site
-  p <- p +
-    geom_line(data = sub_data, aes(x = Date, y = Temp_C, color = SiteCode)) +
-    scale_color_manual(values = color_values, na.value = "transparent")  # Use colors up to the current site
-  
-  # Display the plot
-  print(p)
-}
-This code filters the data to include only months from the years 2020 and 2021 but not from August onwards. Then it proceeds with plotting as before.
-
-User
-I only want <8 for 20201
-ChatGPT
-Apologies for the oversight. To filter data for the year 2020 entirely and only include data from January to July for the year 2021, you can adjust the filtering condition accordingly. Here's how you can modify the code:
-
-R
-Copy code
-library(dplyr)  # Load the dplyr package for data manipulation
-
-# Filter the data to include only months in 2020 and months from January to July in 2021
-STPlot_2020_2021 <- filter(STPlot, (year(Date) == 2020) | (year(Date) == 2021 & month(Date) < 8))
-
-# Create an empty plot
-p <- ggplot(STPlot_2020_2021, aes(x = Date, y = Temp_C, color = SiteCode)) +
-  geom_line() +
-  scale_color_manual(values = site_colors) +  # Apply custom color palette
-  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
-  theme_minimal()
-
-# Loop through each site and gradually add lines one at a time
-for (i in 1:length(unique(STPlot_2020_2021$SiteCode))) {
-  # Subset the data up to the current site
-  sub_data <- subset(STPlot_2020_2021, SiteCode %in% unique(STPlot_2020_2021$SiteCode)[1:i])
-  
-  # Create a color vector
-  color_values <- rep(NA, length(unique(STPlot_2020_2021$SiteCode)))
-  color_values[1:i] <- site_colors[1:i]
-  
-  # Add a line for the current site
-  p <- p +
-    geom_line(data = sub_data, aes(x = Date, y = Temp_C, color = SiteCode)) +
-    scale_color_manual(values = color_values, na.value = "transparent")  # Use colors up to the current site
-  
-  # Display the plot
-  print(p)
-}
-This code filters the data to include only months from January to July in the year 2021 and all months from the year 2020. Then, it proceeds with plotting as before.
-
-User
-#Define site colors 
-site_colors <- c("Dry.Hoagland" = "gray1", "Grandad.Hessler" = "blue", "Painter.LittleBear" = "forestgreen", "Sherman.Loyalsock" = "firebrick", "Red.LittleBear" = "slateblue2")
-
-#Filter for 2020 and 2021 <7 so you can get sherman to stop going into 2022 when other data doesent 
-
-STPlot_2020_2021 <- filter(STPlot, (year(Date) == 2020) | (year(Date) == 2021 & month(Date) < 7))
-
-# Create an empty plot
-p <- ggplot(STPlot_2020_2021, aes(x = Date, y = Temp_C, color = SiteCode)) +
-  geom_line() +
-  scale_color_manual(values = site_colors) +  # Apply custom color palette
-  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
-  theme_minimal()
-
-# Loop through each site and gradually add lines one at a time
-for (i in 1:length(unique(STPlot_2020_2021$SiteCode))) {
-  # Subset the data up to the current site
-  sub_data <- subset(STPlot_2020_2021, SiteCode %in% unique(STPlot_2020_2021$SiteCode)[1:i])
-  
-  # Create a color vector
-  color_values <- rep(NA, length(unique(STPlot_2020_2021$SiteCode)))
-  color_values[1:i] <- site_colors[1:i]
-  
-  # Add a line for the current site
-  p <- p +
-    geom_line(data = sub_data, aes(x = Date, y = Temp_C, color = SiteCode)) +
-    scale_color_manual(values = color_values, na.value = "transparent")  # Use colors up to the current site
-  
-  # Display the plot
-  print(p)
-}Why is Sherman purple when i want it to be firebrick?
-ChatGPT
-It seems like the issue might be with the way the color values are assigned to the site_colors vector. In your code, you've defined the color for "Sherman.Loyalsock" as "firebrick" in the site_colors vector. However, when using it in the plot, it appears as purple instead.
-
-This discrepancy could occur if the data associated with "Sherman.Loyalsock" is not present in the filtered dataset STPlot_2020_2021, or if there's an issue with the mapping between the SiteCode values and the colors.
-
-To troubleshoot this, you can check the following:
-
-Ensure that the data associated with "Sherman.Loyalsock" is present in the filtered dataset STPlot_2020_2021. You can do this by printing the unique SiteCode values in STPlot_2020_2021 and verifying that "Sherman.Loyalsock" is included.
-
-Verify that the SiteCode values in STPlot_2020_2021 match exactly with the keys in the site_colors vector. Even a slight difference in spelling or case sensitivity can cause the color mapping to fail.
-
-Here's how you can check the unique SiteCode values in STPlot_2020_2021:
-  
-  R
-Copy code
-unique(STPlot_2020_2021$SiteCode)
-If "Sherman.Loyalsock" is not included in the output, it means that there might be a discrepancy in the SiteCode values between the data and the site_colors vector. You would need to adjust either the SiteCode values in the data or the keys in the site_colors vector to match exactly.
-
-Once you ensure that the SiteCode values and the site_colors vector are correctly aligned, "Sherman.Loyalsock" should be plotted with the specified "firebrick" color.
-
-User
-#Define site colors 
-site_colors <- c("Dry.Hoagland" = "gray1", "Grandad.Hessler" = "blue", "Painter.LittleBear" = "forestgreen", "Sherman.Loyalsock" = "firebrick", "Red.LittleBear" = "slateblue2")
-
-#Filter for 2020 and 2021 <7 so you can get sherman to stop going into 2022 when other data doesent 
-
-STPlot_2020_2021 <- filter(STPlot, (year(Date) == 2020) | (year(Date) == 2021 & month(Date) < 7))
-
-# Create an empty plot
-p <- ggplot(STPlot_2020_2021, aes(x = Date, y = Temp_C, color = SiteCode)) +
-  geom_line() +
-  scale_color_manual(values = site_colors) +  # Apply custom color palette
-  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
-  theme_minimal()
-
-# Loop through each site and gradually add lines one at a time
-for (i in 1:length(unique(STPlot_2020_2021$SiteCode))) {
-  # Subset the data up to the current site
-  sub_data <- subset(STPlot_2020_2021, SiteCode %in% unique(STPlot_2020_2021$SiteCode)[1:i])
-  
-  # Create a color vector
-  color_values <- rep(NA, length(unique(STPlot_2020_2021$SiteCode)))
-  color_values[1:i] <- site_colors[1:i]
-  
-  # Add a line for the current site
-  p <- p +
-    geom_line(data = sub_data, aes(x = Date, y = Temp_C, color = SiteCode)) +
-    scale_color_manual(values = color_values, na.value = "transparent")  # Use colors up to the current site
-  
-  # Display the plot
-  print(p)
-} How to make legend biger
-ChatGPT
-To make the legend bigger in a ggplot2 plot in R, you can adjust the size of the legend key using the theme() function. Here's how you can modify your code to make the legend bigger:
-
-R
-Copy code
-# Define site colors 
-site_colors <- c("Dry.Hoagland" = "gray1", "Grandad.Hessler" = "blue", "Painter.LittleBear" = "forestgreen", "Sherman.Loyalsock" = "firebrick", "Red.LittleBear" = "slateblue2")
-
-# Filter for 2020 and 2021 <7 so you can get sherman to stop going into 2022 when other data doesn't
-STPlot_2020_2021 <- filter(STPlot, (year(Date) == 2020) | (year(Date) == 2021 & month(Date) < 7))
-
-# Create an empty plot
-p <- ggplot(STPlot_2020_2021, aes(x = Date, y = Temp_C, color = SiteCode)) +
-  geom_line() +
-  scale_color_manual(values = site_colors) +  # Apply custom color palette
-  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
-  theme_minimal() +
-  theme(legend.key.size = unit(2, "lines"))  # Adjust the legend key size
-
-# Loop through each site and gradually add lines one at a time
-for (i in 1:length(unique(STPlot_2020_2021$SiteCode))) {
-  # Subset the data up to the current site
-  sub_data <- subset(STPlot_2020_2021, SiteCode %in% unique(STPlot_2020_2021$SiteCode)[1:i])
-  
-  # Create a color vector
-  color_values <- rep(NA, length(unique(STPlot_2020_2021$SiteCode)))
-  color_values[1:i] <- site_colors[1:i]
-  
-  # Add a line for the current site
-  p <- p +
-    geom_line(data = sub_data, aes(x = Date, y = Temp_C, color = SiteCode)) +
-    scale_color_manual(values = color_values, na.value = "transparent")  # Use colors up to the current site
-  
-  # Display the plot
-  print(p)
-}
-In this code:
-  
-  I added theme(legend.key.size = unit(2, "lines")) to the plot p. This line adjusts the size of the legend key to be bigger. You can adjust the value 2 as needed to make the legend key larger or smaller.
-User
-> Data_merge_Model %>%
-  +   mutate(MP23 = predict.gam(MR23))  %>%
-  +   ggplot() +
-  +   geom_point(aes(Lowest_Temperature_C, RatAY, color = Month)) +
-  +   geom_smooth(aes(Lowest_Temperature_C, MP23)) +
-  +   scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
-                                    +                                 "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
-                                    +                                 "09" = 15, "10" = 15, "11" = 15, "12" = 17))
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-Warning message:
-  No shared levels found between `names(values)` of the manual scale and the data's shape values.
-ChatGPT
-The warning message you received indicates that there is a mismatch between the levels specified in scale_shape_manual() and the shape values present in your data. This mismatch can occur if the levels specified in scale_shape_manual() do not match the values present in your data.
-
-To resolve this issue, you need to ensure that the levels specified in scale_shape_manual() match the values present in your data's Month variable. Here's how you can do it:
-
-R
-Copy code
-Data_merge_Model %>%
-  mutate(MP23 = predict.gam(MR23)) %>%
-  ggplot() +
-  geom_point(aes(Lowest_Temperature_C, RatAY, color = Month, shape = Month)) +
-  geom_smooth(aes(Lowest_Temperature_C, MP23)) +
-  scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
-                                 "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
-                                 "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
-  theme_minimal()
-In this code:
-
-I added shape = Month inside aes() in geom_point() to map the Month variable to the shape aesthetic.
-I specified values in scale_shape_manual() corresponding to the unique levels of the Month variable in your data. Make sure these values match the levels present in your data's Month variable exactly. Adjust them as needed based on your data.
-By including shape = Month inside aes() in geom_point(), the Month variable is mapped to both color and shape aesthetics, ensuring consistency between the levels specified in scale_shape_manual() and the data's shape values.
-User
-> Data_merge_Model %>%
-+   mutate(MP11 = predict.gam(MR11))  %>%
-+   ggplot() +
-+   geom_point(aes(AvgMin, CPUE_Count, color = Month)) +
-+   geom_smooth(aes(AvgMin, MP11)) +
-+   scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
-+                                 "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
-+                                 "09" = 15, "10" = 15, "11" = 15, "12" = 17))
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-Warning message:
-No shared levels found between `names(values)` of the manual scale and the data's shape values. 
-ChatGPT
-The warning message you received indicates that there is a mismatch between the levels specified in scale_shape_manual() and the shape values present in your data. This mismatch can occur if the levels specified in scale_shape_manual() do not match the values present in your data's Month variable.
-
-To resolve this issue, you need to ensure that the levels specified in scale_shape_manual() match the values present in your data's Month variable. Here's how you can do it:
-
-R
-Copy code
-Data_merge_Model %>%
-  mutate(MP11 = predict.gam(MR11)) %>%
-  ggplot() +
-  geom_point(aes(AvgMin, CPUE_Count, color = Month, shape = Month)) +
-  geom_smooth(aes(AvgMin, MP11)) +
-  scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
-                                 "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
-                                 "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
-  theme_minimal()
-In this code:
-
-I added shape = Month inside aes() in geom_point() to map the Month variable to the shape aesthetic.
-I specified values in scale_shape_manual() corresponding to the unique levels of the Month variable in your data. Make sure these values match the levels present in your data's Month variable exactly. Adjust them as needed based on your data.
-By including shape = Month inside aes() in geom_point(), the Month variable is mapped to both color and shape aesthetics, ensuring consistency between the levels specified in scale_shape_manual() and the data's shape values.
-User
-> Data_merge_Model %>%
-+   mutate(MP28 = predict.gam(MR28))  %>%
-+   ggplot() +
-+   geom_point(aes(AvgMax, RatAY, color = Month)) +
-+   geom_smooth(aes(AvgMax, MP28)) +
-+   scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
-+                                 "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
-+                                 "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
-+   theme_minimal()
-`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-Warning message:
-No shared levels found between `names(values)` of the manual scale and the data's shape values. 
-ChatGPT
-The warning message you received indicates that there is a mismatch between the levels specified in scale_shape_manual() and the shape values present in your data. This mismatch can occur if the levels specified in scale_shape_manual() do not match the values present in your data's Month variable.
-
-To resolve this issue, you need to ensure that the levels specified in scale_shape_manual() match the values present in your data's Month variable. Here's how you can do it:
-
-R
-Copy code
-Data_merge_Model %>%
-  mutate(MP28 = predict.gam(MR28)) %>%
-  ggplot() +
-  geom_point(aes(AvgMax, RatAY, color = Month, shape = Month)) +
-  geom_smooth(aes(AvgMax, MP28)) +
-  scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
-                                 "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
-                                 "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
-  theme_minimal()
-In this code:
-
-I added shape = Month inside aes() in geom_point() to map the Month variable to the shape aesthetic.
-I specified values in scale_shape_manual() corresponding to the unique levels of the Month variable in your data. Make sure these values match the levels present in your data's Month variable exactly. Adjust them as needed based on your data.
-By including shape = Month inside aes() in geom_point(), the Month variable is mapped to both color and shape aesthetics, ensuring consistency between the levels specified in scale_shape_manual() and the data's shape values.
-User
-site_colors <- c("Dry.Hoagland" = "gray1", "Grandad.Hessler" = "blue", "Painter.LittleBear" = "forestgreen", "Sherman.Loyalsock" = "darkorange2", "Red.LittleBear" = "firebrick")
-
-
-# Filter for 2020 and 2021 <7 so you can get sherman to stop going into 2022 when other data doesn't
-STPlot_2020_2021 <- filter(STPlot, (year(Date) == 2020) | (year(Date) == 2021 & month(Date) < 7))
-
-# Create an empty plot
-p <- ggplot(STPlot_2020_2021, aes(x = Date, y = Temp_C, color = SiteCode)) +
-  geom_line() +
-  scale_color_manual(values = site_colors) +  # Apply custom color palette
-  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
-  theme_minimal() +
-  theme(legend.key.size = unit(2, "lines"))  # Adjust the legend key size
-
-# Loop through each site and gradually add lines one at a time
-for (i in 1:length(unique(STPlot_2020_2021$SiteCode))) {
-  # Subset the data up to the current site
-  sub_data <- subset(STPlot_2020_2021, SiteCode %in% unique(STPlot_2020_2021$SiteCode)[1:i])
-  
-  # Create a color vector
-  color_values <- rep(NA, length(unique(STPlot_2020_2021$SiteCode)))
-  color_values[1:i] <- site_colors[1:i]
-  
-  # Add a line for the current site
-  p <- p +
-    geom_line(data = sub_data, aes(x = Date, y = Temp_C, color = SiteCode)) +
-    scale_color_manual(values = color_values, na.value = "transparent")  # Use colors up to the current site
-  
-  # Display the plot
-  print(p)
-}
-
+#Define site colors  
 site_colors <- c("Dry.Hoagland" = "gray1", "Grandad.Hessler" = "blue", "Painter.LittleBear" = "forestgreen", "Sherman.Loyalsock" = "darkorange2", "Red.LittleBear" = "firebrick")
 
 # Filter for 2020 and 2021 <7 so you can get sherman to stop going into 2022 when other data doesn't
@@ -1372,33 +607,15 @@ STPlot_2020_2021 <- filter(STPlot, (year(Date) == 2020) | (year(Date) == 2021 & 
 p <- ggplot(STPlot_2020_2021, aes(x = Date, y = Temp_C, color = SiteCode)) +
   geom_line(size = 0.9) +  # Adjust line size here
   scale_color_manual(values = site_colors) +  # Apply custom color palette
-  labs(x = "Date", y = "Temperature (°C)", color = "Site") +
+  labs(x = "Date", y = "Temperature (°C)", color = "Site") +  # Change x-axis label here
+  ggtitle("Seasonal Temperature Variation Over Time") +  # Add plot title
   theme_minimal() +
   theme(legend.key.size = unit(2, "lines"), 
-        axis.text = element_text(size = 13),  # Adjust the size of axis text here
-        axis.title = element_text(size = 13))  # Adjust the size of axis labels here
-
-# Loop through each site and gradually add lines one at a time
-for (i in 1:length(unique(STPlot_2020_2021$SiteCode))) {
-  # Subset the data up to the current site
-  sub_data <- subset(STPlot_2020_2021, SiteCode %in% unique(STPlot_2020_2021$SiteCode)[1:i])
-  
-  # Create a color vector
-  color_values <- rep(NA, length(unique(STPlot_2020_2021$SiteCode)))
-  color_values[1:i] <- site_colors[1:i]
-  
-  # Add a line for the current site
-  p <- p +
-    geom_line(data = sub_data, aes(x = Date, y = Temp_C, color = SiteCode), size = 0.9) +  # Adjust line size here
-    scale_color_manual(values = color_values, na.value = "transparent")  # Use colors up to the current site
-  
-  # Display the plot
-  print(p)
-}
-
-#Making legend size bigger. 
-
-
+        axis.text = element_text(size = 14),  # Adjust the size of axis text here
+        axis.title = element_text(size = 14),  # Adjust the size of axis labels here
+        legend.text = element_text(size = 14),  # Adjust the size of legend text here
+        legend.title = element_text(size = 14),  # Adjust legend title size
+        plot.title = element_text(size = 18, hjust = 0.5))  # Adjust title text size and alignment
 
 #Make Plots of signicnt Data 
 
@@ -1478,7 +695,7 @@ Data_merge_Model %>%
                                 "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
   theme_minimal()
 
-Data_merge_Model %>%
+`Data_merge_Model %>%
   mutate(MP11 = predict.gam(MR11)) %>%
   ggplot() +
   geom_boxplot(aes(x = AvgMin, y = CPUE_Count, fill = Month)) +
@@ -1539,7 +756,7 @@ ggplot(Data_merge_Model, aes(x = AvgMax, y = RatAY, color = Month)) +
 
 #Dont undderstand how to do the interaction :(
 
-#MR31 Maybe more intersting- SA
+#MR31 Maybe more intersting- SA ***
 
 Data_merge_Model %>%
   mutate(MP31 = predict.gam(MR31))  %>%
@@ -1556,6 +773,37 @@ Data_merge_Model %>%
                                 "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
                                 "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
   theme_minimal()
+
+Data_merge_Model %>%
+  mutate(MP31 = predict.gam(MR31))  %>%
+  ggplot() +
+  geom_point(aes(AvgMin, RatAY, color = Month, shape = Month), size = 2) +
+  geom_smooth(aes(AvgMin, MP31)) +
+  scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
+                                "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
+                                "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
+  ggtitle("Smoothed Predctions of Model 31") +  # Add plot title
+  theme_minimal() +
+  theme(plot.title = element_text(size = 18, hjust = 0.5))  # Adjust title text size and center it
+
+Data_merge_Model %>%
+  mutate(MP31 = predict.gam(MR31)) %>%
+  ggplot() +
+  geom_point(aes(AvgMin, RatAY, color = Month, shape = Month), size = 2.5) +
+  geom_smooth(aes(AvgMin, MP31)) +
+  scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
+                                "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
+                                "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
+  ggtitle("Smoothed Predictions of Model 31") +  # Add plot title
+  theme_minimal() +
+  theme(plot.title = element_text(size = 21, hjust = 0.5),  # Adjust title text size and center it
+        axis.text.x = element_text(size = 15),  # Adjust x-axis text size
+        axis.text.y = element_text(size = 15),  # Adjust y-axis text size
+        axis.title.x = element_text(size = 17),  # Adjust x-axis title size
+        axis.title.y = element_text(size = 17),  # Adjust y-axis title size
+        legend.text = element_text(size = 14),  # Adjust legend text size
+        legend.title = element_text(size = 17),# Adjust legend title size
+        legend.key.size = unit(3, "lines"))  # Adjust size of shapes in legend
 
 #MP35
 
@@ -1684,7 +932,16 @@ Data_merge_Model %>%
   scale_shape_manual(values = c("01" = 17, "02" = 17, "03" = 15, "04" = 15, 
                                 "05" = 15, "06" = 16, "07" = 16, "08" = 16, 
                                 "09" = 15, "10" = 15, "11" = 15, "12" = 17)) +
-  theme_minimal()
+  ggtitle("Smoothed Predictions of Model 50") +  # Add plot title
+  theme_minimal() +
+  theme(plot.title = element_text(size = 21, hjust = 0.5),  # Adjust title text size and center it
+        axis.text.x = element_text(size = 15),  # Adjust x-axis text size
+        axis.text.y = element_text(size = 15),  # Adjust y-axis text size
+        axis.title.x = element_text(size = 17),  # Adjust x-axis title size
+        axis.title.y = element_text(size = 17),  # Adjust y-axis title size
+        legend.text = element_text(size = 14),  # Adjust legend text size
+        legend.title = element_text(size = 17),# Adjust legend title size
+        legend.key.size = unit(3, "lines"))  # Adjust size of shapes in legend
 
 MR50 <- gam(CPUE_Biomass ~ Month*AvgMax, data = Data_merge_Model)
 summary(MR50)
@@ -1948,6 +1205,38 @@ ggplot(LifeHistoryTable, aes(x = LH_Stage, y = AvgTemp, color = LH_Stage)) +
   geom_point(stat = "identity", color = "black", size = 3) +  # Adjust point size (e.g., size = 3)
   geom_errorbar(aes(ymin = AvgTemp - SD, ymax = AvgTemp + SD), width = 0.2, size = 1.0) +  # Adjust error bar size (e.g., size = 1.5)
   theme(legend.key.size = unit(2, "lines"))  # Adjust the legend key size
+
+ggplot(LifeHistoryTable, aes(x = LH_Stage, y = AvgTemp, color = LH_Stage)) + 
+  geom_point(stat = "identity", color = "black", size = 3) +  # Adjust point size (e.g., size = 3)
+  geom_errorbar(aes(ymin = AvgTemp - SD, ymax = AvgTemp + SD), width = 0.2, size = 1.0) +  # Adjust error bar size (e.g., size = 1.5)
+  labs(x = "Life History Stage", y = "Average Temperature (°C)", color = "Life History Stage") +  # Adjust the axis and legend labels
+  theme(legend.key.size = unit(2, "lines"))  # Adjust the legend key size
+
+ggplot(LifeHistoryTable, aes(x = LH_Stage, y = AvgTemp, color = LH_Stage)) + 
+  geom_point(stat = "identity", color = "black", size = 3) +  # Adjust point size (e.g., size = 3)
+  geom_errorbar(aes(ymin = AvgTemp - SD, ymax = AvgTemp + SD), width = 0.2, size = 1.0) +  # Adjust error bar size (e.g., size = 1.5)
+  labs(x = "Life History Stage", y = "Average Temperature", color = "Life History Stage") +  # Adjust the axis and legend labels
+  theme(legend.key.size = unit(2, "lines"),  # Adjust the legend key size
+        axis.text.x = element_text(size = 14),  # Adjust x-axis text size
+        axis.text.y = element_text(size = 14),  # Adjust y-axis text size
+        axis.title.x = element_text(size = 16),  # Adjust x-axis title size
+        axis.title.y = element_text(size = 16),  # Adjust y-axis title size
+        legend.text = element_text(size = 14),
+        legend.title = element_text(size = 14))  # Adjust legend title size  # Adjust legend text size
+
+ggplot(LifeHistoryTable, aes(x = LH_Stage, y = AvgTemp, color = LH_Stage)) + 
+  geom_point(stat = "identity", color = "black", size = 3) +  # Adjust point size (e.g., size = 3)
+  geom_errorbar(aes(ymin = AvgTemp - SD, ymax = AvgTemp + SD), width = 0.2, size = 1.0) +  # Adjust error bar size (e.g., size = 1.5)
+  labs(x = "Life History Stage", y = "Average Temperature", color = "Life History Stage") +  # Adjust the axis and legend labels
+  ggtitle("Average Temperature Effects on Life History Stages") +  # Add plot title
+  theme(legend.key.size = unit(2, "lines"),  # Adjust the legend key size
+        axis.text.x = element_text(size = 14),  # Adjust x-axis text size
+        axis.text.y = element_text(size = 14),  # Adjust y-axis text size
+        axis.title.x = element_text(size = 16),  # Adjust x-axis title size
+        axis.title.y = element_text(size = 16),  # Adjust y-axis title size
+        legend.text = element_text(size = 14),
+        legend.title = element_text(size = 14),
+        plot.title = element_text(size = 18, hjust = 0.5))  # Adjust title text size and center it
 
 #Trying to get things to work bellow, but its not. 
 
