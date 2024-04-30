@@ -114,6 +114,19 @@ axis(1, at = maj1, lty = 1, lwd = 0.5, pos = 0, labels = TRUE)
 
 maj2 <- c(0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700) # Freq
 axis(2, at = maj2, lty = 1, lwd = 0.5, las = 2, pos = 22) # tck = 1
+
+BKT2021TL <- BKTRecLoy19to21 %>%
+  filter(str_detect(EventCode, "2021"))
+
+hist(BKT2020TL$Length_mm, freq = TRUE, breaks = 22.32, axes = FALSE,
+     main = "Histogram of 2020 Brook Trout Lengths and Frequency")
+
+maj1 <- c(20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160,
+          170, 180, 190, 200, 210, 220, 230, 240) # Lengths
+axis(1, at = maj1, lty = 1, lwd = 0.5, pos = 0, labels = TRUE)
+
+maj2 <- c(0, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700) # Freq
+axis(2, at = maj2, lty = 1, lwd = 0.5, las = 2, pos = 22) # tck = 1
 ################################################################################
 #Create Adult/YOY Ratio using BKTRecLoy 
 #YOY < 75 (Length_mm)
