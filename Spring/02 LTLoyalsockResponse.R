@@ -151,6 +151,7 @@ RatioAY #66 x 7
 # So, RatAY ranges from 1.00 (when all BKT are Adults) and -1.00 (when all BKT 
 #   are YOY) and 0.00 indicates when BKT Adults=YOY.
 
+write.csv(RatioAY, "RatioAY.csv")
 ################################################################################
 #Create CPUE_Count and CPUE_Biomass using FishSurLoy AND BKTRecLoy
 CPUE<-left_join(FishSurLoy19to21U,BKTEvtSum,by="EventCode")
